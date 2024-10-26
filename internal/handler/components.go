@@ -61,7 +61,26 @@ func GetComponentPage(c echo.Context) error {
 }
 
 func GetComponentSearch(c echo.Context) error {
-	return render(c, http.StatusOK, pages.ComponentSearchListItems(nil))
+	search := c.FormValue("search")
+	search = strings.ToLower(search)
+	search = strings.TrimSpace(search)
+	if search == "" {
+		return nil
+	}
+
+	results := []pages.ComponentSearchItem{}
+	for category := range internal.ComponentCodeMap {
+		for i := range internal.ComponentCodeMap[category] {
+			if strings.Contains(strings.ToLower(internal.SnakeCaseToCapitalized(internal.ComponentCodeMap[category][i].Name)), search) {
+				results = append(results, pages.ComponentSearchItem{
+					Category: category,
+					Name:     internal.ComponentCodeMap[category][i].Name,
+				})
+			}
+		}
+	}
+
+	return render(c, http.StatusOK, pages.ComponentSearchListItems(results))
 }
 
 // ActiveSearchExampleTable

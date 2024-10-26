@@ -42,7 +42,7 @@ func main() {
 	e.GET("/terms-of-service", handler.GetTermsOfServicePage)
 
 	e.GET("/components/:category/:name", handler.GetComponentPage)
-	e.GET("/search", handler.GetComponentSearch)
+	e.GET("/components/search", handler.GetComponentSearch)
 
 	// handlers for component examples
 	e.POST("/validate/string/:name", handler.PostValidateString)

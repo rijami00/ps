@@ -277,7 +277,6 @@ templ drawerSide(anchors []model.Anchor) {
 }
 
 type ComponentSearchItem struct {
-	Slug     string
 	Category string
 	Name     string
 }
@@ -287,13 +286,13 @@ templ ComponentSearchListItems(cs []ComponentSearchItem) {
 		<div name="search-list-item" class="m-2 px-2 py-1 bg-base-100 rounded-box cursor-pointer">
 			<a
 				name="component-search-anchor"
-				href={ templ.SafeURL(fmt.Sprintf("/components/%s", cs[i].Slug)) }
+				href={ templ.SafeURL(fmt.Sprintf("/components/%s/%s", cs[i].Category, cs[i].Name)) }
 			>
 				<p class="text-xs text-base-content/75">
-					{ cs[i].Category }
+					{ internal.SnakeCaseToCapitalized(cs[i].Category) }
 				</p>
 				<p class="font-bold">
-					{ cs[i].Name }
+					{ internal.SnakeCaseToCapitalized(cs[i].Name) }
 				</p>
 			</a>
 		</div>
