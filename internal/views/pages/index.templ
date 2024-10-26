@@ -13,6 +13,7 @@ templ IndexPage() {
 }
 
 templ IndexPageContent() {
+	@openSourceToast()
 	<div class="w-full space-y-12">
 		<div class="pt-12 lg:pt-24 pb-8 lg:pb-12 flex flex-col lg:flex-row w-full max-w-screen-md mx-auto">
 			<div class="hero">
@@ -91,6 +92,39 @@ templ IndexPageContent() {
 				Examples here use <a href="https://echo.labstack.com/" class="link">Echo</a> as the router. For usage with other routers or frameworks, refer to the integration guides found at <a href="https://templ.guide/integrations/web-frameworks" class="link">templ.guide</a> to see examples of rendering in different frameworks/libraries.
 			</p>
 		</section>
+	</div>
+}
+
+templ openSourceToast() {
+	<div name="oss-toast" class="toast toast-top toast-center text-sm">
+		<div class="alert">
+			<div class="flex items-center space-x-4">
+				<p>
+					goship.it is now open source, see the repository <a target="_blank" href="https://github.com/haatos/goshipit" class="link">here</a>
+				</p>
+				<div class="flex flex-col space-y-1">
+					<button
+						onclick="dismissOSSToast();"
+						class="btn btn-xs btn-primary"
+					>
+						OK
+					</button>
+				</div>
+			</div>
+			<script>
+				document.addEventListener("DOMContentLoaded", function() {
+					let cookieBarState = localStorage.getItem("oss-toast-shown");
+					if (cookieBarState !== null) {
+						document.querySelector("div[name=oss-toast]").remove();
+					}
+				})
+
+                function dismissOSSToast() {
+					localStorage.setItem("oss-toast-shown", "true");
+					document.querySelector("div[name=oss-toast]").remove()
+                }
+            </script>
+		</div>
 	</div>
 }
 
