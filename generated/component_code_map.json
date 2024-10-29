@@ -208,6 +208,40 @@
       ]
     },
     {
+      "name": "chat",
+      "code": [
+        "templ Chat(chat model.Chat) {",
+        "\tfor _, message := range chat.Messages {",
+        "\t\t@ChatMessage(message)",
+        "\t}",
+        "}",
+        "",
+        "templ ChatMessage(message model.ChatMessage) {",
+        "\t\u003cdiv",
+        "\t\tclass={",
+        "\t\t\t\"chat\",",
+        "\t\t\ttempl.KV(\"chat-start\", message.Location == \"start\"),",
+        "\t\t\ttempl.KV(\"chat-end\", message.Location == \"end\"),",
+        "\t\t}",
+        "\t\u003e",
+        "\t\tif message.AvatarURL != \"\" {",
+        "\t\t\t@Avatar(message.AvatarURL, \"chat-image w-10 rounded-full\")",
+        "\t\t}",
+        "\t\t\u003cdiv class=\"chat-header\"\u003e",
+        "\t\t\t{ message.Sender }",
+        "\t\t\t\u003ctime class=\"text-xs opacity-50\"\u003e{ message.Time }\u003c/time\u003e",
+        "\t\t\u003c/div\u003e",
+        "\t\t\u003cdiv class={ \"chat-bubble\", message.Classes }\u003e",
+        "\t\t\t{ message.Message }",
+        "\t\t\u003c/div\u003e",
+        "\t\t\u003cdiv class=\"chat-footer\"\u003e",
+        "\t\t\t{ message.Footer }",
+        "\t\t\u003c/div\u003e",
+        "\t\u003c/div\u003e",
+        "}"
+      ]
+    },
+    {
       "name": "collapse",
       "code": [
         "templ Collapse(title string) {",

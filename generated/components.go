@@ -18,6 +18,7 @@ var ExampleComponents = map[string]templ.Component{
 	"BasicCard":                  examples.BasicCard(),
 	"BasicCardWithImage":         examples.BasicCardWithImage(),
 	"CarouselExample":            examples.CarouselExample(),
+	"BasicChat":                  examples.BasicChat(),
 	"DefaultCheckbox":            examples.DefaultCheckbox(),
 	"PrimaryCheckbox":            examples.PrimaryCheckbox(),
 	"CollapseExample":            examples.CollapseExample(),

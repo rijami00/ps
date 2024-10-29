@@ -30,6 +30,20 @@ type Card struct {
 	Alt     string
 }
 
+type Chat struct {
+	Messages []ChatMessage
+}
+
+type ChatMessage struct {
+	AvatarURL string
+	Sender    string
+	Time      string
+	Message   string
+	Footer    string
+	Location  string
+	Classes   string
+}
+
 type Checkbox struct {
 	Label   string
 	Name    string

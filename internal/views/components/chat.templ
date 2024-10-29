@@ -1,0 +1,34 @@
+// data_display
+package components
+
+import "github.com/haatos/goshipit/internal/model"
+
+templ Chat(chat model.Chat) {
+	for _, message := range chat.Messages {
+		@ChatMessage(message)
+	}
+}
+
+templ ChatMessage(message model.ChatMessage) {
+	<div
+		class={
+			"chat",
+			templ.KV("chat-start", message.Location == "start"),
+			templ.KV("chat-end", message.Location == "end"),
+		}
+	>
+		if message.AvatarURL != "" {
+			@Avatar(message.AvatarURL, "chat-image w-10 rounded-full")
+		}
+		<div class="chat-header">
+			{ message.Sender }
+			<time class="text-xs opacity-50">{ message.Time }</time>
+		</div>
+		<div class={ "chat-bubble", message.Classes }>
+			{ message.Message }
+		</div>
+		<div class="chat-footer">
+			{ message.Footer }
+		</div>
+	</div>
+}

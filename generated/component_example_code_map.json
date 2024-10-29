@@ -296,6 +296,55 @@
       ]
     }
   ],
+  "chat": [
+    {
+      "name": "BasicChat",
+      "code": [
+        "templ BasicChat() {",
+        "\t\u003cdiv class=\"w-full max-w-screen-sm rounded-box mx-auto border border-base-content/30 p-4\"\u003e",
+        "\t\t@components.Chat(model.Chat{",
+        "\t\t\tMessages: []model.ChatMessage{",
+        "\t\t\t\t{",
+        "\t\t\t\t\tAvatarURL: \"/images/avatar.jpg\",",
+        "\t\t\t\t\tSender:    \"Me\",",
+        "\t\t\t\t\tTime:      time.Now().UTC().Add(-4 * time.Minute).Format(\"15:04:05\"),",
+        "\t\t\t\t\tMessage:   \"I started learning how to cook more dishes from scratch, and it's been way more satisfying than I expected. Last night, I made homemade pasta!\",",
+        "\t\t\t\t\tFooter:    \"✓✓\",",
+        "\t\t\t\t\tLocation:  \"start\",",
+        "\t\t\t\t\tClasses:   \"chat-bubble-primary\",",
+        "\t\t\t\t},",
+        "\t\t\t\t{",
+        "\t\t\t\t\tAvatarURL: \"/images/avatar-reverse.jpg\",",
+        "\t\t\t\t\tSender:    \"Myself\",",
+        "\t\t\t\t\tTime:      time.Now().UTC().Add(-2 * time.Minute).Format(\"15:04:05\"),",
+        "\t\t\t\t\tMessage:   \"That's awesome! Homemade pasta is no joke—it's a workout, too! Did you use a pasta machine, or go for the classic rolling pin method?\",",
+        "\t\t\t\t\tFooter:    \"✓✓\",",
+        "\t\t\t\t\tLocation:  \"end\",",
+        "\t\t\t\t},",
+        "\t\t\t\t{",
+        "\t\t\t\t\tAvatarURL: \"/images/avatar.jpg\",",
+        "\t\t\t\t\tSender:    \"Me\",",
+        "\t\t\t\t\tTime:      time.Now().UTC().Add(-1 * time.Minute).Format(\"15:04:05\"),",
+        "\t\t\t\t\tMessage:   \"Went old-school with the rolling pin! Took forever, but it was worth it. I made a simple marinara sauce to go with it, and honestly, it was better than what I usually order.\",",
+        "\t\t\t\t\tFooter:    \"✓✓\",",
+        "\t\t\t\t\tLocation:  \"start\",",
+        "\t\t\t\t\tClasses:   \"chat-bubble-primary\",",
+        "\t\t\t\t},",
+        "\t\t\t\t{",
+        "\t\t\t\t\tAvatarURL: \"/images/avatar-reverse.jpg\",",
+        "\t\t\t\t\tSender:    \"Myself\",",
+        "\t\t\t\t\tTime:      time.Now().UTC().Format(\"15:04:05\"),",
+        "\t\t\t\t\tMessage:   \"Love it! Next up, you've got to try ravioli. It's a bit more work, but filling them with something like ricotta and spinach makes it feel super fancy. You'll impress everyone!\",",
+        "\t\t\t\t\tFooter:    \"✓✓\",",
+        "\t\t\t\t\tLocation:  \"end\",",
+        "\t\t\t\t},",
+        "\t\t\t},",
+        "\t\t})",
+        "\t\u003c/div\u003e",
+        "}"
+      ]
+    }
+  ],
   "checkbox": [
     {
       "name": "DefaultCheckbox",
