@@ -2,6 +2,7 @@ package handler
 
 import (
 	"fmt"
+	"log"
 	"math"
 	"net/http"
 	"sort"
@@ -309,3 +310,14 @@ func PostComboboxSubmit(c echo.Context) error {
 }
 
 // BasicCombobox
+
+// ModalConfirmDelete
+// endpoint to log deleted 'element' and return an empty string
+// to replace the element, i.e. remove it from the DOM
+func DeleteModalExample(c echo.Context) error {
+	value := c.QueryParam("value")
+	log.Println("deleting modal", value)
+	return c.String(http.StatusOK, "")
+}
+
+// ModalConfirmDelete

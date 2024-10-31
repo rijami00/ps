@@ -44,6 +44,7 @@ var ExampleComponents = map[string]templ.Component{
 	"BasicModal":                 examples.BasicModal(),
 	"MultipleModals":             examples.MultipleModals(),
 	"ModalWithAction":            examples.ModalWithAction(),
+	"ModalConfirmDelete":         examples.ModalConfirmDelete(),
 	"BasicPaginationExample":     examples.BasicPaginationExample(),
 	"PricingExample":             examples.PricingExample(),
 	"DefaultRadioGroup":          examples.DefaultRadioGroup(),

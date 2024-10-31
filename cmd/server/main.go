@@ -56,6 +56,7 @@ func main() {
 	e.GET("/pagination-pages", handler.GetPaginationExamplePage)
 	e.POST("/combobox/:name/:value", handler.PostCombobox)
 	e.POST("/combobox-submit/:name", handler.PostComboboxSubmit)
+	e.DELETE("/modal-confirm", handler.DeleteModalExample)
 	// handlers for component examples
 
 	internal.GracefulShutdown(e, internal.Settings.Port)
