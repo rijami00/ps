@@ -36,6 +36,7 @@ var ExampleComponents = map[string]templ.Component{
 	"BasicTextInput":             examples.BasicTextInput(),
 	"PasswordInput":              examples.PasswordInput(),
 	"EmailInput":                 examples.EmailInput(),
+	"DisabledInput":              examples.DisabledInput(),
 	"JoinButtons":                examples.JoinButtons(),
 	"JoinInputs":                 examples.JoinInputs(),
 	"LazyLoadExample":            examples.LazyLoadExample(),

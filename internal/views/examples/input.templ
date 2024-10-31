@@ -45,3 +45,17 @@ templ EmailInput() {
 		)
 	</div>
 }
+
+// example
+templ DisabledInput() {
+	<div class="max-w-xs mx-auto pt-4">
+		@components.Input(
+			model.Input{
+				Label:           "Name",
+				Name:            "name",
+				Disabled:        true,
+				DisabledMessage: "This is disabled",
+			},
+		)
+	</div>
+}

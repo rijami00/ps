@@ -13,18 +13,23 @@ templ Input(input model.Input) {
 		hx-swap="innerHTML"
 		class="w-full"
 	>
-		<label
-			class={ "form-control w-full", templ.KV("pb-1", input.Label != "") }
-		>
+		<label class={ "form-control w-full", }>
 			if input.Label != "" {
 				<div class="py-1 pr-2">
 					<span class="label-text leading-4">{ input.Label }</span>
 				</div>
 			}
 			<div
-				class={ "relative input input-bordered !px-0 bg-transparent w-full flex items-center flex-grow",
+				class={
+					"relative input input-bordered !px-0 bg-transparent w-full flex items-center flex-grow",
 					templ.KV("!pl-3", input.Icon != nil),
-					templ.KV("input-error", input.Err != "") }
+					templ.KV("input-error", input.Err != ""),
+					templ.KV("pb-1", input.Label != ""),
+					templ.KV("tooltip tooltip-top", input.DisabledMessage != ""),
+				}
+				if input.Disabled && input.DisabledMessage != "" {
+					data-tip={ input.DisabledMessage }
+				}
 			>
 				if input.Icon != nil {
 					<div class="w-5 h-5">
@@ -40,6 +45,9 @@ templ Input(input model.Input) {
 						templ.KV(input.Classes, input.Classes != ""),
 					}
 					value={ input.Value }
+					if input.Disabled {
+						disabled
+					}
 				/>
 				<script>
 					document.addEventListener("htmx:afterRequest", (evt) => {
@@ -61,7 +69,12 @@ templ Input(input model.Input) {
 					})
 				</script>
 			</div>
-			<span id={ fmt.Sprintf("%s-error", input.Name) } class="text-error h-3 text-xs">{ input.Err }</span>
+			<span
+				id={ fmt.Sprintf("%s-error", input.Name) }
+				class="text-error h-3 text-xs"
+			>
+				{ input.Err }
+			</span>
 		</label>
 	</div>
 }

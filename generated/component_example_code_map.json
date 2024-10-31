@@ -1012,6 +1012,24 @@
         "\t\t\t},",
         "\t\t)",
         "\t\u003c/div\u003e",
+        "}",
+        ""
+      ]
+    },
+    {
+      "name": "DisabledInput",
+      "code": [
+        "templ DisabledInput() {",
+        "\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e",
+        "\t\t@components.Input(",
+        "\t\t\tmodel.Input{",
+        "\t\t\t\tLabel:           \"Name\",",
+        "\t\t\t\tName:            \"name\",",
+        "\t\t\t\tDisabled:        true,",
+        "\t\t\t\tDisabledMessage: \"This is disabled\",",
+        "\t\t\t},",
+        "\t\t)",
+        "\t\u003c/div\u003e",
         "}"
       ]
     }

@@ -86,14 +86,16 @@ type Image struct {
 }
 
 type Input struct {
-	Label   string
-	Name    string
-	Value   string
-	Err     string
-	Small   bool
-	Attrs   templ.Attributes
-	Classes string
-	Icon    templ.Component
+	Label           string
+	Name            string
+	Value           string
+	Err             string
+	Small           bool
+	Attrs           templ.Attributes
+	Classes         string
+	Icon            templ.Component
+	Disabled        bool
+	DisabledMessage string
 }
 
 type PaginationItem struct {
