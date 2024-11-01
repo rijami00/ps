@@ -1,7 +1,9 @@
 package examples
 
-import "fmt"
-import "github.com/haatos/goshipit/internal/views/components"
+import (
+	"fmt"
+	"github.com/haatos/goshipit/internal/views/components"
+)
 
 // example
 templ InfiniteScrollTableExample() {
@@ -14,10 +16,10 @@ templ InfiniteScrollTableExample() {
 }
 
 func initialRows() []templ.Component {
-    data := make([]templ.Component, 10)
+	data := make([]templ.Component, 10)
 	for i := 0; i < 10; i++ {
 		data[i] = components.InfiniteScrollRow("John Doe", fmt.Sprintf("john.doe%d@email.com", i), 0, i == 9)
 	}
 
-    return data
+	return data
 }

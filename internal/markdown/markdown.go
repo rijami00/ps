@@ -65,3 +65,14 @@ func replaceCodeParts(mdFile []byte) (string, error) {
 	}
 	return new, nil
 }
+
+func CodeSliceToMarkdown(s []string) string {
+	if s == nil {
+		return ""
+	}
+	n := make([]string, len(s)+2)
+	n[0] = "```go"
+	n[len(s)+2-1] = "```"
+	copy(n[1:len(s)+1], s)
+	return strings.Join(n, "\n")
+}

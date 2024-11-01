@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"log"
 	"os"
-	"strings"
 
 	"github.com/haatos/goshipit/internal/model"
 )
@@ -15,17 +14,6 @@ var ComponentExampleCodeMap model.ComponentExampleCodeMap
 func init() {
 	getComponentCodeMap()
 	getComponentExampleCodeMap()
-}
-
-func codeSliceToMarkdown(s []string) string {
-	if s == nil {
-		return ""
-	}
-	n := make([]string, len(s)+2)
-	n[0] = "```go"
-	n[len(s)+2-1] = "```"
-	copy(n[1:len(s)+1], s)
-	return strings.Join(n, "\n")
 }
 
 func getComponentCodeMap() {
@@ -41,7 +29,6 @@ func getComponentCodeMap() {
 	for k := range ComponentCodeMap {
 		for i := range ComponentCodeMap[k] {
 			ComponentCodeMap[k][i].Label = SnakeCaseToCapitalized(ComponentCodeMap[k][i].Name)
-			ComponentCodeMap[k][i].CodeMarkdown = codeSliceToMarkdown(ComponentCodeMap[k][i].Code)
 		}
 	}
 }
@@ -59,8 +46,6 @@ func getComponentExampleCodeMap() {
 	for k := range ComponentExampleCodeMap {
 		for i := range ComponentExampleCodeMap[k] {
 			ComponentExampleCodeMap[k][i].Label = SnakeCaseToCapitalized(ComponentExampleCodeMap[k][i].Name)
-			ComponentExampleCodeMap[k][i].CodeMarkdown = codeSliceToMarkdown(ComponentExampleCodeMap[k][i].Code)
-			ComponentExampleCodeMap[k][i].HandlerMarkdown = codeSliceToMarkdown(ComponentExampleCodeMap[k][i].Handler)
 		}
 	}
 }

@@ -1,13 +1,12 @@
 package model
 
 type ComponentCode struct {
-	Name    string   `json:"name"`
-	Code    []string `json:"code"`
-	Handler []string `json:"handler,omitempty"`
+	Name        string `json:"name"`
+	Code        string `json:"code,omitempty"`
+	Handler     string `json:"handler,omitempty"`
+	Description string `json:"description,omitempty"`
 
-	Label           string `json:"-"`
-	CodeMarkdown    string `json:"-"`
-	HandlerMarkdown string `json:"-"`
+	Label string `json:"-"`
 }
 
 type ComponentCodeMap map[string][]ComponentCode

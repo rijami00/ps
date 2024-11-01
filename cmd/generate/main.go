@@ -12,6 +12,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/haatos/goshipit/internal/markdown"
 	"github.com/haatos/goshipit/internal/model"
 )
 
@@ -80,11 +81,25 @@ func getComponentCode(path string, info fs.FileInfo, fmap model.ComponentCodeMap
 	scanner := bufio.NewScanner(f)
 	function := []string{}
 	inFunction := false
+	description := []string{}
+	inDescription := false
 	var category string
 	for scanner.Scan() {
 		line := scanner.Text()
 		if category == "" {
 			category = strings.TrimPrefix(line, "// ")
+			continue
+		}
+		if strings.HasPrefix(line, "/*") {
+			inDescription = true
+			continue
+		}
+		if strings.HasPrefix(line, "*/") {
+			inDescription = false
+			continue
+		}
+		if inDescription {
+			description = append(description, line)
 			continue
 		}
 		if strings.HasPrefix(line, "templ ") {
@@ -99,7 +114,11 @@ func getComponentCode(path string, info fs.FileInfo, fmap model.ComponentCodeMap
 	}
 	fmap[category] = append(
 		fmap[category],
-		model.ComponentCode{Name: componentName, Code: function})
+		model.ComponentCode{
+			Name:        componentName,
+			Code:        markdown.CodeSliceToMarkdown(function),
+			Description: strings.Join(description, "\n"),
+		})
 	return nil
 }
 
@@ -117,6 +136,8 @@ func generateComponentExampleCodeMap() {
 			componentName := strings.TrimSuffix(info.Name(), ".templ")
 			m[componentName] = []model.ComponentCode{}
 			inExample := false
+			description := []string{}
+			inDescription := false
 
 			scanner := bufio.NewScanner(f)
 			for scanner.Scan() {
@@ -125,12 +146,29 @@ func generateComponentExampleCodeMap() {
 					if inExample {
 						m[componentName] = append(
 							m[componentName],
-							model.ComponentCode{Name: functionName, Code: functionLines})
+							model.ComponentCode{
+								Name:        functionName,
+								Code:        markdown.CodeSliceToMarkdown(functionLines),
+								Description: strings.Join(description, "\n"),
+							})
 						functionName = ""
 						functionLines = []string{}
+						description = []string{}
 					}
 					inExample = true
 					continue
+				}
+
+				if strings.HasPrefix(line, "/*") {
+					inDescription = true
+					continue
+				}
+				if strings.HasPrefix(line, "*/") {
+					inDescription = false
+					continue
+				}
+				if inDescription {
+					description = append(description, line)
 				}
 
 				if strings.HasPrefix(line, "templ ") && functionName == "" {
@@ -138,7 +176,7 @@ func generateComponentExampleCodeMap() {
 					functionName = functionName[:strings.Index(functionName, "(")]
 				}
 
-				if inExample {
+				if inExample && !inDescription {
 					functionLines = append(functionLines, line)
 				}
 			}
@@ -146,7 +184,11 @@ func generateComponentExampleCodeMap() {
 			f.Close()
 			m[componentName] = append(
 				m[componentName],
-				model.ComponentCode{Name: functionName, Code: functionLines})
+				model.ComponentCode{
+					Name:        functionName,
+					Code:        markdown.CodeSliceToMarkdown(functionLines),
+					Description: strings.Join(description, "\n"),
+				})
 		}
 		return nil
 	}); err != nil {
@@ -168,7 +210,7 @@ func generateComponentExampleCodeMap() {
 				if strings.HasPrefix(line, fmt.Sprintf("// %s", m[comName][i].Name)) {
 					if inExampleHandler {
 						inExampleHandler = false
-						m[comName][i].Handler = functionLines
+						m[comName][i].Handler = markdown.CodeSliceToMarkdown(functionLines)
 						break
 					} else {
 						inExampleHandler = true

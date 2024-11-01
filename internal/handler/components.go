@@ -52,24 +52,24 @@ func GetComponentPage(c echo.Context) error {
 			},
 			{
 				Label:   "Templ",
-				Content: templ.Raw(markdown.GetHTMLFromMarkdown([]byte(exampleCode.CodeMarkdown))),
+				Content: templ.Raw(markdown.GetHTMLFromMarkdown([]byte(exampleCode.Code))),
 			},
 		}
-		if exampleCode.HandlerMarkdown != "" {
+		if exampleCode.Handler != "" {
 			tabs = append(
 				tabs,
 				model.Tab{
 					Label:   "Handler",
-					Content: templ.Raw(markdown.GetHTMLFromMarkdown([]byte(exampleCode.HandlerMarkdown))),
+					Content: templ.Raw(markdown.GetHTMLFromMarkdown([]byte(exampleCode.Handler))),
 				})
 		}
-		coms = append(coms, components.Tabs(fmt.Sprintf("%s-%d-tab", exampleCode.Name, i), tabs))
+		coms = append(coms, pages.ComponentExampleTabs(exampleCode.Description, components.Tabs(fmt.Sprintf("%s-%d-tab", exampleCode.Name, i), tabs)))
 	}
 
 	if isHXRequest(c) {
-		return render(c, http.StatusOK, pages.ComponentMain(componentCode.Label, componentCode.CodeMarkdown, coms))
+		return render(c, http.StatusOK, pages.ComponentMain(componentCode.Label, componentCode.Code, componentCode.Description, coms))
 	}
-	return render(c, http.StatusOK, pages.ComponentPage(componentCode.Label, componentCode.CodeMarkdown, coms))
+	return render(c, http.StatusOK, pages.ComponentPage(componentCode.Label, componentCode.Code, componentCode.Description, coms))
 }
 
 func GetComponentSearch(c echo.Context) error {

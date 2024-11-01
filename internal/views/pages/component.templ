@@ -5,19 +5,20 @@ import (
 	"github.com/haatos/goshipit/internal/views/scripts"
 )
 
-templ ComponentPage(name, code string, examples []templ.Component) {
+templ ComponentPage(name, code, description string, examples []templ.Component) {
 	@SideNavLayout(nil) {
-		@ComponentMain(name, code, examples)
+		@ComponentMain(name, code, description, examples)
 	}
 	@scripts.CodeCopyButtonScript()
 }
 
-templ ComponentMain(name string, code string, examples []templ.Component) {
+templ ComponentMain(name, code, description string, examples []templ.Component) {
 	<div class="w-full min-h-svh pt-8">
 		<section class="relative w-full !max-w-screen-lg">
 			<h1 class="text-4xl font-bold pb-8">
 				{ name }
 			</h1>
+			@templ.Raw(markdown.GetHTMLFromMarkdown([]byte(description)))
 			if code != "" {
 				<h2 class="text-2xl font-bold pt-12 pb-8">Code</h2>
 				<div class="relative w-full flex flex-col">
@@ -46,4 +47,9 @@ templ ComponentExampleCode(code string) {
 
 templ RawHTML(html string) {
 	@templ.Raw(html)
+}
+
+templ ComponentExampleTabs(description string, tabs templ.Component) {
+	@templ.Raw(markdown.GetHTMLFromMarkdown([]byte(description)))
+	@tabs
 }
