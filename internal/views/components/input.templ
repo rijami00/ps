@@ -38,11 +38,20 @@ templ Input(input model.Input) {
 				}
 				<input
 					{ input.Attrs... }
+					if input.ID != "" {
+						id={ input.ID }
+					}
 					name={ input.Name }
+					if input.Type != "" {
+						type={ input.Type }
+					} else {
+						type="text"
+					}
+					placeholder={ input.Placeholder }
 					class={
 						"w-full focus:!outline-none !appearance-none px-2",
+						input.Classes,
 						templ.KV("input-error", input.Err != ""),
-						templ.KV(input.Classes, input.Classes != ""),
 					}
 					value={ input.Value }
 					if input.Disabled {
@@ -71,7 +80,7 @@ templ Input(input model.Input) {
 			</div>
 			<span
 				id={ fmt.Sprintf("%s-error", input.Name) }
-				class="text-error h-3 text-xs"
+				class="text-error min-h-3 text-xs"
 			>
 				{ input.Err }
 			</span>

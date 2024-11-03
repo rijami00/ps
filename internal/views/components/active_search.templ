@@ -1,8 +1,10 @@
 // data_display
 package components
 
-import "fmt"
-import "github.com/haatos/goshipit/internal/model"
+import (
+	"fmt"
+	"github.com/haatos/goshipit/internal/model"
+)
 
 templ ActiveSearchInput(id, url, targetSelector string) {
 	<div class="w-full flex space-x-2 items-center">
@@ -19,13 +21,11 @@ templ ActiveSearchInput(id, url, targetSelector string) {
 			) {
 				@Input(
 					model.Input{
-						Icon: searchIcon(),
-						Name: "search",
-						Attrs: templ.Attributes{
-							"type":        "search",
-							"placeholder": "Search components...",
-						},
-						Classes: "input-sm !border-0 !outline-base-content/10 !placeholder-base-content/50 !bg-transparent",
+						Icon:        searchIcon(),
+						Name:        "search",
+						Type:        "search",
+						Placeholder: "Search components...",
+						Classes:     "input-sm !border-0 !outline-base-content/10 !placeholder-base-content/50 !bg-transparent",
 					},
 				)
 			}

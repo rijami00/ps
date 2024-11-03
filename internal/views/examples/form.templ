@@ -41,7 +41,6 @@ templ SignUpForm(
 					Value: firstName,
 					Err:   firstNameError,
 					Attrs: templ.Attributes{
-						"type":    "text",
 						"hx-post": "/validate/string/first_name?v=notempty",
 					},
 				},
@@ -53,7 +52,6 @@ templ SignUpForm(
 					Value: lastName,
 					Err:   lastNameError,
 					Attrs: templ.Attributes{
-						"type":    "text",
 						"hx-post": "/validate/string/last_name?v=notempty",
 					},
 				},
@@ -62,10 +60,10 @@ templ SignUpForm(
 				model.Input{
 					Label: "Email",
 					Name:  "email",
+					Type:  "email",
 					Value: email,
 					Err:   emailError,
 					Attrs: templ.Attributes{
-						"type":    "text",
 						"hx-post": "/validate/string/email?v=email",
 					},
 				},
@@ -74,17 +72,19 @@ templ SignUpForm(
 				model.Input{
 					Label: "Password",
 					Name:  "password",
+					Type:  "password",
 					Value: password,
 					Err:   passwordError,
 					Attrs: templ.Attributes{
-						"type":    "password",
 						"hx-post": "/validate/string/password?v=hasupper&v=haslower&v=hasdigit",
 					},
 				},
 			)
-			<button type="submit" class="w-full btn btn-primary mt-4">
-				Sign up
-			</button>
+			<div class="pt-4">
+				<button type="submit" class="w-full btn btn-primary">
+					Sign up
+				</button>
+			</div>
 		}
 	</div>
 }

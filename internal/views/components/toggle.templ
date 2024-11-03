@@ -15,6 +15,9 @@ templ Toggle(toggle model.Toggle) {
 			<input
 				{ toggle.Attrs... }
 				type="checkbox"
+				if toggle.ID != "" {
+					id={ toggle.ID }
+				}
 				name={ toggle.Name }
 				class={ "toggle", toggle.Class }
 				if toggle.Checked {

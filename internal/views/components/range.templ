@@ -19,6 +19,9 @@ templ Range(r model.Range) {
 			}
 			<input
 				type="range"
+				if r.ID != "" {
+					id={ r.ID }
+				}
 				name={ r.Name }
 				min={ fmt.Sprintf("%d", r.Min) }
 				max={ fmt.Sprintf("%d", r.Max) }

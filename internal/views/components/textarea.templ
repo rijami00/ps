@@ -13,6 +13,9 @@ templ Textarea(textarea model.Textarea) {
 		</div>
 		<textarea
 			{ textarea.Attrs... }
+			if textarea.ID != "" {
+				id={ textarea.ID }
+			}
 			name={ textarea.Name }
 			class={
 				"textarea textarea-bordered resize-none",

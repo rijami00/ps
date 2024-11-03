@@ -45,6 +45,7 @@ type ChatMessage struct {
 }
 
 type Checkbox struct {
+	ID      string
 	Label   string
 	Name    string
 	Checked bool
@@ -85,11 +86,13 @@ type Image struct {
 }
 
 type Input struct {
+	ID              string
+	Type            string // defaults to "text"
 	Label           string
 	Name            string
 	Value           string
+	Placeholder     string
 	Err             string
-	Small           bool
 	Attrs           templ.Attributes
 	Classes         string
 	Icon            templ.Component
@@ -117,6 +120,7 @@ type Price struct {
 }
 
 type Range struct {
+	ID    string
 	Label string
 	Name  string
 	Value int
@@ -139,16 +143,8 @@ type Script struct {
 	Defer  bool
 }
 
-type Section struct {
-	Title        string
-	Description  string
-	Source       string
-	Alt          string
-	CallToAction Button
-	Reverse      bool
-}
-
 type Select struct {
+	ID      string
 	Label   string
 	Name    string
 	Options []SelectOption
@@ -188,6 +184,7 @@ type Testimonial struct {
 }
 
 type Textarea struct {
+	ID    string
 	Label string
 	Name  string
 	Value string
@@ -210,6 +207,7 @@ type Toast struct {
 }
 
 type Toggle struct {
+	ID        string
 	Before    string
 	After     string
 	Name      string

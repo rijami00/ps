@@ -10,6 +10,9 @@ templ Checkbox(checkbox model.Checkbox) {
 		</span>
 		<input
 			{ checkbox.Attrs... }
+			if checkbox.ID != "" {
+				id={ checkbox.ID }
+			}
 			type="checkbox"
 			name={ checkbox.Name }
 			if checkbox.Checked {

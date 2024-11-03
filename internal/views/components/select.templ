@@ -13,6 +13,9 @@ templ Select(s model.Select) {
 			</div>
 		}
 		<select
+			if s.ID != "" {
+				id={ s.ID }
+			}
 			name={ s.Name }
 			class="select select-bordered"
 			{ s.Attrs... }
