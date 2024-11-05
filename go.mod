@@ -4,7 +4,7 @@ go 1.23.2
 
 require (
 	github.com/PuerkitoBio/goquery v1.10.0
-	github.com/a-h/templ v0.2.778
+	github.com/a-h/templ v0.2.793
 	github.com/alecthomas/chroma v0.10.0
 	github.com/labstack/echo/v4 v4.12.0
 	github.com/labstack/gommon v0.4.2

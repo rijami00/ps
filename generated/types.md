@@ -185,14 +185,15 @@ type Testimonial struct {
 }
 
 type Textarea struct {
-	ID    string
-	Label string
-	Name  string
-	Value string
-	Rows  int
-	Err   string
-	Class string
-	Attrs templ.Attributes
+	ID          string
+	Label       string
+	Name        string
+	Placeholder string
+	Value       string
+	Rows        int
+	Err         string
+	Class       string
+	Attrs       templ.Attributes
 }
 
 type TimelineItem struct {
