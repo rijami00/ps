@@ -5,7 +5,7 @@ deploy:
 	go build -ldflags "-s -w" -o bin/main cmd/server/main.go
 	scp -r 'content' $(user)@$(ip):/opt/goshipit/
 	scp -r 'generated' $(user)@$(ip):/opt/goshipit/
-	scp -r 'static' $(user)@$(ip):/opt/goshipit/
+	scp -r 'public' $(user)@$(ip):/opt/goshipit/
 	ssh $(user)@$(ip) "sudo service goshipit stop"
 	scp 'bin/main' $(user)@$(ip):/opt/goshipit/
 	ssh $(user)@$(ip) "sudo service goshipit start"
