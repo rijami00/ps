@@ -31,7 +31,7 @@ func main() {
 		}),
 	)
 
-	e.Static("/", "static")
+	e.Static("/", "public")
 
 	e.GET("/", handler.GetIndexPage)
 	e.GET("/about", handler.GetAboutPage)

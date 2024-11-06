@@ -1,5 +1,5 @@
 deploy:
-	npx tailwindcss -o ./static/css/tw.css --minify
+	npx tailwindcss -o ./public/static/css/tw.css --minify
 	go run cmd/generate/main.go
 	templ generate
 	go build -ldflags "-s -w" -o bin/main cmd/server/main.go
@@ -14,7 +14,7 @@ gen:
 	go run cmd/generate/main.go
 
 tw:
-	@npx tailwindcss -i input.css -o static/css/tw.css --watch
+	@npx tailwindcss -i input.css -o public/static/css/tw.css --watch
 
 dev: gen
 	@templ generate -watch -proxyport=7332 -proxy="http://localhost:8080" -open-browser=false -cmd="go run cmd/server/main.go"

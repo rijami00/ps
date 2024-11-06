@@ -5,4 +5,4 @@
 bin/
 node_modules/
 package-lock.json
-static/css/tw.css
+public/static/css/tw.css

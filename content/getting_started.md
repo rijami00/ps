@@ -37,7 +37,7 @@ module.exports = {
 - Create `Makefile` at the base of your project with the following contents:
 ```make
 tw:
-	@npx tailwindcss -i input.css -o static/css/tw.css --watch
+	@npx tailwindcss -i input.css -o public/static/css/tw.css --watch
 
 dev:
 	@templ generate -watch -proxy="http://localhost:8080" -open-browser=false -cmd="go run main.go"
@@ -62,7 +62,7 @@ var staticFS embed.FS
 func main() {
 	e := echo.New()
 
-	e.Static("/", "static")
+	e.Static("/", "public")
 
 	e.GET("/", func(c echo.Context) error {
 		buf := templ.GetBuffer()
@@ -100,7 +100,7 @@ templ AccordionExample() {
 		<head>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<link rel="stylesheet" type="text/css" href="/css/tw.css"/>
+			<link rel="stylesheet" type="text/css" href="/static/css/tw.css"/>
 			<title>Document</title>
 		</head>
 		<body class="w-full h-full min-h-svh">
