@@ -102,7 +102,7 @@
   "diff": [
     {
       "name": "ImageDiff",
-      "code": "```go\ntempl ImageDiff() {\n\t\u003cdiv class=\"flex mx-auto pt-4 min-h-[240px] sm:min-h-[300px] lg:min-h-[480px]\"\u003e\n\t\t@components.Diff(\n\t\t\t16,\n\t\t\t19,\n\t\t\tmodel.Image{Source: \"/images/diff1.png\", Alt: \"diff image 1\"},\n\t\t\tmodel.Image{Source: \"/images/diff2.png\", Alt: \"diff image 2\"},\n\t\t)\n\t\u003c/div\u003e\n}\n```"
+      "code": "```go\ntempl ImageDiff() {\n\t\u003cdiv class=\"flex mx-auto pt-4 min-h-[240px] sm:min-h-[300px] lg:min-h-[480px]\"\u003e\n\t\t@components.Diff(\n\t\t\t16,\n\t\t\t19,\n\t\t\tmodel.Image{Source: \"/static/images/diff1.png\", Alt: \"diff image 1\"},\n\t\t\tmodel.Image{Source: \"/static/images/diff2.png\", Alt: \"diff image 2\"},\n\t\t)\n\t\u003c/div\u003e\n}\n```"
     }
   ],
   "drawer": [

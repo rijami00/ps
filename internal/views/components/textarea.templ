@@ -8,9 +8,11 @@ import (
 
 templ Textarea(textarea model.Textarea) {
 	<label class="form-control">
-		<div class="label">
-			<span class="label-text">{ textarea.Label }</span>
-		</div>
+		if textarea.Label != "" {
+			<div class="label">
+				<span class="label-text">{ textarea.Label }</span>
+			</div>
+		}
 		<textarea
 			{ textarea.Attrs... }
 			if textarea.ID != "" {
@@ -20,8 +22,8 @@ templ Textarea(textarea model.Textarea) {
 			placeholder={ textarea.Placeholder }
 			class={
 				"textarea textarea-bordered resize-none",
-				templ.KV("textarea-error", textarea.Err != ""),
 				textarea.Class,
+				templ.KV("textarea-error", textarea.Err != ""),
 			}
 			if textarea.Rows > 0 {
 				rows={ fmt.Sprintf("%d", textarea.Rows) }
