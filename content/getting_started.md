@@ -18,7 +18,7 @@ To get started with goship.it in a new project using *Echo* router:
 - Configure `tailwind.config.js`, which the previous command generated, to look like this:
 ```javascript
 module.exports = {
-	content: ["views/**/*.templ"],
+	content: ["internal/views/**/*.templ"],
 	theme: {
 		extend: {},
 	},
@@ -51,13 +51,10 @@ import (
 	"log"
 	"net/http"
 
-	"<your project>/views/components"
+	"<your project>/internal/views/components"
 
 	"github.com/labstack/echo/v4"
 )
-
-//go:embed static/**
-var staticFS embed.FS
 
 func main() {
 	e := echo.New()
@@ -80,7 +77,7 @@ func main() {
 }
 
 ```
-- Create the accordion component `views/components/accordion.templ`:
+- Create the accordion component `internal/views/components/accordion.templ`:
 ```go
 package components
 
@@ -119,7 +116,7 @@ templ AccordionExample() {
 }
 ```
 
-At this point, the filetree of your project should look like this:
+At this point, the filetree of your project should look something like this:
 
 ```sh
 .
@@ -127,13 +124,17 @@ At this point, the filetree of your project should look like this:
 ├── go.mod
 ├── go.sum
 ├── input.css
+├── internal
+│   └── views
 ├── main.go
 ├── node_modules
 ├── package-lock.json
 ├── package.json
-├── static
-├── tailwind.config.js
-└── views
+├── public
+│   └── static
+│       └── css
+│           └── tw.css
+└── tailwind.config.js
 ```
 
 If you are using VSCode as your IDE, you should also add a `.vscode/settings.json` with the following contents (or place these settings in some other VSCode configuration file):
