@@ -30,8 +30,9 @@ templ FileInput(input model.Input) {
 					type="file"
 					name={ input.Name }
 					class={
-						"w-full file-input file-input-bordered",
+						"w-full file-input",
 						templ.KV("input-error", input.Err != ""),
+						input.Class,
 					}
 					value={ input.Value }
 				/>

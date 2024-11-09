@@ -24,7 +24,7 @@ templ ChatMessage(message model.ChatMessage) {
 			{ message.Sender }
 			<time class="text-xs opacity-50">{ message.Time }</time>
 		</div>
-		<div class={ "chat-bubble", message.Classes }>
+		<div class={ "chat-bubble", message.Class }>
 			{ message.Message }
 		</div>
 		<div class="chat-footer">

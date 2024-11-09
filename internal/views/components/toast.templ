@@ -4,8 +4,8 @@ package components
 import "github.com/haatos/goshipit/internal/model"
 
 templ Toast(toast model.Toast) {
-	<div name={ toast.Name } class={ "toast", toast.ToastClasses }>
-		<div class={ "alert", toast.AlertClasses }>
+	<div name={ toast.Name } class={ "toast", toast.ToastClass }>
+		<div class={ "alert", toast.AlertClass }>
 			{ children... }
 		</div>
 	</div>
@@ -14,9 +14,9 @@ templ Toast(toast model.Toast) {
 templ ToastErrorConfirm(errs ...string) {
 	@Toast(
 		model.Toast{
-			Name:         "toast-error",
-			ToastClasses: "toast-top toast-center",
-			AlertClasses: "alert-error",
+			Name:       "toast-error",
+			ToastClass: "toast-top toast-center",
+			AlertClass: "alert-error",
 		},
 	) {
 		<svg
@@ -46,9 +46,9 @@ templ ToastErrorConfirm(errs ...string) {
 templ HXToastInfoFade(messages ...string) {
 	@Toast(
 		model.Toast{
-			Name:         "toast-info",
-			ToastClasses: "toast-bottom toast-end w-full max-w-xs",
-			AlertClasses: "alert-info w-full max-w-xs space-x-4",
+			Name:       "toast-info",
+			ToastClass: "toast-bottom toast-end w-full max-w-xs",
+			AlertClass: "alert-info w-full max-w-xs space-x-4",
 		},
 	) {
 		<svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

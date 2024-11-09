@@ -12,6 +12,7 @@ templ BasicTextarea() {
 			model.Textarea{
 				Label: "Description",
 				Name:  "description",
+				Class: "textarea-bordered resize-none",
 			},
 		)
 	</div>
@@ -25,6 +26,7 @@ templ BasicTextareaWithError() {
 				Label: "Description",
 				Name:  "description",
 				Err:   "Description cannot be empty",
+				Class: "textarea-bordered resize-none",
 			},
 		)
 	</div>

@@ -21,7 +21,7 @@ templ Textarea(textarea model.Textarea) {
 			name={ textarea.Name }
 			placeholder={ textarea.Placeholder }
 			class={
-				"textarea textarea-bordered resize-none",
+				"textarea",
 				textarea.Class,
 				templ.KV("textarea-error", textarea.Err != ""),
 			}

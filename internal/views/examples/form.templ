@@ -43,6 +43,7 @@ templ SignUpForm(
 					Attrs: templ.Attributes{
 						"hx-post": "/validate/string/first_name?v=notempty",
 					},
+					Class: "input-bordered",
 				},
 			)
 			@components.Input(
@@ -54,6 +55,7 @@ templ SignUpForm(
 					Attrs: templ.Attributes{
 						"hx-post": "/validate/string/last_name?v=notempty",
 					},
+					Class: "input-bordered",
 				},
 			)
 			@components.Input(
@@ -66,6 +68,7 @@ templ SignUpForm(
 					Attrs: templ.Attributes{
 						"hx-post": "/validate/string/email?v=email",
 					},
+					Class: "input-bordered",
 				},
 			)
 			@components.Input(
@@ -78,6 +81,7 @@ templ SignUpForm(
 					Attrs: templ.Attributes{
 						"hx-post": "/validate/string/password?v=hasupper&v=haslower&v=hasdigit",
 					},
+					Class: "input-bordered",
 				},
 			)
 			<div class="pt-4">

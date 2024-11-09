@@ -13,6 +13,7 @@ templ BasicTextInput() {
 				Label:       "Name",
 				Name:        "name",
 				Placeholder: "Your name...",
+				Class:       "input-bordered",
 			},
 		)
 	</div>
@@ -27,6 +28,7 @@ templ PasswordInput() {
 				Name:        "password",
 				Type:        "password",
 				Placeholder: "Password...",
+				Class:       "input-bordered",
 			},
 		)
 	</div>
@@ -43,6 +45,7 @@ templ EmailInput() {
 				Value:       "not@a.valid@email.com",
 				Placeholder: "Email...",
 				Err:         "Please provide a valid email",
+				Class:       "input-bordered",
 			},
 		)
 	</div>
@@ -57,6 +60,7 @@ templ DisabledInput() {
 				Name:            "name",
 				Disabled:        true,
 				DisabledMessage: "This is disabled",
+				Class:           "input-bordered",
 			},
 		)
 	</div>

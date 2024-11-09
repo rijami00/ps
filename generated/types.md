@@ -48,7 +48,7 @@ type ChatMessage struct {
 	Message   string
 	Footer    string
 	Location  string
-	Classes   string
+	Class     string
 }
 
 type Checkbox struct {
@@ -101,7 +101,7 @@ type Input struct {
 	Placeholder     string
 	Err             string
 	Attrs           templ.Attributes
-	Classes         string
+	Class           string
 	Icon            templ.Component
 	Disabled        bool
 	DisabledMessage string
@@ -156,6 +156,7 @@ type Select struct {
 	Name    string
 	Options []SelectOption
 	Attrs   templ.Attributes
+	Class   string
 }
 
 type SelectOption struct {
@@ -209,9 +210,9 @@ type TimelineItem struct {
 }
 
 type Toast struct {
-	Name         string
-	ToastClasses string
-	AlertClasses string
+	Name       string
+	ToastClass string
+	AlertClass string
 }
 
 type Toggle struct {

@@ -21,11 +21,12 @@ templ Input(input model.Input) {
 			}
 			<div
 				class={
-					"relative input input-bordered !px-0 bg-transparent w-full flex items-center flex-grow",
+					"relative input !px-0 bg-transparent w-full flex items-center flex-grow",
 					templ.KV("!pl-3", input.Icon != nil),
 					templ.KV("input-error", input.Err != ""),
 					templ.KV("pb-1", input.Label != ""),
 					templ.KV("tooltip tooltip-top", input.DisabledMessage != ""),
+					input.Class,
 				}
 				if input.Disabled && input.DisabledMessage != "" {
 					data-tip={ input.DisabledMessage }
@@ -50,7 +51,6 @@ templ Input(input model.Input) {
 					placeholder={ input.Placeholder }
 					class={
 						"w-full focus:!outline-none !appearance-none px-2",
-						input.Classes,
 						templ.KV("input-error", input.Err != ""),
 					}
 					value={ input.Value }

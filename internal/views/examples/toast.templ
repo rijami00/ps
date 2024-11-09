@@ -10,9 +10,9 @@ templ InfoToast() {
 	<div class="relative min-h-60">
 		@components.Toast(
 			model.Toast{
-				Name:         "info-toast",
-				ToastClasses: "absolute toast-end toast-top",
-				AlertClasses: "alert-info",
+				Name:       "info-toast",
+				ToastClass: "absolute toast-end toast-top",
+				AlertClass: "alert-info",
 			},
 		) {
 			<span>Info toast</span>
@@ -25,9 +25,9 @@ templ WarningToast() {
 	<div class="relative min-h-60">
 		@components.Toast(
 			model.Toast{
-				Name:         "warning-toast",
-				ToastClasses: "absolute toast-end toast-bottom",
-				AlertClasses: "alert-warning",
+				Name:       "warning-toast",
+				ToastClass: "absolute toast-end toast-bottom",
+				AlertClass: "alert-warning",
 			},
 		) {
 			<span>Warning toast</span>
@@ -40,9 +40,9 @@ templ ErrorToast() {
 	<div class="relative min-h-60">
 		@components.Toast(
 			model.Toast{
-				Name:         "error-toast",
-				ToastClasses: "absolute toast-center toast-top",
-				AlertClasses: "alert-error",
+				Name:       "error-toast",
+				ToastClass: "absolute toast-center toast-top",
+				AlertClass: "alert-error",
 			},
 		) {
 			<span>Error toast</span>
@@ -54,9 +54,9 @@ templ ErrorToast() {
 templ InfoToastConfirm() {
 	<div class="relative min-h-60">
 		@components.Toast(model.Toast{
-			Name:         "error-toast",
-			ToastClasses: "absolute toast-end toast-top",
-			AlertClasses: "alert-info",
+			Name:       "error-toast",
+			ToastClass: "absolute toast-end toast-top",
+			AlertClass: "alert-info",
 		},
 		) {
 			<span>Info toast</span>

@@ -17,7 +17,10 @@ templ Select(s model.Select) {
 				id={ s.ID }
 			}
 			name={ s.Name }
-			class="select select-bordered"
+			class={
+				"select",
+				s.Class,
+			}
 			{ s.Attrs... }
 		>
 			@SelectOptions(s.Options)
