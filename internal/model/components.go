@@ -60,7 +60,8 @@ type ChatMessage struct {
 
 type Checkbox struct {
 	ID      string
-	Label   string
+	Before  string
+	After   string
 	Name    string
 	Checked bool
 	Class   string

@@ -94,7 +94,7 @@
   "data_input": [
     {
       "name": "checkbox",
-      "code": "```go\ntempl Checkbox(checkbox model.Checkbox) {\n\t\u003clabel class=\"label cursor-pointer space-x-2\"\u003e\n\t\t\u003cspan class=\"label-text\"\u003e\n\t\t\t{ checkbox.Label }\n\t\t\u003c/span\u003e\n\t\t\u003cinput\n\t\t\t{ checkbox.Attrs... }\n\t\t\tif checkbox.ID != \"\" {\n\t\t\t\tid={ checkbox.ID }\n\t\t\t}\n\t\t\ttype=\"checkbox\"\n\t\t\tname={ checkbox.Name }\n\t\t\tif checkbox.Checked {\n\t\t\t\tchecked=\"checked\"\n\t\t\t}\n\t\t\tclass={ \"checkbox\", checkbox.Class }\n\t\t/\u003e\n\t\u003c/label\u003e\n}\n```"
+      "code": "```go\ntempl Checkbox(checkbox model.Checkbox) {\n\t\u003clabel class=\"label justify-center cursor-pointer space-x-4\"\u003e\n\t\tif checkbox.Before != \"\" {\n\t\t\t\u003cspan class=\"label-text\"\u003e\n\t\t\t\t{ checkbox.Before }\n\t\t\t\u003c/span\u003e\n\t\t}\n\t\t\u003cinput\n\t\t\t{ checkbox.Attrs... }\n\t\t\tif checkbox.ID != \"\" {\n\t\t\t\tid={ checkbox.ID }\n\t\t\t}\n\t\t\ttype=\"checkbox\"\n\t\t\tname={ checkbox.Name }\n\t\t\tif checkbox.Checked {\n\t\t\t\tchecked=\"checked\"\n\t\t\t}\n\t\t\tclass={ \"checkbox\", checkbox.Class }\n\t\t/\u003e\n\t\tif checkbox.After != \"\" {\n\t\t\t\u003cspan class=\"label-text\"\u003e\n\t\t\t\t{ checkbox.After }\n\t\t\t\u003c/span\u003e\n\t\t}\n\t\u003c/label\u003e\n}\n```"
     },
     {
       "name": "combobox",

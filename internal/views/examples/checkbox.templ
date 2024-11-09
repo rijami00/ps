@@ -6,11 +6,15 @@ import (
 )
 
 // example
+/*
+Label before checkbox.
+*/
+
 templ DefaultCheckbox() {
-	<div class="max-w-xs mx-auto pt-4">
+	<div class="mx-auto pt-4">
 		@components.Checkbox(
 			model.Checkbox{
-				Label:   "Remember me",
+				Before:  "Remember me",
 				Name:    "remember_me",
 				Checked: false,
 			},
@@ -19,11 +23,15 @@ templ DefaultCheckbox() {
 }
 
 // example
+/*
+Label after checkbox.
+*/
+
 templ PrimaryCheckbox() {
-	<div class="max-w-xs mx-auto pt-4">
+	<div class="mx-auto pt-4">
 		@components.Checkbox(
 			model.Checkbox{
-				Label:   "Remember me",
+				After:   "Remember me",
 				Name:    "remember_me",
 				Checked: true,
 				Class:   "checkbox-primary",

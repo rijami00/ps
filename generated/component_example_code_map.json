@@ -88,11 +88,13 @@
   "checkbox": [
     {
       "name": "DefaultCheckbox",
-      "code": "```go\ntempl DefaultCheckbox() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.Checkbox(\n\t\t\tmodel.Checkbox{\n\t\t\t\tLabel:   \"Remember me\",\n\t\t\t\tName:    \"remember_me\",\n\t\t\t\tChecked: false,\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\n\ntempl DefaultCheckbox() {\n\t\u003cdiv class=\"mx-auto pt-4\"\u003e\n\t\t@components.Checkbox(\n\t\t\tmodel.Checkbox{\n\t\t\t\tBefore:  \"Remember me\",\n\t\t\t\tName:    \"remember_me\",\n\t\t\t\tChecked: false,\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```",
+      "description": "Label before checkbox."
     },
     {
       "name": "PrimaryCheckbox",
-      "code": "```go\ntempl PrimaryCheckbox() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.Checkbox(\n\t\t\tmodel.Checkbox{\n\t\t\t\tLabel:   \"Remember me\",\n\t\t\t\tName:    \"remember_me\",\n\t\t\t\tChecked: true,\n\t\t\t\tClass:   \"checkbox-primary\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n```"
+      "code": "```go\n\ntempl PrimaryCheckbox() {\n\t\u003cdiv class=\"mx-auto pt-4\"\u003e\n\t\t@components.Checkbox(\n\t\t\tmodel.Checkbox{\n\t\t\t\tAfter:   \"Remember me\",\n\t\t\t\tName:    \"remember_me\",\n\t\t\t\tChecked: true,\n\t\t\t\tClass:   \"checkbox-primary\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n```",
+      "description": "Label after checkbox."
     }
   ],
   "collapse": [

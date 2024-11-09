@@ -4,10 +4,12 @@ package components
 import "github.com/haatos/goshipit/internal/model"
 
 templ Checkbox(checkbox model.Checkbox) {
-	<label class="label cursor-pointer space-x-2">
-		<span class="label-text">
-			{ checkbox.Label }
-		</span>
+	<label class="label justify-center cursor-pointer space-x-4">
+		if checkbox.Before != "" {
+			<span class="label-text">
+				{ checkbox.Before }
+			</span>
+		}
 		<input
 			{ checkbox.Attrs... }
 			if checkbox.ID != "" {
@@ -20,5 +22,10 @@ templ Checkbox(checkbox model.Checkbox) {
 			}
 			class={ "checkbox", checkbox.Class }
 		/>
+		if checkbox.After != "" {
+			<span class="label-text">
+				{ checkbox.After }
+			</span>
+		}
 	</label>
 }
