@@ -1,8 +1,14 @@
 {
   "accordion": [
     {
-      "name": "AccordionExample",
-      "code": "```go\ntempl AccordionExample() {\n\t\u003cdiv class=\"w-full flex join join-vertical pt-4\"\u003e\n\t\t@components.AccordionRow(\"Label 1\") {\n\t\t\t\u003cp class=\"pt-4\"\u003eLabel 1 content\u003c/p\u003e\n\t\t}\n\t\t@components.AccordionRow(\"Label 2\") {\n\t\t\t\u003ch2 class=\"text-xl font-bold py-4\"\u003eContent 2\u003c/h2\u003e\n\t\t\t\u003cp\u003eLabel 2 content\u003c/p\u003e\n\t\t}\n\t\t@components.AccordionRow(\"Label 3\") {\n\t\t\t\u003ch2 class=\"text-xl font-bold py-4\"\u003eContent 3\u003c/h2\u003e\n\t\t\t\u003cul class=\"list-disc [\u0026\u003eli]:ml-4\"\u003e\n\t\t\t\t\u003cli\u003eItem 1\u003c/li\u003e\n\t\t\t\t\u003cli\u003eItem 2\u003c/li\u003e\n\t\t\t\t\u003cli\u003eItem 3\u003c/li\u003e\n\t\t\t\u003c/ul\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n```"
+      "name": "AccordionWithCheckbox",
+      "code": "```go\n\ntempl AccordionWithCheckbox() {\n\t\u003cdiv class=\"w-full flex join join-vertical pt-4\"\u003e\n\t\t@components.AccordionRow(model.Accordion{Label: \"Label 1\", Name: \"accordion-example-1\"}) {\n\t\t\t\u003cp class=\"pt-4\"\u003eLabel 1 content\u003c/p\u003e\n\t\t}\n\t\t@components.AccordionRow(model.Accordion{Label: \"Label 2\", Name: \"accordion-example-2\"}) {\n\t\t\t\u003ch2 class=\"text-xl font-bold py-4\"\u003eContent 2\u003c/h2\u003e\n\t\t\t\u003cp\u003eLabel 2 content\u003c/p\u003e\n\t\t}\n\t\t@components.AccordionRow(model.Accordion{Label: \"Label 3\", Name: \"accordion-example-3\"}) {\n\t\t\t\u003ch2 class=\"text-xl font-bold py-4\"\u003eContent 3\u003c/h2\u003e\n\t\t\t\u003cul class=\"list-disc [\u0026\u003eli]:ml-4\"\u003e\n\t\t\t\t\u003cli\u003eItem 1\u003c/li\u003e\n\t\t\t\t\u003cli\u003eItem 2\u003c/li\u003e\n\t\t\t\t\u003cli\u003eItem 3\u003c/li\u003e\n\t\t\t\u003c/ul\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n\n```",
+      "description": "Accordion with input type 'checkbox': multiple rows can be open at a time."
+    },
+    {
+      "name": "AccordionWithRadio",
+      "code": "```go\n\ntempl AccordionWithRadio() {\n\t\u003cdiv class=\"w-full flex join join-vertical pt-4\"\u003e\n\t\t@components.AccordionRow(model.Accordion{Label: \"Label 1\", Name: \"accordion-example-2\", Type: \"radio\"}) {\n\t\t\t\u003cp class=\"pt-4\"\u003eLabel 1 content\u003c/p\u003e\n\t\t}\n\t\t@components.AccordionRow(model.Accordion{Label: \"Label 2\", Name: \"accordion-example-2\", Type: \"radio\"}) {\n\t\t\t\u003ch2 class=\"text-xl font-bold py-4\"\u003eContent 2\u003c/h2\u003e\n\t\t\t\u003cp\u003eLabel 2 content\u003c/p\u003e\n\t\t}\n\t\t@components.AccordionRow(model.Accordion{Label: \"Label 3\", Name: \"accordion-example-2\", Type: \"radio\"}) {\n\t\t\t\u003ch2 class=\"text-xl font-bold py-4\"\u003eContent 3\u003c/h2\u003e\n\t\t\t\u003cul class=\"list-disc [\u0026\u003eli]:ml-4\"\u003e\n\t\t\t\t\u003cli\u003eItem 1\u003c/li\u003e\n\t\t\t\t\u003cli\u003eItem 2\u003c/li\u003e\n\t\t\t\t\u003cli\u003eItem 3\u003c/li\u003e\n\t\t\t\u003c/ul\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n```",
+      "description": "Accordion with input type 'radio': only a single row can be open at a time."
     }
   ],
   "active_search": [

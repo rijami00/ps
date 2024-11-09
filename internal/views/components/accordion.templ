@@ -1,11 +1,20 @@
 // data_display
 package components
 
-templ AccordionRow(label string) {
-	<div class="collapse collapse-arrow bg-base-200 join-item">
-		<input type="checkbox" name="templ-accordion"/>
-		<div class="collapse-title text-xl font-medium">{ label }</div>
-		<div class="collapse-content bg-base-300">
+import "github.com/haatos/goshipit/internal/model"
+
+templ AccordionRow(a model.Accordion) {
+	<div class="collapse collapse-arrow bg-base-300 join-item">
+		<input
+			if a.Type == "" {
+				type="checkbox"
+			} else {
+				type={ a.Type }
+			}
+			name={ a.Name }
+		/>
+		<div class="collapse-title text-xl font-medium">{ a.Label }</div>
+		<div class="collapse-content bg-base-200">
 			{ children... }
 		</div>
 	</div>

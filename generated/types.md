@@ -5,6 +5,12 @@ import (
 	"github.com/a-h/templ"
 )
 
+type Accordion struct {
+	Label string
+	Type  string
+	Name  string
+}
+
 type Anchor struct {
 	Href  string
 	Label string

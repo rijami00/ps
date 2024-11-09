@@ -6,7 +6,8 @@ import (
 )
 
 var ExampleComponents = map[string]templ.Component{
-	"AccordionExample":           examples.AccordionExample(),
+	"AccordionWithCheckbox":      examples.AccordionWithCheckbox(),
+	"AccordionWithRadio":         examples.AccordionWithRadio(),
 	"ActiveSearchExampleTable":   examples.ActiveSearchExampleTable(),
 	"AlertInfoExample":           examples.AlertInfoExample(),
 	"AlertSuccessExample":        examples.AlertSuccessExample(),

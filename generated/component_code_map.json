@@ -16,7 +16,7 @@
   "data_display": [
     {
       "name": "accordion",
-      "code": "```go\ntempl AccordionRow(label string) {\n\t\u003cdiv class=\"collapse collapse-arrow bg-base-200 join-item\"\u003e\n\t\t\u003cinput type=\"checkbox\" name=\"templ-accordion\"/\u003e\n\t\t\u003cdiv class=\"collapse-title text-xl font-medium\"\u003e{ label }\u003c/div\u003e\n\t\t\u003cdiv class=\"collapse-content bg-base-300\"\u003e\n\t\t\t{ children... }\n\t\t\u003c/div\u003e\n\t\u003c/div\u003e\n}\n```"
+      "code": "```go\ntempl AccordionRow(a model.Accordion) {\n\t\u003cdiv class=\"collapse collapse-arrow bg-base-300 join-item\"\u003e\n\t\t\u003cinput\n\t\t\tif a.Type == \"\" {\n\t\t\t\ttype=\"checkbox\"\n\t\t\t} else {\n\t\t\t\ttype={ a.Type }\n\t\t\t}\n\t\t\tname={ a.Name }\n\t\t/\u003e\n\t\t\u003cdiv class=\"collapse-title text-xl font-medium\"\u003e{ a.Label }\u003c/div\u003e\n\t\t\u003cdiv class=\"collapse-content bg-base-200\"\u003e\n\t\t\t{ children... }\n\t\t\u003c/div\u003e\n\t\u003c/div\u003e\n}\n```"
     },
     {
       "name": "active_search",
