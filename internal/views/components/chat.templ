@@ -18,7 +18,7 @@ templ ChatMessage(message model.ChatMessage) {
 		}
 	>
 		if message.AvatarURL != "" {
-			@Avatar(message.AvatarURL, "chat-image w-10 rounded-full")
+			@Avatar(model.Avatar{ContainerClass: "chat-image w-10 rounded-full", Source: message.AvatarURL})
 		}
 		<div class="chat-header">
 			{ message.Sender }

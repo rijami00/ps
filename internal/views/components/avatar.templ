@@ -1,36 +1,26 @@
 // data_display
 package components
 
-templ Avatar(src, classes string) {
-	<div class={ "avatar", classes }>
-		<div class={ "rounded", classes }>
-			<img class="block" src={ src }/>
+import "github.com/haatos/goshipit/internal/model"
+
+templ Avatar(a model.Avatar) {
+	<div class={ "avatar", a.AvatarClass }>
+		<div class={ a.ContainerClass }>
+			<img src={ a.Source }/>
+			if a.Placeholder != "" {
+				<span class={ a.PlaceholderClass }>{ a.Placeholder }</span>
+			}
 		</div>
 	</div>
 }
 
-templ AvatarXS(src string) {
-	@Avatar(src, "w-8")
-}
-
-templ AvatarSM(src string) {
-	@Avatar(src, "w-12")
-}
-
-templ AvatarLG(src string) {
-	@Avatar(src, "w-16")
-}
-
-templ AvatarXL(src string) {
-	@Avatar(src, "w-20")
-}
-
-templ AvatarXXL(src string) {
-	@Avatar(src, "w-24")
-}
-
-templ AvatarGroup() {
-	<div class="avatar-group -space-x-6 rtl:space-x-reverse">
+templ AvatarGroup(class string) {
+	<div
+		class={
+			"avatar-group rtl:space-x-reverse",
+			class,
+		}
+	>
 		{ children... }
 	</div>
 }

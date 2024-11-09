@@ -14,6 +14,8 @@ var ExampleComponents = map[string]templ.Component{
 	"AlertWarningExample":        examples.AlertWarningExample(),
 	"AlertErrorExample":          examples.AlertErrorExample(),
 	"MultipleAvatarSizes":        examples.MultipleAvatarSizes(),
+	"GroupOfAvatars":             examples.GroupOfAvatars(),
+	"OnlineAndOffline":           examples.OnlineAndOffline(),
 	"BannerExample":              examples.BannerExample(),
 	"BreadcrumbsExample":         examples.BreadcrumbsExample(),
 	"BasicCard":                  examples.BasicCard(),

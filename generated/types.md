@@ -18,6 +18,14 @@ type Anchor struct {
 	Attrs templ.Attributes
 }
 
+type Avatar struct {
+	AvatarClass      string
+	ContainerClass   string
+	Source           string
+	Placeholder      string
+	PlaceholderClass string
+}
+
 type Banner struct {
 	Title                 templ.Component
 	Description           string

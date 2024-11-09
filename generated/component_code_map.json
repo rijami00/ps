@@ -24,7 +24,7 @@
     },
     {
       "name": "avatar",
-      "code": "```go\ntempl Avatar(src, classes string) {\n\t\u003cdiv class={ \"avatar\", classes }\u003e\n\t\t\u003cdiv class={ \"rounded\", classes }\u003e\n\t\t\t\u003cimg class=\"block\" src={ src }/\u003e\n\t\t\u003c/div\u003e\n\t\u003c/div\u003e\n}\n\ntempl AvatarXS(src string) {\n\t@Avatar(src, \"w-8\")\n}\n\ntempl AvatarSM(src string) {\n\t@Avatar(src, \"w-12\")\n}\n\ntempl AvatarLG(src string) {\n\t@Avatar(src, \"w-16\")\n}\n\ntempl AvatarXL(src string) {\n\t@Avatar(src, \"w-20\")\n}\n\ntempl AvatarXXL(src string) {\n\t@Avatar(src, \"w-24\")\n}\n\ntempl AvatarGroup() {\n\t\u003cdiv class=\"avatar-group -space-x-6 rtl:space-x-reverse\"\u003e\n\t\t{ children... }\n\t\u003c/div\u003e\n}\n```"
+      "code": "```go\ntempl Avatar(a model.Avatar) {\n\t\u003cdiv class={ \"avatar\", a.AvatarClass }\u003e\n\t\t\u003cdiv class={ a.ContainerClass }\u003e\n\t\t\t\u003cimg src={ a.Source }/\u003e\n\t\t\tif a.Placeholder != \"\" {\n\t\t\t\t\u003cspan class={ a.PlaceholderClass }\u003e{ a.Placeholder }\u003c/span\u003e\n\t\t\t}\n\t\t\u003c/div\u003e\n\t\u003c/div\u003e\n}\n\ntempl AvatarGroup(class string) {\n\t\u003cdiv\n\t\tclass={\n\t\t\t\"avatar-group rtl:space-x-reverse\",\n\t\t\tclass,\n\t\t}\n\t\u003e\n\t\t{ children... }\n\t\u003c/div\u003e\n}\n```"
     },
     {
       "name": "card",
@@ -36,7 +36,7 @@
     },
     {
       "name": "chat",
-      "code": "```go\ntempl Chat(chat model.Chat) {\n\tfor _, message := range chat.Messages {\n\t\t@ChatMessage(message)\n\t}\n}\n\ntempl ChatMessage(message model.ChatMessage) {\n\t\u003cdiv\n\t\tclass={\n\t\t\t\"chat\",\n\t\t\ttempl.KV(\"chat-start\", message.Location == \"start\"),\n\t\t\ttempl.KV(\"chat-end\", message.Location == \"end\"),\n\t\t}\n\t\u003e\n\t\tif message.AvatarURL != \"\" {\n\t\t\t@Avatar(message.AvatarURL, \"chat-image w-10 rounded-full\")\n\t\t}\n\t\t\u003cdiv class=\"chat-header\"\u003e\n\t\t\t{ message.Sender }\n\t\t\t\u003ctime class=\"text-xs opacity-50\"\u003e{ message.Time }\u003c/time\u003e\n\t\t\u003c/div\u003e\n\t\t\u003cdiv class={ \"chat-bubble\", message.Class }\u003e\n\t\t\t{ message.Message }\n\t\t\u003c/div\u003e\n\t\t\u003cdiv class=\"chat-footer\"\u003e\n\t\t\t{ message.Footer }\n\t\t\u003c/div\u003e\n\t\u003c/div\u003e\n}\n```"
+      "code": "```go\ntempl Chat(chat model.Chat) {\n\tfor _, message := range chat.Messages {\n\t\t@ChatMessage(message)\n\t}\n}\n\ntempl ChatMessage(message model.ChatMessage) {\n\t\u003cdiv\n\t\tclass={\n\t\t\t\"chat\",\n\t\t\ttempl.KV(\"chat-start\", message.Location == \"start\"),\n\t\t\ttempl.KV(\"chat-end\", message.Location == \"end\"),\n\t\t}\n\t\u003e\n\t\tif message.AvatarURL != \"\" {\n\t\t\t@Avatar(model.Avatar{ContainerClass: \"chat-image w-10 rounded-full\", Source: message.AvatarURL})\n\t\t}\n\t\t\u003cdiv class=\"chat-header\"\u003e\n\t\t\t{ message.Sender }\n\t\t\t\u003ctime class=\"text-xs opacity-50\"\u003e{ message.Time }\u003c/time\u003e\n\t\t\u003c/div\u003e\n\t\t\u003cdiv class={ \"chat-bubble\", message.Class }\u003e\n\t\t\t{ message.Message }\n\t\t\u003c/div\u003e\n\t\t\u003cdiv class=\"chat-footer\"\u003e\n\t\t\t{ message.Footer }\n\t\t\u003c/div\u003e\n\t\u003c/div\u003e\n}\n```"
     },
     {
       "name": "collapse",
