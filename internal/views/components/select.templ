@@ -17,10 +17,7 @@ templ Select(s model.Select) {
 				id={ s.ID }
 			}
 			name={ s.Name }
-			class={
-				"select",
-				s.Class,
-			}
+			class={ "select", s.Class }
 			{ s.Attrs... }
 		>
 			@SelectOptions(s.Options)

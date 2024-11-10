@@ -15,12 +15,7 @@ templ Avatar(a model.Avatar) {
 }
 
 templ AvatarGroup(class string) {
-	<div
-		class={
-			"avatar-group rtl:space-x-reverse",
-			class,
-		}
-	>
+	<div class={ "avatar-group rtl:space-x-reverse", class }>
 		{ children... }
 	</div>
 }

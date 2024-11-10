@@ -24,7 +24,7 @@
     },
     {
       "name": "avatar",
-      "code": "```go\ntempl Avatar(a model.Avatar) {\n\t\u003cdiv class={ \"avatar\", a.AvatarClass }\u003e\n\t\t\u003cdiv class={ a.ContainerClass }\u003e\n\t\t\t\u003cimg src={ a.Source }/\u003e\n\t\t\tif a.Placeholder != \"\" {\n\t\t\t\t\u003cspan class={ a.PlaceholderClass }\u003e{ a.Placeholder }\u003c/span\u003e\n\t\t\t}\n\t\t\u003c/div\u003e\n\t\u003c/div\u003e\n}\n\ntempl AvatarGroup(class string) {\n\t\u003cdiv\n\t\tclass={\n\t\t\t\"avatar-group rtl:space-x-reverse\",\n\t\t\tclass,\n\t\t}\n\t\u003e\n\t\t{ children... }\n\t\u003c/div\u003e\n}\n```"
+      "code": "```go\ntempl Avatar(a model.Avatar) {\n\t\u003cdiv class={ \"avatar\", a.AvatarClass }\u003e\n\t\t\u003cdiv class={ a.ContainerClass }\u003e\n\t\t\t\u003cimg src={ a.Source }/\u003e\n\t\t\tif a.Placeholder != \"\" {\n\t\t\t\t\u003cspan class={ a.PlaceholderClass }\u003e{ a.Placeholder }\u003c/span\u003e\n\t\t\t}\n\t\t\u003c/div\u003e\n\t\u003c/div\u003e\n}\n\ntempl AvatarGroup(class string) {\n\t\u003cdiv class={ \"avatar-group rtl:space-x-reverse\", class }\u003e\n\t\t{ children... }\n\t\u003c/div\u003e\n}\n```"
     },
     {
       "name": "card",
@@ -126,7 +126,7 @@
     },
     {
       "name": "select",
-      "code": "```go\ntempl Select(s model.Select) {\n\t\u003clabel\n\t\tclass={ \"form-control\", templ.KV(\"pb-2\", s.Label != \"\") }\n\t\u003e\n\t\tif s.Label != \"\" {\n\t\t\t\u003cdiv class=\"label pr-2\"\u003e\n\t\t\t\t\u003cspan class=\"label-text\"\u003e{ s.Label }\u003c/span\u003e\n\t\t\t\u003c/div\u003e\n\t\t}\n\t\t\u003cselect\n\t\t\tif s.ID != \"\" {\n\t\t\t\tid={ s.ID }\n\t\t\t}\n\t\t\tname={ s.Name }\n\t\t\tclass={\n\t\t\t\t\"select\",\n\t\t\t\ts.Class,\n\t\t\t}\n\t\t\t{ s.Attrs... }\n\t\t\u003e\n\t\t\t@SelectOptions(s.Options)\n\t\t\u003c/select\u003e\n\t\u003c/label\u003e\n}\n\ntempl SelectOptions(options []model.SelectOption) {\n\tfor i := range options {\n\t\t\u003coption\n\t\t\tif options[i].Selected {\n\t\t\t\tselected\n\t\t\t}\n\t\t\tif options[i].Disabled {\n\t\t\t\tdisabled\n\t\t\t}\n\t\t\tvalue={ options[i].Value }\n\t\t\u003e\n\t\t\t{ options[i].Label }\n\t\t\u003c/option\u003e\n\t}\n}\n```"
+      "code": "```go\ntempl Select(s model.Select) {\n\t\u003clabel\n\t\tclass={ \"form-control\", templ.KV(\"pb-2\", s.Label != \"\") }\n\t\u003e\n\t\tif s.Label != \"\" {\n\t\t\t\u003cdiv class=\"label pr-2\"\u003e\n\t\t\t\t\u003cspan class=\"label-text\"\u003e{ s.Label }\u003c/span\u003e\n\t\t\t\u003c/div\u003e\n\t\t}\n\t\t\u003cselect\n\t\t\tif s.ID != \"\" {\n\t\t\t\tid={ s.ID }\n\t\t\t}\n\t\t\tname={ s.Name }\n\t\t\tclass={ \"select\", s.Class }\n\t\t\t{ s.Attrs... }\n\t\t\u003e\n\t\t\t@SelectOptions(s.Options)\n\t\t\u003c/select\u003e\n\t\u003c/label\u003e\n}\n\ntempl SelectOptions(options []model.SelectOption) {\n\tfor i := range options {\n\t\t\u003coption\n\t\t\tif options[i].Selected {\n\t\t\t\tselected\n\t\t\t}\n\t\t\tif options[i].Disabled {\n\t\t\t\tdisabled\n\t\t\t}\n\t\t\tvalue={ options[i].Value }\n\t\t\u003e\n\t\t\t{ options[i].Label }\n\t\t\u003c/option\u003e\n\t}\n}\n```"
     },
     {
       "name": "textarea",
