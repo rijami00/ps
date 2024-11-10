@@ -1,12 +1,23 @@
 package examples
 
-import "github.com/haatos/goshipit/internal/views/components"
+import (
+	"github.com/haatos/goshipit/internal/model"
+	"github.com/haatos/goshipit/internal/views/components"
+)
 
 // example
 templ CollapseExample() {
 	<div class="flex justify-center items-center pt-4">
-		@components.Collapse("Click me to show/hide content") {
-			<p>Collapse content</p>
+		@components.Collapse(
+			model.Collapse{
+				Title:        "Click me to show/hide content",
+				TitleClass:   "text-xl font-medium",
+				Class:        "collapse-plus bg-base-300",
+				ContentClass: "bg-base-200",
+			}) {
+			<div class="pt-4">
+				<p>Collapse content</p>
+			</div>
 		}
 	</div>
 }

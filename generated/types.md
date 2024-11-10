@@ -43,6 +43,7 @@ type Card struct {
 	Content string
 	Source  string
 	Alt     string
+	Class   string
 }
 
 type Chat struct {
@@ -67,6 +68,13 @@ type Checkbox struct {
 	Checked bool
 	Class   string
 	Attrs   templ.Attributes
+}
+
+type Collapse struct {
+	Class        string
+	Title        string
+	TitleClass   string
+	ContentClass string
 }
 
 type Combobox struct {

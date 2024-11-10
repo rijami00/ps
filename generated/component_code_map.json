@@ -28,7 +28,7 @@
     },
     {
       "name": "card",
-      "code": "```go\ntempl Card(card model.Card) {\n\t\u003cdiv class=\"card bg-base-100 w-96 shadow-xl\"\u003e\n\t\tif card.Source != \"\" {\n\t\t\t\u003cfigure\u003e\n\t\t\t\t\u003cimg src={ card.Source } alt={ card.Alt }/\u003e\n\t\t\t\u003c/figure\u003e\n\t\t}\n\t\t\u003cdiv class=\"card-body\"\u003e\n\t\t\t\u003ch2 class=\"card-title\"\u003e{ card.Title }\u003c/h2\u003e\n\t\t\t\u003cp\u003e{ card.Content }\u003c/p\u003e\n\t\t\t\u003cdiv class=\"card-actions justify-end\"\u003e\n\t\t\t\t{ children... }\n\t\t\t\u003c/div\u003e\n\t\t\u003c/div\u003e\n\t\u003c/div\u003e\n}\n```"
+      "code": "```go\ntempl Card(card model.Card) {\n\t\u003cdiv\n\t\tclass={\n\t\t\t\"card\",\n\t\t\tcard.Class,\n\t\t}\n\t\u003e\n\t\tif card.Source != \"\" {\n\t\t\t\u003cfigure\u003e\n\t\t\t\t\u003cimg src={ card.Source } alt={ card.Alt }/\u003e\n\t\t\t\u003c/figure\u003e\n\t\t}\n\t\t\u003cdiv class=\"card-body\"\u003e\n\t\t\t\u003ch2 class=\"card-title\"\u003e{ card.Title }\u003c/h2\u003e\n\t\t\t\u003cp\u003e{ card.Content }\u003c/p\u003e\n\t\t\t\u003cdiv class=\"card-actions justify-end\"\u003e\n\t\t\t\t{ children... }\n\t\t\t\u003c/div\u003e\n\t\t\u003c/div\u003e\n\t\u003c/div\u003e\n}\n```"
     },
     {
       "name": "carousel",
@@ -40,7 +40,7 @@
     },
     {
       "name": "collapse",
-      "code": "```go\ntempl Collapse(title string) {\n\t\u003cdiv tabindex=\"0\" class=\"collapse bg-base-200\"\u003e\n\t\t\u003cinput type=\"checkbox\"/\u003e\n\t\t\u003cdiv class=\"collapse-title text-xl font-medium\"\u003e{ title }\u003c/div\u003e\n\t\t\u003cdiv class=\"collapse-content\"\u003e\n\t\t\t{ children... }\n\t\t\u003c/div\u003e\n\t\u003c/div\u003e\n}\n```"
+      "code": "```go\ntempl Collapse(c model.Collapse) {\n\t\u003cdiv\n\t\ttabindex=\"0\"\n\t\tclass={\n\t\t\t\"collapse\",\n\t\t\tc.Class,\n\t\t}\n\t\u003e\n\t\t\u003cinput type=\"checkbox\"/\u003e\n\t\t\u003cdiv\n\t\t\tclass={\n\t\t\t\t\"collapse-title\",\n\t\t\t\tc.TitleClass,\n\t\t\t}\n\t\t\u003e\n\t\t\t{ c.Title }\n\t\t\u003c/div\u003e\n\t\t\u003cdiv\n\t\t\tclass={\n\t\t\t\t\"collapse-content\",\n\t\t\t\tc.ContentClass,\n\t\t\t}\n\t\t\u003e\n\t\t\t{ children... }\n\t\t\u003c/div\u003e\n\t\u003c/div\u003e\n}\n```"
     },
     {
       "name": "countdown",

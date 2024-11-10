@@ -8,7 +8,13 @@ import (
 // example
 templ BasicCard() {
 	<div class="flex justify-center items-center py-4">
-		@components.Card(model.Card{Title: "This is a card", Content: "And this is the card's content."})
+		@components.Card(
+			model.Card{
+				Title:   "This is a card",
+				Content: "And this is the card's content.",
+				Class:   "bg-base-100 w-96 shadow-xl",
+			},
+		)
 	</div>
 }
 
@@ -21,6 +27,7 @@ templ BasicCardWithImage() {
 				Content: "Card with image content",
 				Source:  "/static/images/avatar.jpg",
 				Alt:     "avatar image",
+				Class:   "card-bordered bg-base-100 w-96 shadow-xl",
 			},
 		) {
 			<button class="btn btn-sm btn-primary">Contact</button>

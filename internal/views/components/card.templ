@@ -4,7 +4,7 @@ package components
 import "github.com/haatos/goshipit/internal/model"
 
 templ Card(card model.Card) {
-	<div class="card bg-base-100 w-96 shadow-xl">
+	<div class={ "card", card.Class }>
 		if card.Source != "" {
 			<figure>
 				<img src={ card.Source } alt={ card.Alt }/>

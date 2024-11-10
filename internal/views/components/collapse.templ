@@ -1,11 +1,18 @@
 // data_display
 package components
 
-templ Collapse(title string) {
-	<div tabindex="0" class="collapse bg-base-200">
+import "github.com/haatos/goshipit/internal/model"
+
+templ Collapse(c model.Collapse) {
+	<div
+		tabindex="0"
+		class={ "collapse", c.Class }
+	>
 		<input type="checkbox"/>
-		<div class="collapse-title text-xl font-medium">{ title }</div>
-		<div class="collapse-content">
+		<div class={ "collapse-title", c.TitleClass }>
+			{ c.Title }
+		</div>
+		<div class={ "collapse-content", c.ContentClass }>
 			{ children... }
 		</div>
 	</div>
