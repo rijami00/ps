@@ -208,6 +208,13 @@ type Swap struct {
 	Class string
 }
 
+type Tabs struct {
+	Name         string
+	Class        string
+	Tabs         []Tab
+	ContentClass string
+}
+
 type Tab struct {
 	Label   string
 	Content templ.Component

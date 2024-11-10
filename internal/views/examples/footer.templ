@@ -1,51 +1,51 @@
 package examples
 
-import "github.com/haatos/goshipit/internal/model"
-import "github.com/haatos/goshipit/internal/views/components"
+import (
+	"github.com/haatos/goshipit/internal/model"
+	"github.com/haatos/goshipit/internal/views/components"
+)
 
 // example
 templ BasicFooterWithLinks() {
-	<div class="pt-4">
-		@components.Footer(
-			model.CompanyInfo{
-				Icon:        FooterCompanyInfoIconExample(),
-				Name:        "ACME Industries Ltd.",
-				Description: "Providing reliable tech since 1992",
-			},
+	@components.Footer(
+		model.CompanyInfo{
+			Icon:        FooterCompanyInfoIconExample(),
+			Name:        "ACME Industries Ltd.",
+			Description: "Providing reliable tech since 1992",
+		},
+		[]model.Anchor{
+			{Icon: XIcon()},
+			{Icon: YoutubeIcon()},
+			{Icon: FacebookIcon()},
+		},
+	) {
+		@components.FooterNav(
+			"Services",
 			[]model.Anchor{
-				{Icon: XIcon()},
-				{Icon: YoutubeIcon()},
-				{Icon: FacebookIcon()},
+				{Label: "Branding"},
+				{Label: "Design"},
+				{Label: "Marketing"},
+				{Label: "Advertisement"},
 			},
-		) {
-			@components.FooterNav(
-				"Services",
-				[]model.Anchor{
-					{Label: "Branding"},
-					{Label: "Design"},
-					{Label: "Marketing"},
-					{Label: "Advertisement"},
-				},
-			)
-			@components.FooterNav(
-				"Company",
-				[]model.Anchor{
-					{Label: "About us"},
-					{Label: "Contact"},
-					{Label: "Jobs"},
-					{Label: "Press kit"},
-				},
-			)
-			@components.FooterNav(
-				"Legal",
-				[]model.Anchor{
-					{Label: "Terms of use"},
-					{Label: "Privacy policy"},
-					{Label: "Cookie policy"},
-				},
-			)
-		}
-	</div>
+		)
+		@components.FooterNav(
+			"Company",
+			[]model.Anchor{
+				{Label: "About us"},
+				{Label: "Contact"},
+				{Label: "Jobs"},
+				{Label: "Press kit"},
+			},
+		)
+		@components.FooterNav(
+			"Legal",
+			[]model.Anchor{
+				{Label: "Terms of use"},
+				{Label: "Privacy policy"},
+				{Label: "Cookie policy"},
+			},
+		)
+	}
 }
 
 templ FooterCompanyInfoIconExample() {

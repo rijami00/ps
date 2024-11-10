@@ -8,22 +8,25 @@ import (
 // example
 templ BasicTabs() {
 	@components.Tabs(
-		"basic-tabs",
-		[]model.Tab{
-			{
-				Label:   "Home",
-				Content: homeTabContent(),
+		model.Tabs{
+			Name:         "basic-tabs",
+			Class:        "tabs-boxed",
+			ContentClass: "bg-base-100 py-8",
+			Tabs: []model.Tab{
+				{
+					Label:   "Home",
+					Content: homeTabContent(),
+				},
+				{
+					Label:   "Info",
+					Content: infoTabContent(),
+				},
+				{
+					Label:   "Stats",
+					Content: statsTabContent(),
+				},
 			},
-			{
-				Label:   "Info",
-				Content: infoTabContent(),
-			},
-			{
-				Label:   "Stats",
-				Content: statsTabContent(),
-			},
-		},
-	)
+		})
 }
 
 templ homeTabContent() {

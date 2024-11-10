@@ -2,6 +2,8 @@ package pages
 
 import (
 	"github.com/haatos/goshipit/internal/markdown"
+	"github.com/haatos/goshipit/internal/model"
+	"github.com/haatos/goshipit/internal/views/components"
 	"github.com/haatos/goshipit/internal/views/scripts"
 )
 
@@ -54,4 +56,15 @@ templ RawHTML(html string) {
 templ ComponentExampleTabs(description string, tabs templ.Component) {
 	@templ.Raw(markdown.GetHTMLFromMarkdown([]byte(description)))
 	@tabs
+}
+
+templ ComponentTabs(name string, tabs []model.Tab) {
+	@components.Tabs(
+		model.Tabs{
+			Name:         name,
+			Class:        "tabs-lifted",
+			ContentClass: "bg-base-100 border-base-300 rounded-box p-4 overflow-x-auto",
+			Tabs:         tabs,
+		},
+	)
 }

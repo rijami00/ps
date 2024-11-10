@@ -63,7 +63,7 @@ func GetComponentPage(c echo.Context) error {
 					Content: templ.Raw(markdown.GetHTMLFromMarkdown([]byte(exampleCode.Handler))),
 				})
 		}
-		coms = append(coms, pages.ComponentExampleTabs(exampleCode.Description, components.Tabs(fmt.Sprintf("%s-%d-tab", exampleCode.Name, i), tabs)))
+		coms = append(coms, pages.ComponentExampleTabs(exampleCode.Description, pages.ComponentTabs(fmt.Sprintf("%s-%d-tab", exampleCode.Name, i), tabs)))
 	}
 
 	if isHXRequest(c) {

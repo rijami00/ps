@@ -3,20 +3,20 @@ package components
 
 import "github.com/haatos/goshipit/internal/model"
 
-templ Tabs(name string, tabs []model.Tab) {
-	<div role="tablist" class="tabs tabs-lifted">
-		for i, tab := range tabs {
+templ Tabs(t model.Tabs) {
+	<div role="tablist" class={ "tabs", t.Class }>
+		for i, tab := range t.Tabs {
 			<input
 				type="radio"
-				name={ name }
+				name={ t.Name }
 				role="tab"
-				class={ "tab" }
+				class="tab"
 				aria-label={ tab.Label }
 				if i == 0 {
 					checked="checked"
 				}
 			/>
-			<div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6 overflow-x-auto">
+			<div class={ "tab-content", t.ContentClass }>
 				@tab.Content
 			</div>
 		}
