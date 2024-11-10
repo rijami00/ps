@@ -1,17 +1,22 @@
 package examples
 
-import "github.com/haatos/goshipit/internal/views/components"
+import (
+	"github.com/haatos/goshipit/internal/model"
+	"github.com/haatos/goshipit/internal/views/components"
+)
 
 // example
 templ DefaultRadioGroup() {
 	<div class="max-w-xs mx-auto pt-4">
 		@components.RadioGroup(
-			"my-radio-group1",
-			"",
-			map[string]string{
-				"Apples":  "apples",
-				"Oranges": "oranges",
-			})
+			model.Radio{
+				Name: "my-radio-group1",
+				Values: map[string]string{
+					"Apples":  "apples",
+					"Oranges": "oranges",
+				},
+			},
+		)
 	</div>
 }
 
@@ -19,11 +24,14 @@ templ DefaultRadioGroup() {
 templ PrimaryRadioGroup() {
 	<div class="max-w-xs mx-auto pt-4">
 		@components.RadioGroup(
-			"my-radio-group2",
-			"radio-primary",
-			map[string]string{
-				"Apples":  "apples",
-				"Oranges": "oranges",
-			})
+			model.Radio{
+				Name: "my-radio-group2",
+				Values: map[string]string{
+					"Apples":  "apples",
+					"Oranges": "oranges",
+				},
+				Class: "radio-primary",
+			},
+		)
 	</div>
 }

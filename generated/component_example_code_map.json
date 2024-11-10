@@ -248,11 +248,11 @@
   "radio_group": [
     {
       "name": "DefaultRadioGroup",
-      "code": "```go\ntempl DefaultRadioGroup() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.RadioGroup(\n\t\t\t\"my-radio-group1\",\n\t\t\t\"\",\n\t\t\tmap[string]string{\n\t\t\t\t\"Apples\":  \"apples\",\n\t\t\t\t\"Oranges\": \"oranges\",\n\t\t\t})\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl DefaultRadioGroup() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.RadioGroup(\n\t\t\tmodel.Radio{\n\t\t\t\tName: \"my-radio-group1\",\n\t\t\t\tValues: map[string]string{\n\t\t\t\t\t\"Apples\":  \"apples\",\n\t\t\t\t\t\"Oranges\": \"oranges\",\n\t\t\t\t},\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```"
     },
     {
       "name": "PrimaryRadioGroup",
-      "code": "```go\ntempl PrimaryRadioGroup() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.RadioGroup(\n\t\t\t\"my-radio-group2\",\n\t\t\t\"radio-primary\",\n\t\t\tmap[string]string{\n\t\t\t\t\"Apples\":  \"apples\",\n\t\t\t\t\"Oranges\": \"oranges\",\n\t\t\t})\n\t\u003c/div\u003e\n}\n```"
+      "code": "```go\ntempl PrimaryRadioGroup() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.RadioGroup(\n\t\t\tmodel.Radio{\n\t\t\t\tName: \"my-radio-group2\",\n\t\t\t\tValues: map[string]string{\n\t\t\t\t\t\"Apples\":  \"apples\",\n\t\t\t\t\t\"Oranges\": \"oranges\",\n\t\t\t\t},\n\t\t\t\tClass: \"radio-primary\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n```"
     }
   ],
   "range": [

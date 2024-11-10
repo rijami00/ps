@@ -1,16 +1,18 @@
 // data_input
 package components
 
-templ RadioGroup(name, classes string, labelsToValues map[string]string) {
-	for l, v := range labelsToValues {
+import "github.com/haatos/goshipit/internal/model"
+
+templ RadioGroup(r model.Radio) {
+	for l, v := range r.Values {
 		<div class="form-control">
 			<label class="label cursor-pointer">
 				<span class="label-text">{ l }</span>
 				<input
 					type="radio"
-					name={ name }
+					name={ r.Name }
 					value={ v }
-					class={ "radio", classes }
+					class={ "radio", r.Class }
 				/>
 			</label>
 		</div>

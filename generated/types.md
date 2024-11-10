@@ -143,6 +143,12 @@ type Price struct {
 	Footer           templ.Component
 }
 
+type Radio struct {
+	Name   string
+	Values map[string]string
+	Class  string
+}
+
 type Range struct {
 	ID    string
 	Label string
