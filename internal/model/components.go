@@ -201,6 +201,12 @@ type Status struct {
 	ReturnButton Button
 }
 
+type Swap struct {
+	On    templ.Component
+	Off   templ.Component
+	Class string
+}
+
 type Tab struct {
 	Label   string
 	Content templ.Component

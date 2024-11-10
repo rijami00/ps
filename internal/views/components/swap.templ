@@ -1,14 +1,16 @@
 // actions
 package components
 
-templ Swap(on templ.Component, off templ.Component) {
-	<label class="swap">
+import "github.com/haatos/goshipit/internal/model"
+
+templ Swap(s model.Swap) {
+	<label class={ "swap", s.Class }>
 		<input type="checkbox"/>
 		<div class="swap-on">
-			@on
+			@s.On
 		</div>
 		<div class="swap-off">
-			@off
+			@s.Off
 		</div>
 	</label>
 }

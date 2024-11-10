@@ -10,7 +10,7 @@
     },
     {
       "name": "swap",
-      "code": "```go\ntempl Swap(on templ.Component, off templ.Component) {\n\t\u003clabel class=\"swap\"\u003e\n\t\t\u003cinput type=\"checkbox\"/\u003e\n\t\t\u003cdiv class=\"swap-on\"\u003e\n\t\t\t@on\n\t\t\u003c/div\u003e\n\t\t\u003cdiv class=\"swap-off\"\u003e\n\t\t\t@off\n\t\t\u003c/div\u003e\n\t\u003c/label\u003e\n}\n```"
+      "code": "```go\ntempl Swap(s model.Swap) {\n\t\u003clabel class={ \"swap\", s.Class }\u003e\n\t\t\u003cinput type=\"checkbox\"/\u003e\n\t\t\u003cdiv class=\"swap-on\"\u003e\n\t\t\t@s.On\n\t\t\u003c/div\u003e\n\t\t\u003cdiv class=\"swap-off\"\u003e\n\t\t\t@s.Off\n\t\t\u003c/div\u003e\n\t\u003c/label\u003e\n}\n```"
     }
   ],
   "data_display": [

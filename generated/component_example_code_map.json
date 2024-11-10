@@ -321,7 +321,7 @@
   "swap": [
     {
       "name": "BasicSwap",
-      "code": "```go\ntempl BasicSwap() {\n\t\u003cdiv class=\"flex justify-center items-center h-20\"\u003e\n\t\t@components.Swap(\n\t\t\tSwapExampleOn(),\n\t\t\tSwapExampleOff(),\n\t\t)\n\t\u003c/div\u003e\n}\n\ntempl SwapExampleOn() {\n\t\u003cspan class=\"font-bold text-success\"\u003eON\u003c/span\u003e\n}\n\ntempl SwapExampleOff() {\n\t\u003cspan class=\"font-bold text-neutral\"\u003eOFF\u003c/span\u003e\n}\n```"
+      "code": "```go\ntempl BasicSwap() {\n\t\u003cdiv class=\"flex justify-center items-center h-20\"\u003e\n\t\t@components.Swap(\n\t\t\tmodel.Swap{\n\t\t\t\tOn:    SwapExampleOn(),\n\t\t\t\tOff:   SwapExampleOff(),\n\t\t\t\tClass: \"swap-flip\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\ntempl SwapExampleOn() {\n\t\u003cspan class=\"font-bold text-success\"\u003eON\u003c/span\u003e\n}\n\ntempl SwapExampleOff() {\n\t\u003cspan class=\"font-bold text-neutral\"\u003eOFF\u003c/span\u003e\n}\n```"
     }
   ],
   "table": [
