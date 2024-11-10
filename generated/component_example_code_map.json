@@ -196,7 +196,7 @@
     },
     {
       "name": "JoinInputs",
-      "code": "```go\ntempl JoinInputs() {\n\t@components.Join(\n\t\t[]templ.Component{\n\t\t\tjoinInput(\"first\"),\n\t\t\tjoinInput(\"second\"),\n\t\t\tjoinInput(\"third\"),\n\t\t},\n\t)\n}\n\ntempl joinInput(label string) {\n\t@components.Input(model.Input{Label: label})\n}\n```"
+      "code": "```go\ntempl JoinInputs() {\n\t@components.Join(\n\t\t[]templ.Component{\n\t\t\tjoinInput(\"first\"),\n\t\t\tjoinInput(\"second\"),\n\t\t\tjoinInput(\"third\"),\n\t\t},\n\t)\n}\n\ntempl joinInput(label string) {\n\t@components.Input(model.Input{Label: label, Class: \"input-bordered\"})\n}\n```"
     }
   ],
   "lazy_load": [
