@@ -1,11 +1,28 @@
 package examples
 
-import "github.com/haatos/goshipit/internal/views/components"
+import (
+	"github.com/haatos/goshipit/internal/model"
+	"github.com/haatos/goshipit/internal/views/components"
+)
 
 // example
 templ BasicTooltip() {
 	<div class="min-h-60 flex justify-center items-center">
-		@components.Tooltip("Hello") {
+		@components.Tooltip(model.Tooltip{Tip: "Hello"}) {
+			<button class="btn">Hover me</button>
+		}
+	</div>
+}
+
+// example
+templ BasicTooltipError() {
+	<div class="min-h-60 flex justify-center items-center">
+		@components.Tooltip(
+			model.Tooltip{
+				Tip:   "Hello",
+				Class: "tooltip-bottom tooltip-error",
+			},
+		) {
 			<button class="btn">Hover me</button>
 		}
 	</div>

@@ -156,7 +156,7 @@
     },
     {
       "name": "tooltip",
-      "code": "```go\ntempl Tooltip(tip string) {\n\t\u003cdiv class=\"tooltip\" data-tip={ tip }\u003e\n\t\t{ children... }\n\t\u003c/div\u003e\n}\n\ntempl TooltipError(tip string) {\n\t\u003cdiv class=\"tooltip tooltip-top tooltip-error\" data-tip={ tip }\u003e\n\t\t{ children... }\n\t\u003c/div\u003e\n}\n```"
+      "code": "```go\ntempl Tooltip(t model.Tooltip) {\n\t\u003cdiv class={ \"tooltip\", t.Class } data-tip={ t.Tip }\u003e\n\t\t{ children... }\n\t\u003c/div\u003e\n}\n```"
     }
   ],
   "layout": [

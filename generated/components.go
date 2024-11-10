@@ -78,4 +78,5 @@ var ExampleComponents = map[string]templ.Component{
 	"PrimaryToggle":              examples.PrimaryToggle(),
 	"PrimaryToggleWithHighlight": examples.PrimaryToggleWithHighlight(),
 	"BasicTooltip":               examples.BasicTooltip(),
+	"BasicTooltipError":          examples.BasicTooltipError(),
 }

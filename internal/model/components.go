@@ -253,3 +253,8 @@ type Toggle struct {
 	Highlight bool
 	Attrs     templ.Attributes
 }
+
+type Tooltip struct {
+	Tip   string
+	Class string
+}
