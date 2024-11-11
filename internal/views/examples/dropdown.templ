@@ -8,10 +8,16 @@ import (
 // example
 templ BasicDropdown() {
 	<div class="h-48">
-		@components.Dropdown("Dropdown label", []model.DropdownItem{
-			{Label: "Item 1"},
-			{Label: "Item 2"},
-			{Label: "Item 3"},
-		})
+		@components.Dropdown(
+			model.Dropdown{
+				Label: "Dropdown label",
+				Items: []model.DropdownItem{
+					{Label: "Item 1"},
+					{Label: "Item 2"},
+					{Label: "Item 3"},
+				},
+				ListClass: "bg-base-200 rounded-box z-50 w-52 p-2 shadow",
+			},
+		)
 	</div>
 }

@@ -91,6 +91,13 @@ type CompanyInfo struct {
 	Copyright   string
 }
 
+type Dropdown struct {
+	Label     string
+	Class     string
+	ListClass string
+	Items     []DropdownItem
+}
+
 type DropdownItem struct {
 	Label string
 	Attrs templ.Attributes

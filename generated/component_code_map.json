@@ -2,7 +2,7 @@
   "actions": [
     {
       "name": "dropdown",
-      "code": "```go\ntempl Dropdown(label string, dropdownItems []model.DropdownItem) {\n\t\u003cdetails class=\"dropdown\"\u003e\n\t\t\u003csummary class=\"btn m-1\"\u003e{ label }\u003c/summary\u003e\n\t\t\u003cul class=\"menu dropdown-content bg-base-200 rounded-box z-50 w-52 p-2 shadow\"\u003e\n\t\t\tfor _, di := range dropdownItems {\n\t\t\t\t\u003cli\u003e\u003ca { di.Attrs... }\u003e{ di.Label }\u003c/a\u003e\u003c/li\u003e\n\t\t\t}\n\t\t\u003c/ul\u003e\n\t\u003c/details\u003e\n}\n```"
+      "code": "```go\ntempl Dropdown(d model.Dropdown) {\n\t\u003cdetails class={ \"dropdown\", d.Class }\u003e\n\t\t\u003csummary class=\"btn m-1\"\u003e{ d.Label }\u003c/summary\u003e\n\t\t\u003cul class={ \"menu dropdown-content\", d.ListClass }\u003e\n\t\t\tfor _, di := range d.Items {\n\t\t\t\t\u003cli\u003e\u003ca { di.Attrs... }\u003e{ di.Label }\u003c/a\u003e\u003c/li\u003e\n\t\t\t}\n\t\t\u003c/ul\u003e\n\t\u003c/details\u003e\n}\n```"
     },
     {
       "name": "modal",
