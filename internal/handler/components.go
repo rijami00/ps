@@ -67,9 +67,9 @@ func GetComponentPage(c echo.Context) error {
 	}
 
 	if isHXRequest(c) {
-		return render(c, http.StatusOK, pages.ComponentMain(componentCode.Label, componentCode.Code, componentCode.Description, coms))
+		return render(c, http.StatusOK, pages.ComponentMain(componentCode, coms))
 	}
-	return render(c, http.StatusOK, pages.ComponentPage(componentCode.Label, componentCode.Code, componentCode.Description, coms))
+	return render(c, http.StatusOK, pages.ComponentPage(componentCode, coms))
 }
 
 func GetComponentSearch(c echo.Context) error {

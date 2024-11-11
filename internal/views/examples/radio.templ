@@ -6,9 +6,9 @@ import (
 )
 
 // example
-templ DefaultRadioGroup() {
+templ DefaultRadio() {
 	<div class="max-w-xs mx-auto pt-4">
-		@components.RadioGroup(
+		@components.Radio(
 			model.Radio{
 				Name: "my-radio-group1",
 				Values: map[string]string{
@@ -21,9 +21,9 @@ templ DefaultRadioGroup() {
 }
 
 // example
-templ PrimaryRadioGroup() {
+templ PrimaryRadio() {
 	<div class="max-w-xs mx-auto pt-4">
-		@components.RadioGroup(
+		@components.Radio(
 			model.Radio{
 				Name: "my-radio-group2",
 				Values: map[string]string{
