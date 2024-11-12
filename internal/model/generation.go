@@ -5,6 +5,7 @@ type ComponentCode struct {
 	Code        string `json:"code,omitempty"`
 	Handler     string `json:"handler,omitempty"`
 	Description string `json:"description,omitempty"`
+	DaisyUIURL  string `json:"daisy_ui_url,omitempty"`
 
 	Label string `json:"-"`
 }

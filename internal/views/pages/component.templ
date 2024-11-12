@@ -18,7 +18,10 @@ templ ComponentMain(cc model.ComponentCode, examples []templ.Component) {
 	<div class="w-full min-h-svh pt-8">
 		<section class="relative w-full !max-w-screen-lg">
 			<h1 class="text-4xl font-bold pb-8">
-				{ cc.Name }
+				{ cc.Label }
+				if cc.DaisyUIURL != "" {
+					<a href={ templ.SafeURL(cc.DaisyUIURL) } class="text-lg link link-primary" target="_blank">{ "@DaisyUI" }</a>
+				}
 			</h1>
 			<div class="prose !max-w-screen-lg text-justify">
 				@templ.Raw(markdown.GetHTMLFromMarkdown([]byte(cc.Description)))

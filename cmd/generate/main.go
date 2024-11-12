@@ -83,12 +83,16 @@ func getComponentCode(path string, info fs.FileInfo, fmap model.ComponentCodeMap
 	inFunction := false
 	description := []string{}
 	inDescription := false
+	daisyUIURL := ""
 	var category string
 	for scanner.Scan() {
 		line := scanner.Text()
 		if category == "" {
 			category = strings.TrimPrefix(line, "// ")
 			continue
+		}
+		if strings.HasPrefix(line, "// https://daisyui.com") {
+			daisyUIURL = strings.TrimPrefix(line, "// ")
 		}
 		if strings.HasPrefix(line, "/*") {
 			inDescription = true
@@ -118,6 +122,7 @@ func getComponentCode(path string, info fs.FileInfo, fmap model.ComponentCodeMap
 			Name:        componentName,
 			Code:        markdown.CodeSliceToMarkdown(function),
 			Description: strings.Join(description, "\n"),
+			DaisyUIURL:  daisyUIURL,
 		})
 	return nil
 }
