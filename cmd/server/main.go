@@ -48,7 +48,6 @@ func main() {
 	e.POST("/validate/string/:name", handler.PostValidateString)
 	e.GET("/infinite-scroll", handler.GetInfiniteScrollExample)
 	e.GET("/infinite-scroll-rows", handler.GetInfiniteScrollExampleRows)
-	e.GET("/active-search-table", handler.GetActiveSearchExampleTable)
 	e.GET("/active-search", handler.GetActiveSearchExample)
 	e.GET("/lazy-load", handler.GetLazyLoadExample)
 	e.GET("/pricing", handler.GetPricingExample)

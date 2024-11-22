@@ -117,25 +117,6 @@ func GetActiveSearchExample(c echo.Context) error {
 	return render(c, http.StatusOK, examples.ActiveSearchTableRows(out))
 }
 
-func GetActiveSearchExampleTable(c echo.Context) error {
-	out := make([]templ.Component, 0, len(examples.ActiveSearchTableData))
-	for _, rowData := range examples.ActiveSearchTableData {
-		out = append(out, examples.ActiveSearchTableRow(
-			rowData.FirstName, rowData.LastName, rowData.Email))
-	}
-
-	com := examples.ActiveSearchExample(
-		"active-search-table",
-		[]templ.Component{
-			components.PlainText("First Name"),
-			components.PlainText("Last Name"),
-			components.PlainText("Email"),
-		},
-		out)
-
-	return render(c, http.StatusOK, com)
-}
-
 // ActiveSearchExampleTable
 
 // InfiniteScrollTableExample
