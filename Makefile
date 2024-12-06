@@ -1,8 +1,11 @@
+GOOS := "linux"
+GOARCH := "amd64"
+
 deploy:
 	npx tailwindcss -o ./public/static/css/tw.css --minify
 	go run cmd/generate/main.go
 	templ generate
-	go build -ldflags "-s -w" -o bin/main cmd/server/main.go
+	GOOS=$(GOOS) GOARCH=$(GOARCH) go build -ldflags "-s -w" -o bin/main cmd/server/main.go
 	scp -r 'content' $(user)@$(ip):/opt/goshipit/
 	scp -r 'generated' $(user)@$(ip):/opt/goshipit/
 	scp -r 'public' $(user)@$(ip):/opt/goshipit/
