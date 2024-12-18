@@ -63,5 +63,5 @@ func main() {
 	e.POST("/timeslotpicker/reserve", handler.PostTimeSlotPickerReserve)
 	// handlers for component examples
 
-	internal.GracefulShutdown(e, internal.Settings.Port)
+	internal.GracefulShutdown(e, internal.Settings.Domain, internal.Settings.Port)
 }

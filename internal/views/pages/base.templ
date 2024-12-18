@@ -77,7 +77,8 @@ templ SideNavLayout(head templ.Component) {
 							href="/"
 							class="group btn !shadow-none !bg-transparent !border-none flex items-center xl:hidden"
 						>
-							<img class="h-10" src="/static/images/goshipit-logo.png" alt="goship.it"/>
+							<img class="max-w-8 hidden dark:block" src="/static/images/dark.png" alt="Logo"/>
+							<img class="max-w-8 dark:hidden" src="/static/images/light.png" alt="Logo"/>
 						</a>
 					</div>
 					<main class="w-full max-w-screen-lg min-h-svh pl-8 pr-8 xl:pr-0">
@@ -85,121 +86,34 @@ templ SideNavLayout(head templ.Component) {
 					</main>
 					@components.Footer(
 						components.FooterProps{
-							Name:      "Haatos Ltd",
+							Name:      "APIS Informationtechnologien GmbH",
 							Copyright: fmt.Sprintf("%s", time.Now().UTC().Format("2006")),
-							Anchors: []components.AnchorProps{
-								{LeftIcon: examples.GithubIcon(), Href: "https://github.com/haatos"},
-								{LeftIcon: examples.LinkedInIcon(), Href: "https://linkedin.com/in/tomihaapalainen"},
-							},
-						}) {
-						@components.FooterNav(
-							"Links",
-							[]components.AnchorProps{
-								{
-									Label: "DaisyUI 4 components",
-									Attrs: templ.Attributes{
-										"name": "hx-anchor",
-										"href": "https://old.goship.it",
-									},
-								},
-								{
-									Label: "Getting started",
-									Attrs: templ.Attributes{
-										"name":        "hx-anchor",
-										"hx-get":      "/get-started",
-										"hx-target":   "main",
-										"hx-swap":     "innerHTML",
-										"hx-push-url": "true",
-									},
-								},
-								{
-									Label: "Types",
-									Attrs: templ.Attributes{
-										"name":        "hx-anchor",
-										"hx-get":      "/types",
-										"hx-target":   "main",
-										"hx-swap":     "innerHTML",
-										"hx-push-url": "true",
-									},
-								},
-								{
-									Label:    "GitHub",
-									LeftIcon: examples.GithubIcon(),
-									Attrs: templ.Attributes{
-										"href": "https://github.com/haatos/goshipit",
-									},
-								},
-								{
-									Label: "About the creator",
-									Attrs: templ.Attributes{
-										"name":        "hx-anchor",
-										"hx-get":      "/about",
-										"hx-target":   "main",
-										"hx-swap":     "innerHTML",
-										"hx-push-url": "true",
-									},
-								},
-							})
-						@components.FooterNav(
-							"Legal",
-							[]components.AnchorProps{
-								{
-									Label: "Privacy policy",
-									Attrs: templ.Attributes{
-										"name":        "hx-anchor",
-										"hx-get":      "/privacy",
-										"hx-target":   "main",
-										"hx-swap":     "innerHTML",
-										"hx-push-url": "true",
-									},
-								},
-								{
-									Label: "Terms of Service",
-									Attrs: templ.Attributes{
-										"name":        "hx-anchor",
-										"hx-get":      "/terms-of-service",
-										"hx-target":   "main",
-										"hx-swap":     "innerHTML",
-										"hx-push-url": "true",
-									},
-								},
-							})
-					}
+						    Anchors : []components.AnchorProps{
+							    {LeftIcon: examples.GithubIcon(), Href: "https://github.com/rijami00/ps"},
+						    }
+                        }
+                    )
 				</div>
 				@drawerSide(
 					[]components.AnchorProps{
 						{
-							Label: "DaisyUI 4 components",
-							Attrs: templ.Attributes{
-								"name": "hx-anchor",
-								"href": "https://old.goship.it",
-							},
-						},
-						{
-							Label: "Getting started",
+							Label: "Page 1",
 							Attrs: templ.Attributes{
 								"name":        "hx-anchor",
-								"hx-get":      "/get-started",
+								"hx-get":      "/page1",
 								"hx-target":   "main",
 								"hx-swap":     "innerHTML",
 								"hx-push-url": "true",
 							},
 						},
 						{
-							Label: "Types",
+							Label: "Page 2",
 							Attrs: templ.Attributes{
 								"name":        "hx-anchor",
-								"hx-get":      "/types",
+								"hx-get":      "/page2",
 								"hx-target":   "main",
 								"hx-swap":     "innerHTML",
 								"hx-push-url": "true",
-							},
-						},
-						{
-							Label:    "GitHub",
-							LeftIcon: examples.GithubIcon(),
-							Attrs: templ.Attributes{
-								"href": "https://github.com/haatos/goshipit",
 							},
 						},
 					},
@@ -293,42 +207,10 @@ templ drawerSide(anchors []components.AnchorProps) {
 		<ul class="menu bg-base-300 text-base-content min-h-full w-[330px] p-4 space-y-2">
 			<li class="pb-4">
 				<a href="/" class="group hover:!bg-transparent flex justify-center items-center">
-					<img class="max-w-20" src="/static/images/goshipit-logo.png" alt="goship.it"/>
+					<img class="max-w-12 hidden dark:block" src="/static/images/dark.png" alt="Logo"/>
+					<img class="max-w-12 dark:hidden" src="/static/images/light.png" alt="Logo"/>
 				</a>
 			</li>
-			<div id="my-active-search" class="pl-1">
-				@components.ActiveSearchInput(
-					components.ActiveSearchInputProps{
-						ID:     "component-search-input",
-						URL:    "/components/search",
-						Target: "#search-dropdown-side",
-						InputProps: components.InputProps{
-							Icon:        searchIcon(),
-							Name:        "search",
-							Type:        "search",
-							Placeholder: "Search...",
-							Size:        "sm",
-						},
-					})
-				<div class="relative w-full max-w-xs">
-					<div
-						id="search-dropdown-side"
-						class="w-full max-w-xs absolute top-2 left-0 z-50 rounded-box bg-base-200"
-					></div>
-				</div>
-				<script>
-					document.addEventListener("click", (evt) => {
-						let activeSearch = evt.target.closest("#my-active-search")
-						if (activeSearch === null) {
-							let activeSearchDiv = document.getElementById("my-active-search")
-							activeSearchDiv.querySelectorAll("div[name=search-list-item]").forEach(el => {
-								el.remove()
-							})
-							activeSearchDiv.querySelector("form").reset()
-						}
-					})
-				</script>
-			</div>
 			<!-- Sidebar content here -->
 			for _, a := range anchors {
 				<li>
@@ -336,7 +218,6 @@ templ drawerSide(anchors []components.AnchorProps) {
 				</li>
 			}
 			<div class="divider"></div>
-			<div hx-get="/component-anchors" hx-swap="outerHTML" hx-trigger="intersect once"></div>
 		</ul>
 	</div>
 }

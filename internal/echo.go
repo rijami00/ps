@@ -12,12 +12,12 @@ import (
 	"golang.org/x/time/rate"
 )
 
-func GracefulShutdown(e *echo.Echo, port string) {
+func GracefulShutdown(e *echo.Echo, domain string, port string) {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer stop()
 
 	go func() {
-		if err := e.Start(port); err != nil && err != http.ErrServerClosed {
+		if err := e.Start(domain + port); err != nil && err != http.ErrServerClosed {
 			e.Logger.Fatal("shutting down the server")
 		}
 	}()
