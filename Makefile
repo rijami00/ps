@@ -19,5 +19,8 @@ gen:
 tw:
 	@npx tailwindcss -i input.css -o public/static/css/tw.css --watch
 
+test:
+	go version
+
 dev: gen
 	@templ generate -watch -proxyport=7332 -proxy="http://localhost:8080" -open-browser=false -cmd="go run cmd/server/main.go"

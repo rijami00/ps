@@ -58,5 +58,5 @@ func main() {
 	e.DELETE("/modal-confirm", handler.DeleteModalExample)
 	// handlers for component examples
 
-	internal.GracefulShutdown(e, internal.Settings.Port)
+	internal.GracefulShutdown(e, internal.Settings.Domain, internal.Settings.Port)
 }

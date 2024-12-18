@@ -81,105 +81,31 @@ templ SideNavLayout(head templ.Component) {
 					</main>
 					@components.Footer(
 						model.CompanyInfo{
-							Name:      "Haatos Ltd",
+							Name:      "APIS Informationtechnologien GmbH",
 							Copyright: fmt.Sprintf("%s", time.Now().UTC().Format("2006")),
 						},
 						[]model.Anchor{
-							{Icon: examples.GithubIcon(), Href: "https://github.com/haatos"},
-							{Icon: examples.LinkedInIcon(), Href: "https://linkedin.com/in/tomihaapalainen"},
-						}) {
-						@components.FooterNav(
-							"Links",
-							[]model.Anchor{
-								{
-									Label: "Getting started",
-									Attrs: templ.Attributes{
-										"name":        "hx-anchor",
-										"hx-get":      "/get-started",
-										"hx-target":   "main",
-										"hx-swap":     "innerHTML",
-										"hx-push-url": "true",
-									},
-								},
-								{
-									Label: "Types",
-									Attrs: templ.Attributes{
-										"name":        "hx-anchor",
-										"hx-get":      "/types",
-										"hx-target":   "main",
-										"hx-swap":     "innerHTML",
-										"hx-push-url": "true",
-									},
-								},
-								{
-									Label: "GitHub",
-									Icon:  examples.GithubIcon(),
-									Attrs: templ.Attributes{
-										"href": "https://github.com/haatos/goshipit",
-									},
-								},
-								{
-									Label: "About the creator",
-									Attrs: templ.Attributes{
-										"name":        "hx-anchor",
-										"hx-get":      "/about",
-										"hx-target":   "main",
-										"hx-swap":     "innerHTML",
-										"hx-push-url": "true",
-									},
-								},
-							})
-						@components.FooterNav(
-							"Legal",
-							[]model.Anchor{
-								{
-									Label: "Privacy policy",
-									Attrs: templ.Attributes{
-										"name":        "hx-anchor",
-										"hx-get":      "/privacy",
-										"hx-target":   "main",
-										"hx-swap":     "innerHTML",
-										"hx-push-url": "true",
-									},
-								},
-								{
-									Label: "Terms of Service",
-									Attrs: templ.Attributes{
-										"name":        "hx-anchor",
-										"hx-get":      "/terms-of-service",
-										"hx-target":   "main",
-										"hx-swap":     "innerHTML",
-										"hx-push-url": "true",
-									},
-								},
-							})
-					}
+							{Icon: examples.GithubIcon(), Href: "https://github.com/rijami00/ps"},
+						})
 				</div>
 				@drawerSide(
 					[]model.Anchor{
 						{
-							Label: "Getting started",
+							Label: "Page 1",
 							Attrs: templ.Attributes{
-								"hx-get":      "/get-started",
+								"hx-get":      "/page1",
 								"hx-target":   "main",
 								"hx-swap":     "innerHTML",
 								"hx-push-url": "true",
 							},
 						},
 						{
-							Label: "Types",
+							Label: "Page 2",
 							Attrs: templ.Attributes{
-								"hx-get":      "/types",
+								"hx-get":      "/page2",
 								"hx-target":   "main",
 								"hx-swap":     "innerHTML",
 								"hx-push-url": "true",
-							},
-						},
-						{
-							Label: "GitHub",
-							Icon:  examples.GithubIcon(),
-							Attrs: templ.Attributes{
-								"href": "https://github.com/haatos/goshipit",
 							},
 						},
 					},
@@ -249,27 +175,6 @@ templ drawerSide(anchors []model.Anchor) {
 					<img class="max-w-12 dark:hidden" src="/static/images/light.png" alt="Logo"/>
 				</a>
 			</li>
-			<div id="my-active-search" class="pl-1">
-				@components.ActiveSearchInput("component-search-input", "/components/search", "#search-dropdown-side")
-				<div class="relative w-full max-w-xs">
-					<div
-						id="search-dropdown-side"
-						class="w-full max-w-xs absolute top-2 left-0 z-50 rounded-box bg-base-200"
-					></div>
-				</div>
-				<script>
-					document.addEventListener("click", (evt) => {
-						let activeSearch = evt.target.closest("#my-active-search")
-						if (activeSearch === null) {
-							let activeSearchDiv = document.getElementById("my-active-search")
-							activeSearchDiv.querySelectorAll("div[name=search-list-item]").forEach(el => {
-								el.remove()
-							})
-							activeSearchDiv.querySelector("form").reset()
-						}
-					})
-				</script>
-			</div>
 			<!-- Sidebar content here -->
 			for _, a := range anchors {
 				<li>
@@ -288,7 +193,6 @@ templ drawerSide(anchors []model.Anchor) {
 				</li>
 			}
 			<div class="divider"></div>
-			<div hx-get="/component-anchors" hx-swap="outerHTML" hx-trigger="intersect once"></div>
 		</ul>
 	</div>
 }
