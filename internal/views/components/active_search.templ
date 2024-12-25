@@ -6,32 +6,24 @@ import (
 	"github.com/haatos/goshipit/internal/model"
 )
 
-templ ActiveSearchInput(id, url, targetSelector string) {
+templ ActiveSearchInput(asi model.ActiveSearchInput) {
 	<div class="w-full flex space-x-2 items-center">
 		<div class="w-full max-w-xs">
 			@Form(
 				templ.Attributes{
-					"id":           id,
-					"hx-get":       url,
-					"hx-target":    targetSelector,
+					"id":           asi.ID,
+					"hx-get":       asi.URL,
+					"hx-target":    asi.Target,
 					"hx-swap":      "innerHTML",
 					"hx-trigger":   "keyup from:input[name=search] delay:500ms, search",
-					"hx-indicator": fmt.Sprintf("#%s", id),
+					"hx-indicator": fmt.Sprintf("#%s", asi.ID),
 				},
 			) {
-				@Input(
-					model.Input{
-						Icon:        searchIcon(),
-						Name:        "search",
-						Type:        "search",
-						Placeholder: "Filter table...",
-						Class:       "input-sm input-bordered",
-					},
-				)
+				@Input(asi.Input)
 			}
 		</div>
 		<div class="flex justify-center items-center">
-			<span id={ id } class="htmx-indicator loading loading-spinner"></span>
+			<span id={ asi.ID } class="htmx-indicator loading loading-spinner"></span>
 		</div>
 	</div>
 }

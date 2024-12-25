@@ -12,6 +12,13 @@ type Accordion struct {
 	Name  string
 }
 
+type ActiveSearchInput struct {
+	ID     string
+	URL    string
+	Target string
+	Input  Input
+}
+
 type Anchor struct {
 	Href  string
 	Label string
