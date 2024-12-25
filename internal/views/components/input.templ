@@ -58,6 +58,9 @@ templ Input(input model.Input) {
 					if input.Disabled {
 						disabled
 					}
+					if input.Required {
+						required
+					}
 				/>
 				<script>
 					document.addEventListener("htmx:afterRequest", (evt) => {
@@ -81,7 +84,7 @@ templ Input(input model.Input) {
 			</div>
 			<span
 				id={ fmt.Sprintf("%s-error", input.Name) }
-				class="text-error min-h-3 text-xs pt-1"
+				class="text-error h-4 text-xs pt-1"
 			>
 				{ input.Err }
 			</span>

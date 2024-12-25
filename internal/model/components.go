@@ -173,6 +173,7 @@ type Input struct {
 	Icon            templ.Component
 	Disabled        bool
 	DisabledMessage string
+	Required        bool
 }
 
 type PaginationItem struct {
