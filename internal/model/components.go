@@ -105,11 +105,13 @@ func (dp DatePicker) Days() []time.Time {
 	now := time.Now().UTC()
 	start := time.Date(dp.Year, time.Month(dp.Month), 1, 0, 0, 0, 0, now.Location())
 	end := start.AddDate(0, 1, -1)
-	end = end.AddDate(0, 0, 7-int(end.Weekday())-1+int(dp.StartOfWeek))
-	if start.Weekday() == time.Sunday {
-		start = start.AddDate(0, 0, -6)
-	} else {
-		start = start.AddDate(0, 0, -1*int(start.Weekday())+int(dp.StartOfWeek))
+	for end.Weekday() != dp.StartOfWeek {
+		end = end.AddDate(0, 0, 1)
+	}
+	end = end.AddDate(0, 0, -1)
+
+	for start.Weekday() != dp.StartOfWeek {
+		start = start.AddDate(0, 0, -1)
 	}
 	for !start.After(end) {
 		days = append(days, start)

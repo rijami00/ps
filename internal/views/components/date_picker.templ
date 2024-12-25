@@ -6,6 +6,7 @@ import "time"
 import "github.com/haatos/goshipit/internal/model"
 
 templ DatePicker(dp model.DatePicker) {
+	{{ utcNow := time.Now().UTC() }}
 	{{ days := dp.Days() }}
 	<div
 		name="datepicker-div"
@@ -84,7 +85,7 @@ templ DatePicker(dp model.DatePicker) {
 					name="datepicker-day-btn"
 					class={
 						"btn btn-ghost btn-square bg-base-100 border shadow-md shadow-base-300 h-10 w-10 p-3",
-						templ.KV("text-primary", d.Month() == time.Now().Month() && time.Now().Day() == d.Day()),
+						templ.KV("text-primary", d.Year() == utcNow.Year() && d.Month() == utcNow.Month() && utcNow.Day() == d.Day()),
 						templ.KV("btn-neutral", d.Month() != time.Month(dp.Month)),
 						templ.KV("border-primary bg-base-300", !dp.Selected.IsZero() && d.Day() == dp.Selected.Day()),
 					}
