@@ -112,7 +112,7 @@ func GetComponentSearch(c echo.Context) error {
 func GetActiveSearchExample(c echo.Context) error {
 	time.Sleep(500 * time.Millisecond)
 
-	search := strings.ToLower(strings.TrimSpace(c.FormValue("search")))
+	search := strings.ToLower(strings.TrimSpace(c.FormValue("active-search-example")))
 
 	out := make([]templ.Component, 0, len(examples.ActiveSearchTableData))
 

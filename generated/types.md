@@ -14,11 +14,10 @@ type Accordion struct {
 }
 
 type ActiveSearchInput struct {
-	ID          string
-	URL         string
-	Target      string
-	Placeholder string
-	Input       Input
+	ID     string
+	URL    string
+	Target string
+	Input  Input
 }
 
 type Anchor struct {

@@ -30,7 +30,7 @@ templ ActiveSearchExample(id string, headers []templ.Component, rows []templ.Com
 				Target: fmt.Sprintf("#%s > tbody", id),
 				Input: model.Input{
 					Icon:        searchIcon(),
-					Name:        "example-table-filter",
+					Name:        "active-search-example",
 					Type:        "search",
 					Placeholder: "Filter table...",
 					Class:       "input-sm input-bordered",

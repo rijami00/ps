@@ -15,7 +15,7 @@ templ ActiveSearchInput(asi model.ActiveSearchInput) {
 					"hx-get":       asi.URL,
 					"hx-target":    asi.Target,
 					"hx-swap":      "innerHTML",
-					"hx-trigger":   "keyup from:input[name=search] delay:500ms, search",
+					"hx-trigger":   fmt.Sprintf("keyup from:input[name=%s] delay:500ms, search", asi.Input.Name),
 					"hx-indicator": fmt.Sprintf("#%s", asi.ID),
 				},
 			) {
