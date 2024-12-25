@@ -102,15 +102,21 @@ templ DatePicker(dp model.DatePicker) {
 				</button>
 			}
 			<script>
-            document.addEventListener("DOMContentLoaded", () => {
-                document.addEventListener("click", (evt) => {
-                    if (evt.target.getAttribute("name") == "datepicker-day-btn") {
+            function addDayButtonEventHandler() {
+                document.querySelectorAll("button[name=datepicker-day-btn]").forEach((btn) => {
+                    btn.addEventListener("click", () => {
                         document.querySelectorAll("button[name=datepicker-day-btn]").forEach((el) => {
                             el.classList.remove("border-primary", "bg-base-300")
                         })
-                        evt.target.classList.add("border-primary", "bg-base-300")
-                    }
+                        btn.classList.add("border-primary", "bg-base-300")
+                    })
                 })
+            }
+            document.addEventListener("htmx:afterSettle", () => {
+                addDayButtonEventHandler();
+            })
+            document.addEventListener("DOMContentLoaded", () => {
+                addDayButtonEventHandler();
             })
             </script>
 		</div>
