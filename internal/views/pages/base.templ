@@ -235,6 +235,34 @@ templ SideNavLayout(head templ.Component) {
 					activeMenuLink()
 				})
 			</script>
+			<script>
+				function reloadStylesheetsIfNeeded() {
+					// Check if styles are missing
+					const bodyStyles = window.getComputedStyle(document.body);
+					if (!bodyStyles || bodyStyles.display === 'none' || bodyStyles.display === '') {
+					// Styles are missing, reload all stylesheets
+					const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+					stylesheets.forEach((stylesheet) => {
+						const href = stylesheet.getAttribute('href').split('?')[0];
+						stylesheet.setAttribute('href', `${href}?reload=${Date.now()}`);
+					});
+					}
+				}
+
+				// Handle page show event
+				window.addEventListener('pageshow', function(event) {
+					if (event.persisted) {
+					reloadStylesheetsIfNeeded();
+					}
+				});
+
+				// Handle visibility change event
+				document.addEventListener('visibilitychange', function() {
+					if (document.visibilityState === 'visible') {
+					reloadStylesheetsIfNeeded();
+					}
+				});
+			</script>
 		</body>
 	</html>
 }
