@@ -1,0 +1,26 @@
+// navigation
+package components
+
+import "github.com/haatos/goshipit/internal/model"
+
+templ Anchor(a model.Anchor) {
+	<a
+		if a.Href != "" {
+			href={ templ.SafeURL(a.Href) }
+		}
+		class={ "group flex items-center cursor-pointer", a.Class }
+		{ a.Attrs... }
+	>
+		if a.LeftIcon != nil {
+			<div class="inline-block mr-1">
+				@a.LeftIcon
+			</div>
+		}
+		{ a.Label }
+		if a.RightIcon != nil {
+			<div class="inline-block ml-1">
+				@a.RightIcon
+			</div>
+		}
+	</a>
+}

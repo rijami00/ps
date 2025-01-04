@@ -26,8 +26,8 @@ templ Footer(companyInfo model.CompanyInfo, socialLinks []model.Anchor) {
 		</aside>
 		<nav class="md:place-self-center md:justify-self-end">
 			<div class="grid grid-flow-col gap-4">
-				for _, socialLink := range socialLinks {
-					@SocialsLink(socialLink)
+				for _, anchor := range socialLinks {
+					@Anchor(anchor)
 				}
 			</div>
 		</nav>

@@ -20,10 +20,12 @@ type ActiveSearchInput struct {
 }
 
 type Anchor struct {
-	Href  string
-	Label string
-	Icon  templ.Component
-	Attrs templ.Attributes
+	Href      string
+	Label     string
+	LeftIcon  templ.Component
+	RightIcon templ.Component
+	Attrs     templ.Attributes
+	Class     string
 }
 
 type Avatar struct {

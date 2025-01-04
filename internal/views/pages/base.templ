@@ -85,8 +85,8 @@ templ SideNavLayout(head templ.Component) {
 							Copyright: fmt.Sprintf("%s", time.Now().UTC().Format("2006")),
 						},
 						[]model.Anchor{
-							{Icon: examples.GithubIcon(), Href: "https://github.com/haatos"},
-							{Icon: examples.LinkedInIcon(), Href: "https://linkedin.com/in/tomihaapalainen"},
+							{LeftIcon: examples.GithubIcon(), Href: "https://github.com/haatos"},
+							{LeftIcon: examples.LinkedInIcon(), Href: "https://linkedin.com/in/tomihaapalainen"},
 						}) {
 						@components.FooterNav(
 							"Links",
@@ -112,8 +112,8 @@ templ SideNavLayout(head templ.Component) {
 									},
 								},
 								{
-									Label: "GitHub",
-									Icon:  examples.GithubIcon(),
+									Label:    "GitHub",
+									LeftIcon: examples.GithubIcon(),
 									Attrs: templ.Attributes{
 										"href": "https://github.com/haatos/goshipit",
 									},
@@ -160,6 +160,7 @@ templ SideNavLayout(head templ.Component) {
 						{
 							Label: "Getting started",
 							Attrs: templ.Attributes{
+								"name":        "hx-anchor",
 								"hx-get":      "/get-started",
 								"hx-target":   "main",
 								"hx-swap":     "innerHTML",
@@ -169,6 +170,7 @@ templ SideNavLayout(head templ.Component) {
 						{
 							Label: "Types",
 							Attrs: templ.Attributes{
+								"name":        "hx-anchor",
 								"hx-get":      "/types",
 								"hx-target":   "main",
 								"hx-swap":     "innerHTML",
@@ -176,8 +178,8 @@ templ SideNavLayout(head templ.Component) {
 							},
 						},
 						{
-							Label: "GitHub",
-							Icon:  examples.GithubIcon(),
+							Label:    "GitHub",
+							LeftIcon: examples.GithubIcon(),
 							Attrs: templ.Attributes{
 								"href": "https://github.com/haatos/goshipit",
 							},
@@ -313,18 +315,7 @@ templ drawerSide(anchors []model.Anchor) {
 			<!-- Sidebar content here -->
 			for _, a := range anchors {
 				<li>
-					<a
-						name="hx-anchor"
-						{ a.Attrs... }
-						if a.Href != "" {
-							href={ templ.SafeURL(a.Href) }
-						}
-					>
-						if a.Icon != nil {
-							@a.Icon
-						}
-						{ a.Label }
-					</a>
+					@components.Anchor(a)
 				</li>
 			}
 			<div class="divider"></div>
