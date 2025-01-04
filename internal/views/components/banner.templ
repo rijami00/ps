@@ -1,29 +1,22 @@
 // layout
 package components
 
-import "github.com/haatos/goshipit/internal/model"
+type BannerProps struct {
+	Title       templ.Component
+	Description string
+}
 
-templ Banner(banner model.Banner) {
+templ Banner(props BannerProps) {
 	<section>
 		<div class="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:items-center">
 			<div class="mx-auto max-w-xl text-center">
-				@banner.Title
+				@props.Title
 				<p class="mt-4 sm:text-xl/relaxed">
-					{ banner.Description }
+					{ props.Description }
 				</p>
 				<div class="mt-8 flex flex-wrap justify-center gap-4">
-					<a
-						class="btn btn-primary"
-						{ banner.CallToAction.Attrs... }
-					>
-						{ banner.CallToAction.Label }
-					</a>
-					<a
-						class="btn btn-neutral"
-						{ banner.SecondaryCallToAction.Attrs... }
-					>
-						{ banner.SecondaryCallToAction.Label }
-					</a>
+					// call to action
+					{ children... }
 				</div>
 			</div>
 		</div>
