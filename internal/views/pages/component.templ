@@ -19,13 +19,15 @@ templ ComponentMain(cc model.ComponentCode, examples []templ.Component) {
 		<section class="relative w-full !max-w-screen-lg">
 			<h1 class="text-4xl font-bold pb-8">
 				{ cc.Label }
-				@components.Anchor(model.Anchor{
-					Label:     "@DaisyUI",
-					Href:      cc.DaisyUIURL,
-					Class:     "text-sm link link-primary",
-					Attrs:     templ.Attributes{"target": "_blank"},
-					RightIcon: externalLinkIcon(),
-				})
+				if cc.DaisyUIURL != "" {
+					@components.Anchor(model.Anchor{
+						Label:     "@DaisyUI",
+						Href:      cc.DaisyUIURL,
+						Class:     "text-sm link link-primary",
+						Attrs:     templ.Attributes{"target": "_blank"},
+						RightIcon: externalLinkIcon(),
+					})
+				}
 			</h1>
 			<div class="prose !max-w-screen-lg text-justify">
 				@templ.Raw(markdown.GetHTMLFromMarkdown([]byte(cc.Description)))
