@@ -141,22 +141,22 @@ templ DatePicker(props DatePickerProps) {
 				</button>
 			}
 			<script>
-            function addDayButtonEventHandler() {
-                document.querySelectorAll("button[name=datepicker-day-btn]").forEach((btn) => {
-                    btn.addEventListener("click", () => {
-                        document.querySelectorAll("button[name=datepicker-day-btn]").forEach((el) => {
-                            el.classList.remove("border-primary", "bg-base-300")
+                function addDayButtonEventHandler() {
+                    document.querySelectorAll("button[name=datepicker-day-btn]").forEach((btn) => {
+                        btn.addEventListener("click", () => {
+                            document.querySelectorAll("button[name=datepicker-day-btn]").forEach((el) => {
+                                el.classList.remove("border-primary", "bg-base-300")
+                            })
+                            btn.classList.add("border-primary", "bg-base-300")
                         })
-                        btn.classList.add("border-primary", "bg-base-300")
                     })
+                }
+                document.addEventListener("htmx:afterSettle", () => {
+                    addDayButtonEventHandler();
                 })
-            }
-            document.addEventListener("htmx:afterSettle", () => {
-                addDayButtonEventHandler();
-            })
-            document.addEventListener("DOMContentLoaded", () => {
-                addDayButtonEventHandler();
-            })
+                document.addEventListener("DOMContentLoaded", () => {
+                    addDayButtonEventHandler();
+                })
             </script>
 		</div>
 	</div>

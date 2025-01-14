@@ -46,11 +46,11 @@ templ Toggle(props ToggleProps) {
 		</label>
 		if props.Highlight {
 			<script>
-			function toggler(evt) {
-				evt.target.previousElementSibling.classList.toggle("text-primary")
-				evt.target.nextElementSibling.classList.toggle("text-primary")
-			}
-		</script>
+                function toggler(evt) {
+                    evt.target.previousElementSibling.classList.toggle("text-primary")
+                    evt.target.nextElementSibling.classList.toggle("text-primary")
+                }
+            </script>
 		}
 	</div>
 }
