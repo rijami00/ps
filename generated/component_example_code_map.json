@@ -15,58 +15,69 @@
     {
       "name": "ActiveSearchExampleTable",
       "code": "```go\ntempl ActiveSearchExampleTable() {\n\t\u003cdiv class=\"h-[600px]\"\u003e\n\t\t@ActiveSearchExample(\n\t\t\t\"active-search-example-table\",\n\t\t\t[]templ.Component{\n\t\t\t\tcomponents.PlainText(\"First name\"),\n\t\t\t\tcomponents.PlainText(\"Last name\"),\n\t\t\t\tcomponents.PlainText(\"Email\"),\n\t\t\t},\n\t\t\tactiveSearchTableDataComponents(),\n\t\t)\n\t\u003c/div\u003e\n}\n\ntempl ActiveSearchExample(id string, headers []templ.Component, rows []templ.Component) {\n\t\u003cdiv class=\"py-8\"\u003e\n\t\t@components.ActiveSearchInput(\n\t\t\tcomponents.ActiveSearchInputProps{\n\t\t\t\tID:     \"active-search-example-input\",\n\t\t\t\tURL:    \"/active-search\",\n\t\t\t\tTarget: fmt.Sprintf(\"#%s \u003e tbody\", id),\n\t\t\t\tInput: components.InputProps{\n\t\t\t\t\tIcon:        searchIcon(),\n\t\t\t\t\tName:        \"active-search-example\",\n\t\t\t\t\tType:        \"search\",\n\t\t\t\t\tPlaceholder: \"Filter table...\",\n\t\t\t\t\tClass:       \"input-sm input-bordered\",\n\t\t\t\t},\n\t\t\t})\n\t\t@components.Table(\n\t\t\theaders,\n\t\t\tactiveSearchTableDataComponents(),\n\t\t\ttempl.Attributes{\"id\": \"active-search-example-table\"},\n\t\t)\n\t\u003c/div\u003e\n}\n\ntempl searchIcon() {\n\t\u003csvg\n\t\tclass=\"w-5 h-5\"\n\t\tviewBox=\"0 0 32 32\"\n\t\tversion=\"1.1\"\n\t\txmlns=\"http://www.w3.org/2000/svg\"\n\t\txmlns:xlink=\"http://www.w3.org/1999/xlink\"\n\t\txmlns:sketch=\"http://www.bohemiancoding.com/sketch/ns\"\n\t\u003e\n\t\t\u003cg stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\" sketch:type=\"MSPage\"\u003e\n\t\t\t\u003cg class=\"fill-base-content/60\" id=\"Icon-Set\" sketch:type=\"MSLayerGroup\" transform=\"translate(-256.000000, -1139.000000)\"\u003e\n\t\t\t\t\u003cpath d=\"M269.46,1163.45 C263.17,1163.45 258.071,1158.44 258.071,1152.25 C258.071,1146.06 263.17,1141.04 269.46,1141.04 C275.75,1141.04 280.85,1146.06 280.85,1152.25 C280.85,1158.44 275.75,1163.45 269.46,1163.45 L269.46,1163.45 Z M287.688,1169.25 L279.429,1161.12 C281.591,1158.77 282.92,1155.67 282.92,1152.25 C282.92,1144.93 276.894,1139 269.46,1139 C262.026,1139 256,1144.93 256,1152.25 C256,1159.56 262.026,1165.49 269.46,1165.49 C272.672,1165.49 275.618,1164.38 277.932,1162.53 L286.224,1170.69 C286.629,1171.09 287.284,1171.09 287.688,1170.69 C288.093,1170.3 288.093,1169.65 287.688,1169.25 L287.688,1169.25 Z\" id=\"search\" sketch:type=\"MSShapeGroup\"\u003e\u003c/path\u003e\n\t\t\t\u003c/g\u003e\n\t\t\u003c/g\u003e\n\t\u003c/svg\u003e\n}\n\nfunc activeSearchTableDataComponents() []templ.Component {\n\tcoms := make([]templ.Component, len(ActiveSearchTableData))\n\tfor i := range ActiveSearchTableData {\n\t\tcoms[i] = ActiveSearchTableRow(\n\t\t\tActiveSearchTableData[i].FirstName,\n\t\t\tActiveSearchTableData[i].LastName,\n\t\t\tActiveSearchTableData[i].Email)\n\t}\n\treturn coms\n}\n\nvar ActiveSearchTableData = []struct {\n\tFirstName string\n\tLastName  string\n\tEmail     string\n}{\n\t{FirstName: \"John\", LastName: \"Smith\", Email: \"john.smith@email.com\"},\n\t{FirstName: \"Emily\", LastName: \"Johnson\", Email: \"emily.johnson@email.com\"},\n\t{FirstName: \"Michael\", LastName: \"Brown\", Email: \"michael.brown@email.com\"},\n\t{FirstName: \"Jessica\", LastName: \"Williams\", Email: \"jessica.williams@email.com\"},\n\t{FirstName: \"David\", LastName: \"Jones\", Email: \"david.jones@email.com\"},\n\t{FirstName: \"Sarah\", LastName: \"Miller\", Email: \"sarah.miller@email.com\"},\n\t{FirstName: \"Christopher\", LastName: \"Davis\", Email: \"chris.davis@email.com\"},\n\t{FirstName: \"Amanda\", LastName: \"Wilson\", Email: \"amanda.wilson@email.com\"},\n\t{FirstName: \"James\", LastName: \"Taylor\", Email: \"james.taylor@email.com\"},\n\t{FirstName: \"Laura\", LastName: \"Moore\", Email: \"laura.moore@email.com\"},\n}\n\ntempl ActiveSearchTableRows(rows []templ.Component) {\n\tfor _, r := range rows {\n\t\t@r\n\t}\n}\n\ntempl ActiveSearchTableRow(firstName, lastName, email string) {\n\t\u003ctr\u003e\n\t\t\u003ctd\u003e{ firstName }\u003c/td\u003e\n\t\t\u003ctd\u003e{ lastName }\u003c/td\u003e\n\t\t\u003ctd\u003e{ email }\u003c/td\u003e\n\t\u003c/tr\u003e\n}\n```",
-      "handler": "```go\nfunc GetActiveSearchExample(c echo.Context) error {\n\ttime.Sleep(500 * time.Millisecond)\n\n\tsearch := strings.ToLower(strings.TrimSpace(c.FormValue(\"active-search-example\")))\n\n\tout := make([]templ.Component, 0, len(examples.ActiveSearchTableData))\n\n\tfor _, rowData := range examples.ActiveSearchTableData {\n\t\tif search == \"\" || (strings.Contains(strings.ToLower(rowData.FirstName), search) ||\n\t\t\tstrings.Contains(strings.ToLower(rowData.LastName), search) ||\n\t\t\tstrings.Contains(strings.ToLower(rowData.Email), search)) {\n\t\t\tout = append(out, examples.ActiveSearchTableRow(\n\t\t\t\trowData.FirstName, rowData.LastName, rowData.Email))\n\t\t}\n\t}\n\n\treturn render(c, http.StatusOK, examples.ActiveSearchTableRows(out))\n}\n\n```"
+      "handler": "```go\nfunc GetActiveSearchExample(c echo.Context) error {\n\ttime.Sleep(500 * time.Millisecond)\n\n\tsearch := strings.ToLower(strings.TrimSpace(c.FormValue(\"active-search-example\")))\n\n\tout := make([]templ.Component, 0, len(examples.ActiveSearchTableData))\n\n\tfor _, rowData := range examples.ActiveSearchTableData {\n\t\tif search == \"\" || (strings.Contains(strings.ToLower(rowData.FirstName), search) ||\n\t\t\tstrings.Contains(strings.ToLower(rowData.LastName), search) ||\n\t\t\tstrings.Contains(strings.ToLower(rowData.Email), search)) {\n\t\t\tout = append(out, examples.ActiveSearchTableRow(\n\t\t\t\trowData.FirstName, rowData.LastName, rowData.Email))\n\t\t}\n\t}\n\n\treturn render(c, http.StatusOK, examples.ActiveSearchTableRows(out))\n}\n\n```",
+      "title": "Active search input for a table"
     }
   ],
   "alert": [
     {
       "name": "AlertInfoExample",
-      "code": "```go\ntempl AlertInfoExample() {\n\t\u003cdiv class=\"max-w-md mx-auto pt-4\"\u003e\n\t\t@components.AlertInfo(\n\t\t\t\"Your profile has been successfully updated. Please review your changes.\",\n\t\t)\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl AlertInfoExample() {\n\t\u003cdiv class=\"max-w-md mx-auto pt-4\"\u003e\n\t\t@components.AlertInfo(\n\t\t\t\"Your profile has been successfully updated. Please review your changes.\",\n\t\t)\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Info-type alert"
     },
     {
       "name": "AlertSuccessExample",
-      "code": "```go\ntempl AlertSuccessExample() {\n\t\u003cdiv class=\"max-w-md mx-auto pt-4\"\u003e\n\t\t@components.AlertSuccess(\n\t\t\t\"Your payment was processed successfully! Thank you for your purchase.\",\n\t\t) {\n\t\t\t\u003cbutton class=\"btn btn-sm\"\u003eOK\u003c/button\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl AlertSuccessExample() {\n\t\u003cdiv class=\"max-w-md mx-auto pt-4\"\u003e\n\t\t@components.AlertSuccess(\n\t\t\t\"Your payment was processed successfully! Thank you for your purchase.\",\n\t\t) {\n\t\t\t\u003cbutton class=\"btn btn-sm\"\u003eOK\u003c/button\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Success-type alert"
     },
     {
       "name": "AlertWarningExample",
-      "code": "```go\ntempl AlertWarningExample() {\n\t\u003cdiv class=\"max-w-md mx-auto pt-4\"\u003e\n\t\t@components.AlertWarning(\n\t\t\t\"Your password will expire in 7 days. Please update it to avoid any disruptions.\",\n\t\t)\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl AlertWarningExample() {\n\t\u003cdiv class=\"max-w-md mx-auto pt-4\"\u003e\n\t\t@components.AlertWarning(\n\t\t\t\"Your password will expire in 7 days. Please update it to avoid any disruptions.\",\n\t\t)\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Warning-type alert"
     },
     {
       "name": "AlertErrorExample",
-      "code": "```go\ntempl AlertErrorExample() {\n\t\u003cdiv class=\"max-w-md mx-auto pt-4\"\u003e\n\t\t@components.AlertError(\n\t\t\t\"Failed to connect to the server. Please try again later or contact support if the issue persists.\",\n\t\t) {\n\t\t\t\u003cbutton class=\"btn btn-sm\"\u003eOK\u003c/button\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n```"
+      "code": "```go\ntempl AlertErrorExample() {\n\t\u003cdiv class=\"max-w-md mx-auto pt-4\"\u003e\n\t\t@components.AlertError(\n\t\t\t\"Failed to connect to the server. Please try again later or contact support if the issue persists.\",\n\t\t) {\n\t\t\t\u003cbutton class=\"btn btn-sm\"\u003eOK\u003c/button\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n```",
+      "title": "Error-type alert"
     }
   ],
   "anchor": [
     {
       "name": "BasicAnchor",
-      "code": "```go\ntempl BasicAnchor() {\n\t@components.Anchor(components.AnchorProps{\n\t\tLabel: \"Basic anchor\",\n\t\tClass: \"link\",\n\t})\n}\n\n```"
+      "code": "```go\ntempl BasicAnchor() {\n\t@components.Anchor(components.AnchorProps{\n\t\tLabel: \"Basic anchor\",\n\t\tClass: \"link\",\n\t})\n}\n\n```",
+      "title": "Basic anchor"
     },
     {
       "name": "PrimaryAnchor",
-      "code": "```go\ntempl PrimaryAnchor() {\n\t@components.Anchor(components.AnchorProps{\n\t\tLabel: \"Primary anchor\",\n\t\tClass: \"link link-primary\",\n\t})\n}\n\n```"
+      "code": "```go\ntempl PrimaryAnchor() {\n\t@components.Anchor(components.AnchorProps{\n\t\tLabel: \"Primary anchor\",\n\t\tClass: \"link link-primary\",\n\t})\n}\n\n```",
+      "title": "Primary anchor"
     },
     {
       "name": "AnchorWithIcon",
-      "code": "```go\ntempl AnchorWithIcon() {\n\t@components.Anchor(components.AnchorProps{\n\t\tLabel:    \"GitHub profile\",\n\t\tLeftIcon: GithubIcon(),\n\t\tClass:    \"link\",\n\t})\n}\n\n```"
+      "code": "```go\ntempl AnchorWithIcon() {\n\t@components.Anchor(components.AnchorProps{\n\t\tLabel:    \"GitHub profile\",\n\t\tLeftIcon: GithubIcon(),\n\t\tClass:    \"link\",\n\t})\n}\n\n```",
+      "title": "Anchor with icon"
     },
     {
       "name": "SocialAnchors",
-      "code": "```go\ntempl SocialAnchors() {\n\t\u003cdiv class=\"mx-auto\"\u003e\n\t\t\u003cdiv class=\"flex space-x-4\"\u003e\n\t\t\t@components.Anchor(components.AnchorProps{LeftIcon: XIcon()})\n\t\t\t@components.Anchor(components.AnchorProps{LeftIcon: YoutubeIcon()})\n\t\t\t@components.Anchor(components.AnchorProps{LeftIcon: FacebookIcon()})\n\t\t\t@components.Anchor(components.AnchorProps{LeftIcon: GithubIcon()})\n\t\t\t@components.Anchor(components.AnchorProps{LeftIcon: LinkedInIcon()})\n\t\t\u003c/div\u003e\n\t\u003c/div\u003e\n}\n\ntempl XIcon() {\n\t\u003csvg\n\t\txmlns=\"http://www.w3.org/2000/svg\"\n\t\tx=\"0px\"\n\t\ty=\"0px\"\n\t\tviewBox=\"0 0 50 50\"\n\t\tclass=\"h-6 w-6 fill-base-content/80 hover:fill-base-content inline-block mr-1\"\n\t\u003e\n\t\t\u003cpath d=\"M 5.9199219 6 L 20.582031 27.375 L 6.2304688 44 L 9.4101562 44 L 21.986328 29.421875 L 31.986328 44 L 44 44 L 28.681641 21.669922 L 42.199219 6 L 39.029297 6 L 27.275391 19.617188 L 17.933594 6 L 5.9199219 6 z M 9.7167969 8 L 16.880859 8 L 40.203125 42 L 33.039062 42 L 9.7167969 8 z\"\u003e\u003c/path\u003e\n\t\u003c/svg\u003e\n}\n\ntempl YoutubeIcon() {\n\t\u003csvg\n\t\txmlns=\"http://www.w3.org/2000/svg\"\n\t\tviewBox=\"0 0 24 24\"\n\t\tclass=\"h-6 w-6 fill-base-content/80 hover:fill-base-content inline-block mr-1\"\n\t\u003e\n\t\t\u003cpath\n\t\t\td=\"M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z\"\n\t\t\u003e\u003c/path\u003e\n\t\u003c/svg\u003e\n}\n\ntempl FacebookIcon() {\n\t\u003csvg\n\t\txmlns=\"http://www.w3.org/2000/svg\"\n\t\tviewBox=\"0 0 24 24\"\n\t\tclass=\"h-6 w-6 fill-base-content/80 hover:fill-base-content inline-block mr-1\"\n\t\u003e\n\t\t\u003cpath\n\t\t\td=\"M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z\"\n\t\t\u003e\u003c/path\u003e\n\t\u003c/svg\u003e\n}\n\ntempl GithubIcon() {\n\t\u003csvg\n\t\tclass=\"h-6 w-6 inline-block mr-1\"\n\t\tviewBox=\"0 0 20 20\"\n\t\tversion=\"1.1\"\n\t\txmlns=\"http://www.w3.org/2000/svg\"\n\t\txmlns:xlink=\"http://www.w3.org/1999/xlink\"\n\t\u003e\n\t\t\u003cg stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\"\u003e\n\t\t\t\u003cg class=\"fill-base-content/80 hover:fill-base-content group-hover:fill-base-content\" id=\"Dribbble-Light-Preview\" transform=\"translate(-140.000000, -7559.000000)\"\u003e\n\t\t\t\t\u003cg id=\"icons\" transform=\"translate(56.000000, 160.000000)\"\u003e\n\t\t\t\t\t\u003cpath d=\"M94,7399 C99.523,7399 104,7403.59 104,7409.253 C104,7413.782 101.138,7417.624 97.167,7418.981 C96.66,7419.082 96.48,7418.762 96.48,7418.489 C96.48,7418.151 96.492,7417.047 96.492,7415.675 C96.492,7414.719 96.172,7414.095 95.813,7413.777 C98.04,7413.523 100.38,7412.656 100.38,7408.718 C100.38,7407.598 99.992,7406.684 99.35,7405.966 C99.454,7405.707 99.797,7404.664 99.252,7403.252 C99.252,7403.252 98.414,7402.977 96.505,7404.303 C95.706,7404.076 94.85,7403.962 94,7403.958 C93.15,7403.962 92.295,7404.076 91.497,7404.303 C89.586,7402.977 88.746,7403.252 88.746,7403.252 C88.203,7404.664 88.546,7405.707 88.649,7405.966 C88.01,7406.684 87.619,7407.598 87.619,7408.718 C87.619,7412.646 89.954,7413.526 92.175,7413.785 C91.889,7414.041 91.63,7414.493 91.54,7415.156 C90.97,7415.418 89.522,7415.871 88.63,7414.304 C88.63,7414.304 88.101,7413.319 87.097,7413.247 C87.097,7413.247 86.122,7413.234 87.029,7413.87 C87.029,7413.87 87.684,7414.185 88.139,7415.37 C88.139,7415.37 88.726,7417.2 91.508,7416.58 C91.513,7417.437 91.522,7418.245 91.522,7418.489 C91.522,7418.76 91.338,7419.077 90.839,7418.982 C86.865,7417.627 84,7413.783 84,7409.253 C84,7403.59 88.478,7399 94,7399\"\u003e\u003c/path\u003e\n\t\t\t\t\u003c/g\u003e\n\t\t\t\u003c/g\u003e\n\t\t\u003c/g\u003e\n\t\u003c/svg\u003e\n}\n\ntempl LinkedInIcon() {\n\t\u003csvg\n\t\tclass=\"h-6 w-6 fill-base-content/80 hover:fill-base-content inline-block mr-1\"\n\t\tviewBox=\"0 0 32 32\"\n\t\tversion=\"1.1\"\n\t\txmlns=\"http://www.w3.org/2000/svg\"\n\t\u003e\n\t\t\u003cpath d=\"M28.778 1.004h-25.56c-0.008-0-0.017-0-0.027-0-1.199 0-2.172 0.964-2.186 2.159v25.672c0.014 1.196 0.987 2.161 2.186 2.161 0.010 0 0.019-0 0.029-0h25.555c0.008 0 0.018 0 0.028 0 1.2 0 2.175-0.963 2.194-2.159l0-0.002v-25.67c-0.019-1.197-0.994-2.161-2.195-2.161-0.010 0-0.019 0-0.029 0h0.001zM9.9 26.562h-4.454v-14.311h4.454zM7.674 10.293c-1.425 0-2.579-1.155-2.579-2.579s1.155-2.579 2.579-2.579c1.424 0 2.579 1.154 2.579 2.578v0c0 0.001 0 0.002 0 0.004 0 1.423-1.154 2.577-2.577 2.577-0.001 0-0.002 0-0.003 0h0zM26.556 26.562h-4.441v-6.959c0-1.66-0.034-3.795-2.314-3.795-2.316 0-2.669 1.806-2.669 3.673v7.082h-4.441v-14.311h4.266v1.951h0.058c0.828-1.395 2.326-2.315 4.039-2.315 0.061 0 0.121 0.001 0.181 0.003l-0.009-0c4.5 0 5.332 2.962 5.332 6.817v7.855z\"\u003e\u003c/path\u003e\n\t\u003c/svg\u003e\n}\n```"
+      "code": "```go\ntempl SocialAnchors() {\n\t\u003cdiv class=\"mx-auto\"\u003e\n\t\t\u003cdiv class=\"flex space-x-4\"\u003e\n\t\t\t@components.Anchor(components.AnchorProps{LeftIcon: XIcon()})\n\t\t\t@components.Anchor(components.AnchorProps{LeftIcon: YoutubeIcon()})\n\t\t\t@components.Anchor(components.AnchorProps{LeftIcon: FacebookIcon()})\n\t\t\t@components.Anchor(components.AnchorProps{LeftIcon: GithubIcon()})\n\t\t\t@components.Anchor(components.AnchorProps{LeftIcon: LinkedInIcon()})\n\t\t\u003c/div\u003e\n\t\u003c/div\u003e\n}\n\ntempl XIcon() {\n\t\u003csvg\n\t\txmlns=\"http://www.w3.org/2000/svg\"\n\t\tx=\"0px\"\n\t\ty=\"0px\"\n\t\tviewBox=\"0 0 50 50\"\n\t\tclass=\"h-6 w-6 fill-base-content/80 hover:fill-base-content inline-block mr-1\"\n\t\u003e\n\t\t\u003cpath d=\"M 5.9199219 6 L 20.582031 27.375 L 6.2304688 44 L 9.4101562 44 L 21.986328 29.421875 L 31.986328 44 L 44 44 L 28.681641 21.669922 L 42.199219 6 L 39.029297 6 L 27.275391 19.617188 L 17.933594 6 L 5.9199219 6 z M 9.7167969 8 L 16.880859 8 L 40.203125 42 L 33.039062 42 L 9.7167969 8 z\"\u003e\u003c/path\u003e\n\t\u003c/svg\u003e\n}\n\ntempl YoutubeIcon() {\n\t\u003csvg\n\t\txmlns=\"http://www.w3.org/2000/svg\"\n\t\tviewBox=\"0 0 24 24\"\n\t\tclass=\"h-6 w-6 fill-base-content/80 hover:fill-base-content inline-block mr-1\"\n\t\u003e\n\t\t\u003cpath\n\t\t\td=\"M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z\"\n\t\t\u003e\u003c/path\u003e\n\t\u003c/svg\u003e\n}\n\ntempl FacebookIcon() {\n\t\u003csvg\n\t\txmlns=\"http://www.w3.org/2000/svg\"\n\t\tviewBox=\"0 0 24 24\"\n\t\tclass=\"h-6 w-6 fill-base-content/80 hover:fill-base-content inline-block mr-1\"\n\t\u003e\n\t\t\u003cpath\n\t\t\td=\"M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z\"\n\t\t\u003e\u003c/path\u003e\n\t\u003c/svg\u003e\n}\n\ntempl GithubIcon() {\n\t\u003csvg\n\t\tclass=\"h-6 w-6 inline-block mr-1\"\n\t\tviewBox=\"0 0 20 20\"\n\t\tversion=\"1.1\"\n\t\txmlns=\"http://www.w3.org/2000/svg\"\n\t\txmlns:xlink=\"http://www.w3.org/1999/xlink\"\n\t\u003e\n\t\t\u003cg stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\"\u003e\n\t\t\t\u003cg class=\"fill-base-content/80 hover:fill-base-content group-hover:fill-base-content\" id=\"Dribbble-Light-Preview\" transform=\"translate(-140.000000, -7559.000000)\"\u003e\n\t\t\t\t\u003cg id=\"icons\" transform=\"translate(56.000000, 160.000000)\"\u003e\n\t\t\t\t\t\u003cpath d=\"M94,7399 C99.523,7399 104,7403.59 104,7409.253 C104,7413.782 101.138,7417.624 97.167,7418.981 C96.66,7419.082 96.48,7418.762 96.48,7418.489 C96.48,7418.151 96.492,7417.047 96.492,7415.675 C96.492,7414.719 96.172,7414.095 95.813,7413.777 C98.04,7413.523 100.38,7412.656 100.38,7408.718 C100.38,7407.598 99.992,7406.684 99.35,7405.966 C99.454,7405.707 99.797,7404.664 99.252,7403.252 C99.252,7403.252 98.414,7402.977 96.505,7404.303 C95.706,7404.076 94.85,7403.962 94,7403.958 C93.15,7403.962 92.295,7404.076 91.497,7404.303 C89.586,7402.977 88.746,7403.252 88.746,7403.252 C88.203,7404.664 88.546,7405.707 88.649,7405.966 C88.01,7406.684 87.619,7407.598 87.619,7408.718 C87.619,7412.646 89.954,7413.526 92.175,7413.785 C91.889,7414.041 91.63,7414.493 91.54,7415.156 C90.97,7415.418 89.522,7415.871 88.63,7414.304 C88.63,7414.304 88.101,7413.319 87.097,7413.247 C87.097,7413.247 86.122,7413.234 87.029,7413.87 C87.029,7413.87 87.684,7414.185 88.139,7415.37 C88.139,7415.37 88.726,7417.2 91.508,7416.58 C91.513,7417.437 91.522,7418.245 91.522,7418.489 C91.522,7418.76 91.338,7419.077 90.839,7418.982 C86.865,7417.627 84,7413.783 84,7409.253 C84,7403.59 88.478,7399 94,7399\"\u003e\u003c/path\u003e\n\t\t\t\t\u003c/g\u003e\n\t\t\t\u003c/g\u003e\n\t\t\u003c/g\u003e\n\t\u003c/svg\u003e\n}\n\ntempl LinkedInIcon() {\n\t\u003csvg\n\t\tclass=\"h-6 w-6 fill-base-content/80 hover:fill-base-content inline-block mr-1\"\n\t\tviewBox=\"0 0 32 32\"\n\t\tversion=\"1.1\"\n\t\txmlns=\"http://www.w3.org/2000/svg\"\n\t\u003e\n\t\t\u003cpath d=\"M28.778 1.004h-25.56c-0.008-0-0.017-0-0.027-0-1.199 0-2.172 0.964-2.186 2.159v25.672c0.014 1.196 0.987 2.161 2.186 2.161 0.010 0 0.019-0 0.029-0h25.555c0.008 0 0.018 0 0.028 0 1.2 0 2.175-0.963 2.194-2.159l0-0.002v-25.67c-0.019-1.197-0.994-2.161-2.195-2.161-0.010 0-0.019 0-0.029 0h0.001zM9.9 26.562h-4.454v-14.311h4.454zM7.674 10.293c-1.425 0-2.579-1.155-2.579-2.579s1.155-2.579 2.579-2.579c1.424 0 2.579 1.154 2.579 2.578v0c0 0.001 0 0.002 0 0.004 0 1.423-1.154 2.577-2.577 2.577-0.001 0-0.002 0-0.003 0h0zM26.556 26.562h-4.441v-6.959c0-1.66-0.034-3.795-2.314-3.795-2.316 0-2.669 1.806-2.669 3.673v7.082h-4.441v-14.311h4.266v1.951h0.058c0.828-1.395 2.326-2.315 4.039-2.315 0.061 0 0.121 0.001 0.181 0.003l-0.009-0c4.5 0 5.332 2.962 5.332 6.817v7.855z\"\u003e\u003c/path\u003e\n\t\u003c/svg\u003e\n}\n```",
+      "title": "Socials anchors"
     }
   ],
   "avatar": [
     {
       "name": "MultipleAvatarSizes",
-      "code": "```go\ntempl MultipleAvatarSizes() {\n\t\u003cdiv class=\"flex justify-center items-center space-x-4 pt-4\"\u003e\n\t\t@components.Avatar(components.AvatarProps{\n\t\t\tContainerClass: \"rounded w-8\", Source: \"/static/images/avatar.jpg\"})\n\t\t@components.Avatar(components.AvatarProps{\n\t\t\tContainerClass: \"rounded w-12\", Source: \"/static/images/avatar.jpg\"})\n\t\t@components.Avatar(components.AvatarProps{\n\t\t\tContainerClass: \"rounded w-16\", Source: \"/static/images/avatar.jpg\"})\n\t\t@components.Avatar(components.AvatarProps{\n\t\t\tContainerClass: \"rounded w-20\", Source: \"/static/images/avatar.jpg\"})\n\t\t@components.Avatar(components.AvatarProps{\n\t\t\tContainerClass: \"rounded w-24\", Source: \"/static/images/avatar.jpg\"})\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl MultipleAvatarSizes() {\n\t\u003cdiv class=\"flex justify-center items-center space-x-4 pt-4\"\u003e\n\t\t@components.Avatar(components.AvatarProps{\n\t\t\tContainerClass: \"rounded w-8\", Source: \"/static/images/avatar.jpg\"})\n\t\t@components.Avatar(components.AvatarProps{\n\t\t\tContainerClass: \"rounded w-12\", Source: \"/static/images/avatar.jpg\"})\n\t\t@components.Avatar(components.AvatarProps{\n\t\t\tContainerClass: \"rounded w-16\", Source: \"/static/images/avatar.jpg\"})\n\t\t@components.Avatar(components.AvatarProps{\n\t\t\tContainerClass: \"rounded w-20\", Source: \"/static/images/avatar.jpg\"})\n\t\t@components.Avatar(components.AvatarProps{\n\t\t\tContainerClass: \"rounded w-24\", Source: \"/static/images/avatar.jpg\"})\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Multiple avatar sizes"
     },
     {
       "name": "GroupOfAvatars",
-      "code": "```go\ntempl GroupOfAvatars() {\n\t\u003cdiv class=\"flex justify-center items-center space-x-4 pt-4\"\u003e\n\t\t@components.AvatarGroup(\"-space-x-8\") {\n\t\t\t@components.Avatar(components.AvatarProps{\n\t\t\t\tContainerClass: \"rounded-full w-12\", Source: \"/static/images/avatar.jpg\"})\n\t\t\t@components.Avatar(components.AvatarProps{\n\t\t\t\tContainerClass: \"rounded-full w-12\", Source: \"/static/images/avatar.jpg\"})\n\t\t\t@components.Avatar(components.AvatarProps{\n\t\t\t\tContainerClass: \"rounded-full w-12\", Source: \"/static/images/avatar.jpg\"})\n\t\t\t@components.Avatar(components.AvatarProps{\n\t\t\t\tContainerClass: \"rounded-full w-12\", Source: \"/static/images/avatar.jpg\"})\n\t\t\t@components.Avatar(components.AvatarProps{\n\t\t\t\tContainerClass: \"rounded-full w-12\", Source: \"/static/images/avatar.jpg\"})\n\t\t}\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl GroupOfAvatars() {\n\t\u003cdiv class=\"flex justify-center items-center space-x-4 pt-4\"\u003e\n\t\t@components.AvatarGroup(\"-space-x-8\") {\n\t\t\t@components.Avatar(components.AvatarProps{\n\t\t\t\tContainerClass: \"rounded-full w-12\", Source: \"/static/images/avatar.jpg\"})\n\t\t\t@components.Avatar(components.AvatarProps{\n\t\t\t\tContainerClass: \"rounded-full w-12\", Source: \"/static/images/avatar.jpg\"})\n\t\t\t@components.Avatar(components.AvatarProps{\n\t\t\t\tContainerClass: \"rounded-full w-12\", Source: \"/static/images/avatar.jpg\"})\n\t\t\t@components.Avatar(components.AvatarProps{\n\t\t\t\tContainerClass: \"rounded-full w-12\", Source: \"/static/images/avatar.jpg\"})\n\t\t\t@components.Avatar(components.AvatarProps{\n\t\t\t\tContainerClass: \"rounded-full w-12\", Source: \"/static/images/avatar.jpg\"})\n\t\t}\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Avatar group"
     },
     {
       "name": "OnlineAndOffline",
-      "code": "```go\n\ntempl OnlineAndOffline() {\n\t\u003cdiv class=\"flex justify-center items-center space-x-4 pt-4\"\u003e\n\t\t@components.Avatar(components.AvatarProps{\n\t\t\tAvatarClass:    \"online\",\n\t\t\tContainerClass: \"rounded-full w-12\",\n\t\t\tSource:         \"/static/images/avatar.jpg\",\n\t\t})\n\t\t@components.Avatar(components.AvatarProps{\n\t\t\tAvatarClass:    \"offline\",\n\t\t\tContainerClass: \"rounded-full w-12\",\n\t\t\tSource:         \"/static/images/avatar.jpg\",\n\t\t})\n\t\u003c/div\u003e\n}\n```",
-      "description": "Avatar with online/offline indicator."
+      "code": "```go\ntempl OnlineAndOffline() {\n\t\u003cdiv class=\"flex justify-center items-center space-x-4 pt-4\"\u003e\n\t\t@components.Avatar(components.AvatarProps{\n\t\t\tAvatarClass:    \"online\",\n\t\t\tContainerClass: \"rounded-full w-12\",\n\t\t\tSource:         \"/static/images/avatar.jpg\",\n\t\t})\n\t\t@components.Avatar(components.AvatarProps{\n\t\t\tAvatarClass:    \"offline\",\n\t\t\tContainerClass: \"rounded-full w-12\",\n\t\t\tSource:         \"/static/images/avatar.jpg\",\n\t\t})\n\t\u003c/div\u003e\n}\n```",
+      "title": "Avatar with online/offline indicator"
     }
   ],
   "banner": [
@@ -84,11 +95,13 @@
   "card": [
     {
       "name": "BasicCard",
-      "code": "```go\ntempl BasicCard() {\n\t\u003cdiv class=\"flex justify-center items-center py-4\"\u003e\n\t\t@components.Card(\n\t\t\tcomponents.CardProps{\n\t\t\t\tTitle:   \"This is a card\",\n\t\t\t\tContent: \"And this is the card's content.\",\n\t\t\t\tClass:   \"bg-base-100 w-96 shadow-xl\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl BasicCard() {\n\t\u003cdiv class=\"flex justify-center items-center py-4\"\u003e\n\t\t@components.Card(\n\t\t\tcomponents.CardProps{\n\t\t\t\tTitle:   \"This is a card\",\n\t\t\t\tContent: \"And this is the card's content.\",\n\t\t\t\tClass:   \"bg-base-100 w-96 shadow-xl\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Basic card"
     },
     {
       "name": "BasicCardWithImage",
-      "code": "```go\ntempl BasicCardWithImage() {\n\t\u003cdiv class=\"flex justify-center items-center py-4\"\u003e\n\t\t@components.Card(\n\t\t\tcomponents.CardProps{\n\t\t\t\tTitle:   \"Card with image\",\n\t\t\t\tContent: \"Card with image content\",\n\t\t\t\tSource:  \"/static/images/avatar.jpg\",\n\t\t\t\tAlt:     \"avatar image\",\n\t\t\t\tClass:   \"card-bordered bg-base-100 w-96 shadow-xl\",\n\t\t\t},\n\t\t) {\n\t\t\t\u003cbutton class=\"btn btn-sm btn-primary\"\u003eContact\u003c/button\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n```"
+      "code": "```go\ntempl BasicCardWithImage() {\n\t\u003cdiv class=\"flex justify-center items-center py-4\"\u003e\n\t\t@components.Card(\n\t\t\tcomponents.CardProps{\n\t\t\t\tTitle:   \"Card with image\",\n\t\t\t\tContent: \"Card with image content\",\n\t\t\t\tSource:  \"/static/images/avatar.jpg\",\n\t\t\t\tAlt:     \"avatar image\",\n\t\t\t\tClass:   \"card-bordered bg-base-100 w-96 shadow-xl\",\n\t\t\t},\n\t\t) {\n\t\t\t\u003cbutton class=\"btn btn-sm btn-primary\"\u003eContact\u003c/button\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n```",
+      "title": "Card with image"
     }
   ],
   "carousel": [
@@ -106,19 +119,20 @@
   "checkbox": [
     {
       "name": "DefaultCheckbox",
-      "code": "```go\n\ntempl DefaultCheckbox() {\n\t\u003cdiv class=\"mx-auto pt-4\"\u003e\n\t\t@components.Checkbox(\n\t\t\tcomponents.CheckboxProps{\n\t\t\t\tBefore:  \"Remember me\",\n\t\t\t\tName:    \"remember_me\",\n\t\t\t\tChecked: false,\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```",
-      "description": "Label before checkbox."
+      "code": "```go\ntempl DefaultCheckbox() {\n\t\u003cdiv class=\"mx-auto pt-4\"\u003e\n\t\t@components.Checkbox(\n\t\t\tcomponents.CheckboxProps{\n\t\t\t\tBefore:  \"Remember me\",\n\t\t\t\tName:    \"remember_me\",\n\t\t\t\tChecked: false,\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Checkbox with label before"
     },
     {
       "name": "PrimaryCheckbox",
-      "code": "```go\n\ntempl PrimaryCheckbox() {\n\t\u003cdiv class=\"mx-auto pt-4\"\u003e\n\t\t@components.Checkbox(\n\t\t\tcomponents.CheckboxProps{\n\t\t\t\tAfter:   \"Remember me\",\n\t\t\t\tName:    \"remember_me\",\n\t\t\t\tChecked: true,\n\t\t\t\tClass:   \"checkbox-primary\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n```",
-      "description": "Label after checkbox."
+      "code": "```go\ntempl PrimaryCheckbox() {\n\t\u003cdiv class=\"mx-auto pt-4\"\u003e\n\t\t@components.Checkbox(\n\t\t\tcomponents.CheckboxProps{\n\t\t\t\tAfter:   \"Remember me\",\n\t\t\t\tName:    \"remember_me\",\n\t\t\t\tChecked: true,\n\t\t\t\tClass:   \"checkbox-primary\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n```",
+      "title": "Checkbox with label after"
     }
   ],
   "collapse": [
     {
       "name": "CollapseExample",
-      "code": "```go\ntempl CollapseExample() {\n\t\u003cdiv class=\"flex justify-center items-center pt-4\"\u003e\n\t\t@components.Collapse(\n\t\t\tcomponents.CollapseProps{\n\t\t\t\tTitle:        \"Click me to show/hide content\",\n\t\t\t\tTitleClass:   \"text-xl font-medium\",\n\t\t\t\tClass:        \"collapse-plus bg-base-300\",\n\t\t\t\tContentClass: \"bg-base-200\",\n\t\t\t}) {\n\t\t\t\u003cdiv class=\"pt-4\"\u003e\n\t\t\t\t\u003cp\u003eCollapse content\u003c/p\u003e\n\t\t\t\u003c/div\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n```"
+      "code": "```go\ntempl CollapseExample() {\n\t\u003cdiv class=\"flex justify-center items-center pt-4\"\u003e\n\t\t@components.Collapse(\n\t\t\tcomponents.CollapseProps{\n\t\t\t\tTitle:        \"Click me to show/hide content\",\n\t\t\t\tTitleClass:   \"text-xl font-medium\",\n\t\t\t\tClass:        \"collapse-plus bg-base-300\",\n\t\t\t\tContentClass: \"bg-base-200\",\n\t\t\t}) {\n\t\t\t\u003cdiv class=\"pt-4\"\u003e\n\t\t\t\t\u003cp\u003eCollapse content\u003c/p\u003e\n\t\t\t\u003c/div\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n```",
+      "title": "Basic collapse"
     }
   ],
   "combobox": [
@@ -200,29 +214,35 @@
   "input": [
     {
       "name": "BasicTextInput",
-      "code": "```go\ntempl BasicTextInput() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.Input(\n\t\t\tcomponents.InputProps{\n\t\t\t\tLabel:       \"Name\",\n\t\t\t\tName:        \"name\",\n\t\t\t\tPlaceholder: \"Your name...\",\n\t\t\t\tClass:       \"input-bordered\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl BasicTextInput() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.Input(\n\t\t\tcomponents.InputProps{\n\t\t\t\tLabel:       \"Name\",\n\t\t\t\tName:        \"name\",\n\t\t\t\tPlaceholder: \"Your name...\",\n\t\t\t\tClass:       \"input-bordered\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Basic text input"
     },
     {
       "name": "PasswordInput",
-      "code": "```go\ntempl PasswordInput() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.Input(\n\t\t\tcomponents.InputProps{\n\t\t\t\tLabel:       \"Password\",\n\t\t\t\tName:        \"password\",\n\t\t\t\tType:        \"password\",\n\t\t\t\tPlaceholder: \"Password...\",\n\t\t\t\tClass:       \"input-bordered\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl PasswordInput() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.Input(\n\t\t\tcomponents.InputProps{\n\t\t\t\tLabel:       \"Password\",\n\t\t\t\tName:        \"password\",\n\t\t\t\tType:        \"password\",\n\t\t\t\tPlaceholder: \"Password...\",\n\t\t\t\tClass:       \"input-bordered\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Password input"
     },
     {
       "name": "EmailInput",
-      "code": "```go\ntempl EmailInput() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.Input(\n\t\t\tcomponents.InputProps{\n\t\t\t\tLabel:       \"Email\",\n\t\t\t\tName:        \"email\",\n\t\t\t\tType:        \"email\",\n\t\t\t\tValue:       \"not@a.valid@email.com\",\n\t\t\t\tPlaceholder: \"Email...\",\n\t\t\t\tErr:         \"Please provide a valid email\",\n\t\t\t\tClass:       \"input-bordered\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl EmailInput() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.Input(\n\t\t\tcomponents.InputProps{\n\t\t\t\tLabel:       \"Email\",\n\t\t\t\tName:        \"email\",\n\t\t\t\tType:        \"email\",\n\t\t\t\tValue:       \"not@a.valid@email.com\",\n\t\t\t\tPlaceholder: \"Email...\",\n\t\t\t\tErr:         \"Please provide a valid email\",\n\t\t\t\tClass:       \"input-bordered\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Email input"
     },
     {
       "name": "DisabledInput",
-      "code": "```go\ntempl DisabledInput() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.Input(\n\t\t\tcomponents.InputProps{\n\t\t\t\tLabel:           \"Name\",\n\t\t\t\tName:            \"name\",\n\t\t\t\tDisabled:        true,\n\t\t\t\tDisabledMessage: \"This is disabled\",\n\t\t\t\tClass:           \"input-bordered\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n```"
+      "code": "```go\ntempl DisabledInput() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.Input(\n\t\t\tcomponents.InputProps{\n\t\t\t\tLabel:           \"Name\",\n\t\t\t\tName:            \"name\",\n\t\t\t\tDisabled:        true,\n\t\t\t\tDisabledMessage: \"This is disabled\",\n\t\t\t\tClass:           \"input-bordered\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n```",
+      "title": "Disabled input"
     }
   ],
   "join": [
     {
       "name": "JoinButtons",
-      "code": "```go\ntempl JoinButtons() {\n\t@components.Join(\n\t\t[]templ.Component{\n\t\t\tjoinItem(\"first\"),\n\t\t\tjoinItem(\"second\"),\n\t\t\tjoinItem(\"third\"),\n\t\t},\n\t)\n}\n\ntempl joinItem(label string) {\n\t\u003cbutton class=\"btn btn-primary\"\u003e{ label }\u003c/button\u003e\n}\n\n```"
+      "code": "```go\ntempl JoinButtons() {\n\t@components.Join(\n\t\t[]templ.Component{\n\t\t\tjoinItem(\"first\"),\n\t\t\tjoinItem(\"second\"),\n\t\t\tjoinItem(\"third\"),\n\t\t},\n\t)\n}\n\ntempl joinItem(label string) {\n\t\u003cbutton class=\"btn btn-primary\"\u003e{ label }\u003c/button\u003e\n}\n\n```",
+      "title": "Join buttons"
     },
     {
       "name": "JoinInputs",
-      "code": "```go\ntempl JoinInputs() {\n\t@components.Join(\n\t\t[]templ.Component{\n\t\t\tjoinInput(\"first\"),\n\t\t\tjoinInput(\"second\"),\n\t\t\tjoinInput(\"third\"),\n\t\t},\n\t)\n}\n\ntempl joinInput(label string) {\n\t@components.Input(components.InputProps{Label: label, Class: \"input-bordered\"})\n}\n```"
+      "code": "```go\ntempl JoinInputs() {\n\t@components.Join(\n\t\t[]templ.Component{\n\t\t\tjoinInput(\"first\"),\n\t\t\tjoinInput(\"second\"),\n\t\t\tjoinInput(\"third\"),\n\t\t},\n\t)\n}\n\ntempl joinInput(label string) {\n\t@components.Input(components.InputProps{Label: label, Class: \"input-bordered\"})\n}\n```",
+      "title": "Join inputs"
     }
   ],
   "lazy_load": [
@@ -252,20 +272,24 @@
   "modal": [
     {
       "name": "BasicModal",
-      "code": "```go\ntempl BasicModal() {\n\t\u003cdiv class=\"flex justify-center items-center py-8\"\u003e\n\t\t@components.Modal(components.ModalProps{ID: \"my_modal\", Label: \"Click me\"}) {\n\t\t\t\u003ch3 class=\"text-3xl\"\u003eModal title\u003c/h3\u003e\n\t\t\t\u003cp\u003eModal content goes here\u003c/p\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl BasicModal() {\n\t\u003cdiv class=\"flex justify-center items-center py-8\"\u003e\n\t\t@components.Modal(components.ModalProps{ID: \"my_modal\", Label: \"Click me\"}) {\n\t\t\t\u003ch3 class=\"text-3xl\"\u003eModal title\u003c/h3\u003e\n\t\t\t\u003cp\u003eModal content goes here\u003c/p\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Basic modal"
     },
     {
       "name": "MultipleModals",
-      "code": "```go\ntempl MultipleModals() {\n\t\u003cdiv class=\"flex justify-center items-center py-8\"\u003e\n\t\t\u003cdiv class=\"grid grid-cols-3 gap-4\"\u003e\n\t\t\tfor i := range 3 {\n\t\t\t\t@components.Modal(components.ModalProps{ID: fmt.Sprintf(\"my_modal_%d\", i), Label: \"Click me\"}) {\n\t\t\t\t\t\u003ch3 class=\"text-3xl\"\u003eModal title { fmt.Sprintf(\"%d\", i) }\u003c/h3\u003e\n\t\t\t\t\t\u003cp\u003eModal content { fmt.Sprintf(\"%d\", i) }\u003c/p\u003e\n\t\t\t\t}\n\t\t\t}\n\t\t\u003c/div\u003e\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl MultipleModals() {\n\t\u003cdiv class=\"flex justify-center items-center py-8\"\u003e\n\t\t\u003cdiv class=\"grid grid-cols-3 gap-4\"\u003e\n\t\t\tfor i := range 3 {\n\t\t\t\t@components.Modal(components.ModalProps{ID: fmt.Sprintf(\"my_modal_%d\", i), Label: \"Click me\"}) {\n\t\t\t\t\t\u003ch3 class=\"text-3xl\"\u003eModal title { fmt.Sprintf(\"%d\", i) }\u003c/h3\u003e\n\t\t\t\t\t\u003cp\u003eModal content { fmt.Sprintf(\"%d\", i) }\u003c/p\u003e\n\t\t\t\t}\n\t\t\t}\n\t\t\u003c/div\u003e\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Multiple modals"
     },
     {
       "name": "ModalWithAction",
-      "code": "```go\ntempl ModalWithAction() {\n\t\u003cdiv class=\"flex justify-center items-center py-8\"\u003e\n\t\t@components.Modal(components.ModalProps{ID: \"my_modal_actions\", Label: \"Click me\"}) {\n\t\t\t\u003ch3 class=\"text-3xl\"\u003eModal title\u003c/h3\u003e\n\t\t\t\u003cp\u003eModal content goes here\u003c/p\u003e\n\t\t\t\u003cdiv class=\"modal-action\"\u003e\n\t\t\t\t\u003cbutton class=\"btn\" onclick=\"my_modal_actions.close()\"\u003eClose\u003c/button\u003e\n\t\t\t\u003c/div\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl ModalWithAction() {\n\t\u003cdiv class=\"flex justify-center items-center py-8\"\u003e\n\t\t@components.Modal(components.ModalProps{ID: \"my_modal_actions\", Label: \"Click me\"}) {\n\t\t\t\u003ch3 class=\"text-3xl\"\u003eModal title\u003c/h3\u003e\n\t\t\t\u003cp\u003eModal content goes here\u003c/p\u003e\n\t\t\t\u003cdiv class=\"modal-action\"\u003e\n\t\t\t\t\u003cbutton class=\"btn\" onclick=\"my_modal_actions.close()\"\u003eClose\u003c/button\u003e\n\t\t\t\u003c/div\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Modal with action button"
     },
     {
       "name": "ModalConfirmDelete",
       "code": "```go\ntempl ModalConfirmDelete() {\n\t\u003cdiv class=\"flex justify-center items-center py-8\"\u003e\n\t\t\u003cdiv class=\"grid grid-cols-3 gap-4\"\u003e\n\t\t\tfor i := range 6 {\n\t\t\t\t\u003cdiv name=\"modal-confirm-example\"\u003e\n\t\t\t\t\t@components.Modal(\n\t\t\t\t\t\tcomponents.ModalProps{\n\t\t\t\t\t\t\tID:    fmt.Sprintf(\"modal_confirm_%d\", i),\n\t\t\t\t\t\t\tLabel: modalConfirmDeleteButton(i, templ.Attributes{\"onclick\": fmt.Sprintf(\"modal_confirm_%d.showModal()\", i)}),\n\t\t\t\t\t\t},\n\t\t\t\t\t) {\n\t\t\t\t\t\t\u003cdiv class=\"space-y-8\"\u003e\n\t\t\t\t\t\t\t\u003cdiv class=\"grid grid-cols-8 gap-2\"\u003e\n\t\t\t\t\t\t\t\t\u003cdiv class=\"flex justify-center items-center\"\u003e\n\t\t\t\t\t\t\t\t\t\u003csvg\n\t\t\t\t\t\t\t\t\t\tclass=\"col-span-1 h-8 w-8\"\n\t\t\t\t\t\t\t\t\t\tviewBox=\"0 0 24 24\"\n\t\t\t\t\t\t\t\t\t\tfill=\"none\"\n\t\t\t\t\t\t\t\t\t\txmlns=\"http://www.w3.org/2000/svg\"\n\t\t\t\t\t\t\t\t\t\u003e\u003cpath class=\"fill-error\" fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm-1.5-5.009c0-.867.659-1.491 1.491-1.491.85 0 1.509.624 1.509 1.491 0 .867-.659 1.509-1.509 1.509-.832 0-1.491-.642-1.491-1.509zM11.172 6a.5.5 0 0 0-.499.522l.306 7a.5.5 0 0 0 .5.478h1.043a.5.5 0 0 0 .5-.478l.305-7a.5.5 0 0 0-.5-.522h-1.655z\"\u003e\u003c/path\u003e\u003c/svg\u003e\n\t\t\t\t\t\t\t\t\u003c/div\u003e\n\t\t\t\t\t\t\t\t\u003cp class=\"col-span-7\"\u003e\n\t\t\t\t\t\t\t\t\tAre you sure you want to delete { fmt.Sprintf(\"%d\", i) } ?\n\t\t\t\t\t\t\t\t\u003c/p\u003e\n\t\t\t\t\t\t\t\u003c/div\u003e\n\t\t\t\t\t\t\t\u003cdiv class=\"flex justify-between items-center\"\u003e\n\t\t\t\t\t\t\t\t\u003cbutton\n\t\t\t\t\t\t\t\t\tid=\"modal-confirm-example-delete-button\"\n\t\t\t\t\t\t\t\t\tclass=\"btn btn-sm btn-error\"\n\t\t\t\t\t\t\t\t\thx-delete={ fmt.Sprintf(\"/modal-confirm?value=%d\", i) }\n\t\t\t\t\t\t\t\t\thx-target=\"closest div[name=modal-confirm-example]\"\n\t\t\t\t\t\t\t\t\thx-swap=\"outerHTML\"\n\t\t\t\t\t\t\t\t\u003e\n\t\t\t\t\t\t\t\t\tDelete\n\t\t\t\t\t\t\t\t\u003c/button\u003e\n\t\t\t\t\t\t\t\t\u003cbutton class=\"btn\" { templ.Attributes{\"onclick\": fmt.Sprintf(\"modal_confirm_%d.close()\", i)}... }\u003e\n\t\t\t\t\t\t\t\t\tCancel\n\t\t\t\t\t\t\t\t\u003c/button\u003e\n\t\t\t\t\t\t\t\u003c/div\u003e\n\t\t\t\t\t\t\t\u003cscript\u003e\n\t\t\t\t\t\t\t\t((modal) =\u003e {\n\t\t\t\t\t\t\t\t\tdocument.addEventListener(\"htmx:afterRequest\", (evt) =\u003e {\n\t\t\t\t\t\t\t\t\t\tif (evt.detail.elt.id === \"modal-confirm-example-delete-button\" \u0026\u0026 evt.detail.successful) {\n\t\t\t\t\t\t\t\t\t\t\tmodal.close()\n\t\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t})(document.currentScript.closest(\"dialog.modal\"))\n\t\t\t\t\t\t\t\u003c/script\u003e\n\t\t\t\t\t\t\u003c/div\u003e\n\t\t\t\t\t}\n\t\t\t\t\u003c/div\u003e\n\t\t\t}\n\t\t\u003c/div\u003e\n\t\u003c/div\u003e\n}\n\ntempl modalConfirmDeleteButton(i int, attrs templ.Attributes) {\n\t\u003cbutton { attrs... } class=\"btn\"\u003e\n\t\tClick to delete { fmt.Sprintf(\"%d\", i) }\n\t\u003c/button\u003e\n}\n```",
-      "handler": "```go\n// endpoint to log deleted 'element' and return an empty string\n// to replace the element, i.e. remove it from the DOM\nfunc DeleteModalExample(c echo.Context) error {\n\tvalue := c.QueryParam(\"value\")\n\tlog.Println(\"deleting modal\", value)\n\treturn c.String(http.StatusOK, \"\")\n}\n\n```"
+      "handler": "```go\n// endpoint to log deleted 'element' and return an empty string\n// to replace the element, i.e. remove it from the DOM\nfunc DeleteModalExample(c echo.Context) error {\n\tvalue := c.QueryParam(\"value\")\n\tlog.Println(\"deleting modal\", value)\n\treturn c.String(http.StatusOK, \"\")\n}\n\n```",
+      "title": "Modal to confirm delete action"
     }
   ],
   "pagination": [
@@ -285,11 +309,13 @@
   "radio": [
     {
       "name": "DefaultRadio",
-      "code": "```go\ntempl DefaultRadio() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.Radio(\n\t\t\tcomponents.RadioProps{\n\t\t\t\tName: \"my-radio-group1\",\n\t\t\t\tValues: map[string]string{\n\t\t\t\t\t\"Apples\":  \"apples\",\n\t\t\t\t\t\"Oranges\": \"oranges\",\n\t\t\t\t},\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl DefaultRadio() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.Radio(\n\t\t\tcomponents.RadioProps{\n\t\t\t\tName: \"my-radio-group1\",\n\t\t\t\tValues: map[string]string{\n\t\t\t\t\t\"Apples\":  \"apples\",\n\t\t\t\t\t\"Oranges\": \"oranges\",\n\t\t\t\t},\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Basic radio group"
     },
     {
       "name": "PrimaryRadio",
-      "code": "```go\ntempl PrimaryRadio() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.Radio(\n\t\t\tcomponents.RadioProps{\n\t\t\t\tName: \"my-radio-group2\",\n\t\t\t\tValues: map[string]string{\n\t\t\t\t\t\"Apples\":  \"apples\",\n\t\t\t\t\t\"Oranges\": \"oranges\",\n\t\t\t\t},\n\t\t\t\tClass: \"radio-primary\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n```"
+      "code": "```go\ntempl PrimaryRadio() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.Radio(\n\t\t\tcomponents.RadioProps{\n\t\t\t\tName: \"my-radio-group2\",\n\t\t\t\tValues: map[string]string{\n\t\t\t\t\t\"Apples\":  \"apples\",\n\t\t\t\t\t\"Oranges\": \"oranges\",\n\t\t\t\t},\n\t\t\t\tClass: \"radio-primary\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n```",
+      "title": "Primary radio group"
     }
   ],
   "range": [
@@ -301,22 +327,26 @@
   "rating": [
     {
       "name": "RatingFromOneToFive",
-      "code": "```go\ntempl RatingFromOneToFive() {\n\t\u003cdiv class=\"flex justify-center items-center pt-4\"\u003e\n\t\t@components.Rating(\n\t\t\tcomponents.RatingProps{\n\t\t\t\tName: \"my-rating\",\n\t\t\t\tMin:  1,\n\t\t\t\tMax:  5,\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl RatingFromOneToFive() {\n\t\u003cdiv class=\"flex justify-center items-center pt-4\"\u003e\n\t\t@components.Rating(\n\t\t\tcomponents.RatingProps{\n\t\t\t\tName: \"my-rating\",\n\t\t\t\tMin:  1,\n\t\t\t\tMax:  5,\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Rating from 1 to 5"
     },
     {
       "name": "RatingFromZeroToFive",
-      "code": "```go\ntempl RatingFromZeroToFive() {\n\t\u003cdiv class=\"flex justify-center items-center pt-4\"\u003e\n\t\t@components.Rating(\n\t\t\tcomponents.RatingProps{\n\t\t\t\tName: \"my-rating2\",\n\t\t\t\tMin:  0,\n\t\t\t\tMax:  5,\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n```"
+      "code": "```go\ntempl RatingFromZeroToFive() {\n\t\u003cdiv class=\"flex justify-center items-center pt-4\"\u003e\n\t\t@components.Rating(\n\t\t\tcomponents.RatingProps{\n\t\t\t\tName: \"my-rating2\",\n\t\t\t\tMin:  0,\n\t\t\t\tMax:  5,\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n```",
+      "title": "Rating from 0 to 5"
     }
   ],
   "select": [
     {
       "name": "BasicSelect",
-      "code": "```go\ntempl BasicSelect() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.Select(\n\t\t\tcomponents.SelectProps{\n\t\t\t\tLabel: \"Make a choice\",\n\t\t\t\tName:  \"my-select\",\n\t\t\t\tOptions: []components.SelectOption{\n\t\t\t\t\t{Label: \"Which one?\", Disabled: true},\n\t\t\t\t\t{Label: \"Apples\", Value: \"apples\"},\n\t\t\t\t\t{Label: \"Oranges\", Value: \"oranges\"},\n\t\t\t\t},\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl BasicSelect() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.Select(\n\t\t\tcomponents.SelectProps{\n\t\t\t\tLabel: \"Make a choice\",\n\t\t\t\tName:  \"my-select\",\n\t\t\t\tOptions: []components.SelectOption{\n\t\t\t\t\t{Label: \"Which one?\", Disabled: true},\n\t\t\t\t\t{Label: \"Apples\", Value: \"apples\"},\n\t\t\t\t\t{Label: \"Oranges\", Value: \"oranges\"},\n\t\t\t\t},\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Basic select"
     },
     {
       "name": "CascadingSelect",
       "code": "```go\ntempl CascadingSelect() {\n\t\u003cdiv class=\"max-w-xs mx-auto py-8\"\u003e\n\t\t@components.Select(\n\t\t\tcomponents.SelectProps{\n\t\t\t\tLabel: \"Make\",\n\t\t\t\tName:  \"make\",\n\t\t\t\tOptions: []components.SelectOption{\n\t\t\t\t\t{Label: \"Audi\", Value: \"audi\"},\n\t\t\t\t\t{Label: \"BMW\", Value: \"bmw\"},\n\t\t\t\t\t{Label: \"Toyota\", Value: \"toyota\"},\n\t\t\t\t},\n\t\t\t\tAttrs: templ.Attributes{\n\t\t\t\t\t\"hx-get\":    \"/models\",\n\t\t\t\t\t\"hx-target\": \"#models\",\n\t\t\t\t},\n\t\t\t},\n\t\t)\n\t\t@components.Select(\n\t\t\tcomponents.SelectProps{\n\t\t\t\tLabel: \"Model\",\n\t\t\t\tName:  \"model\",\n\t\t\t\tOptions: []components.SelectOption{\n\t\t\t\t\t{Label: \"A1\", Value: \"a1\"},\n\t\t\t\t\t{Label: \"A4\", Value: \"a4\"},\n\t\t\t\t\t{Label: \"A6\", Value: \"a6\"},\n\t\t\t\t},\n\t\t\t\tAttrs: templ.Attributes{\n\t\t\t\t\t\"id\": \"models\",\n\t\t\t\t},\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n```",
-      "handler": "```go\nvar modelOptions = map[string][]components.SelectOption{\n\t\"audi\": {\n\t\t{Label: \"A1\", Value: \"a1\"},\n\t\t{Label: \"A4\", Value: \"a4\"},\n\t\t{Label: \"A6\", Value: \"a6\"},\n\t},\n\t\"bmw\": {\n\t\t{Label: \"316i\", Value: \"316i\"},\n\t\t{Label: \"320d\", Value: \"320d\"},\n\t},\n\t\"toyota\": {\n\t\t{Label: \"Corolla\", Value: \"corolla\"},\n\t\t{Label: \"Yaris\", Value: \"yaris\"},\n\t\t{Label: \"RAV4\", Value: \"rav4\"},\n\t},\n}\n\nfunc GetCascadingSelectExample(c echo.Context) error {\n\tmake := c.FormValue(\"make\")\n\n\treturn render(c, http.StatusOK, components.SelectOptions(modelOptions[make]))\n}\n\n```"
+      "handler": "```go\nvar modelOptions = map[string][]components.SelectOption{\n\t\"audi\": {\n\t\t{Label: \"A1\", Value: \"a1\"},\n\t\t{Label: \"A4\", Value: \"a4\"},\n\t\t{Label: \"A6\", Value: \"a6\"},\n\t},\n\t\"bmw\": {\n\t\t{Label: \"316i\", Value: \"316i\"},\n\t\t{Label: \"320d\", Value: \"320d\"},\n\t},\n\t\"toyota\": {\n\t\t{Label: \"Corolla\", Value: \"corolla\"},\n\t\t{Label: \"Yaris\", Value: \"yaris\"},\n\t\t{Label: \"RAV4\", Value: \"rav4\"},\n\t},\n}\n\nfunc GetCascadingSelectExample(c echo.Context) error {\n\tmake := c.FormValue(\"make\")\n\n\treturn render(c, http.StatusOK, components.SelectOptions(modelOptions[make]))\n}\n\n```",
+      "title": "Cascading select"
     }
   ],
   "skeleton": [
@@ -340,19 +370,23 @@
   "status": [
     {
       "name": "StatusNotFound",
-      "code": "```go\ntempl StatusNotFound() {\n\t@components.Status(components.StatusProps{\n\t\tCode:              404,\n\t\tTitle:             \"Not Found\",\n\t\tDescription:       \"Looks like there's nothing here...\",\n\t\tReturnButtonLabel: \"Go back\",\n\t})\n}\n\n```"
+      "code": "```go\ntempl StatusNotFound() {\n\t@components.Status(components.StatusProps{\n\t\tCode:              404,\n\t\tTitle:             \"Not Found\",\n\t\tDescription:       \"Looks like there's nothing here...\",\n\t\tReturnButtonLabel: \"Go back\",\n\t})\n}\n\n```",
+      "title": "404 Not Found status"
     },
     {
       "name": "StatusForbidden",
-      "code": "```go\ntempl StatusForbidden() {\n\t@components.Status(components.StatusProps{\n\t\tCode:              403,\n\t\tTitle:             \"Forbidden\",\n\t\tDescription:       \"Invalid permissions to view this page.\",\n\t\tReturnButtonLabel: \"Go back\",\n\t})\n}\n\n```"
+      "code": "```go\ntempl StatusForbidden() {\n\t@components.Status(components.StatusProps{\n\t\tCode:              403,\n\t\tTitle:             \"Forbidden\",\n\t\tDescription:       \"Invalid permissions to view this page.\",\n\t\tReturnButtonLabel: \"Go back\",\n\t})\n}\n\n```",
+      "title": "403 Forbidden status"
     },
     {
       "name": "StatusUnauthorized",
-      "code": "```go\ntempl StatusUnauthorized() {\n\t@components.Status(components.StatusProps{\n\t\tCode:              401,\n\t\tTitle:             \"Unauthorized\",\n\t\tDescription:       \"This page is only available to authenticated users.\",\n\t\tReturnButtonLabel: \"Go back\",\n\t})\n}\n\n```"
+      "code": "```go\ntempl StatusUnauthorized() {\n\t@components.Status(components.StatusProps{\n\t\tCode:              401,\n\t\tTitle:             \"Unauthorized\",\n\t\tDescription:       \"This page is only available to authenticated users.\",\n\t\tReturnButtonLabel: \"Go back\",\n\t})\n}\n\n```",
+      "title": "401 Unauthorized status"
     },
     {
       "name": "StatusInternalServerError",
-      "code": "```go\ntempl StatusInternalServerError() {\n\t@components.Status(components.StatusProps{\n\t\tCode:              500,\n\t\tTitle:             \"Internal Server Error\",\n\t\tDescription:       \"Something went terribly wrong...\",\n\t\tReturnButtonLabel: \"Go back\",\n\t})\n}\n```"
+      "code": "```go\ntempl StatusInternalServerError() {\n\t@components.Status(components.StatusProps{\n\t\tCode:              500,\n\t\tTitle:             \"Internal Server Error\",\n\t\tDescription:       \"Something went terribly wrong...\",\n\t\tReturnButtonLabel: \"Go back\",\n\t})\n}\n```",
+      "title": "500 Internal Server Error status"
     }
   ],
   "steps": [
@@ -388,11 +422,13 @@
   "textarea": [
     {
       "name": "BasicTextarea",
-      "code": "```go\ntempl BasicTextarea() {\n\t\u003cdiv class=\"pt-4\"\u003e\n\t\t@components.Textarea(\n\t\t\tcomponents.TextareaProps{\n\t\t\t\tLabel: \"Description\",\n\t\t\t\tName:  \"description\",\n\t\t\t\tClass: \"textarea-bordered resize-none\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl BasicTextarea() {\n\t\u003cdiv class=\"pt-4\"\u003e\n\t\t@components.Textarea(\n\t\t\tcomponents.TextareaProps{\n\t\t\t\tLabel: \"Description\",\n\t\t\t\tName:  \"description\",\n\t\t\t\tClass: \"textarea-bordered resize-none\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Basic textarea"
     },
     {
       "name": "BasicTextareaWithError",
-      "code": "```go\ntempl BasicTextareaWithError() {\n\t\u003cdiv class=\"pt-4\"\u003e\n\t\t@components.Textarea(\n\t\t\tcomponents.TextareaProps{\n\t\t\t\tLabel: \"Description\",\n\t\t\t\tName:  \"description\",\n\t\t\t\tErr:   \"Description cannot be empty\",\n\t\t\t\tClass: \"textarea-bordered resize-none\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n```"
+      "code": "```go\ntempl BasicTextareaWithError() {\n\t\u003cdiv class=\"pt-4\"\u003e\n\t\t@components.Textarea(\n\t\t\tcomponents.TextareaProps{\n\t\t\t\tLabel: \"Description\",\n\t\t\t\tName:  \"description\",\n\t\t\t\tErr:   \"Description cannot be empty\",\n\t\t\t\tClass: \"textarea-bordered resize-none\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n```",
+      "title": "Textarea with error"
     }
   ],
   "timeline": [
@@ -404,43 +440,52 @@
   "toast": [
     {
       "name": "InfoToast",
-      "code": "```go\ntempl InfoToast() {\n\t\u003cdiv class=\"relative min-h-60\"\u003e\n\t\t@components.Toast(\n\t\t\tcomponents.ToastProps{\n\t\t\t\tName:       \"info-toast\",\n\t\t\t\tToastClass: \"absolute toast-end toast-top\",\n\t\t\t\tAlertClass: \"alert-info\",\n\t\t\t},\n\t\t) {\n\t\t\t\u003cspan\u003eInfo toast\u003c/span\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl InfoToast() {\n\t\u003cdiv class=\"relative min-h-60\"\u003e\n\t\t@components.Toast(\n\t\t\tcomponents.ToastProps{\n\t\t\t\tName:       \"info-toast\",\n\t\t\t\tToastClass: \"absolute toast-end toast-top\",\n\t\t\t\tAlertClass: \"alert-info\",\n\t\t\t},\n\t\t) {\n\t\t\t\u003cspan\u003eInfo toast\u003c/span\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Info-type toast"
     },
     {
       "name": "WarningToast",
-      "code": "```go\ntempl WarningToast() {\n\t\u003cdiv class=\"relative min-h-60\"\u003e\n\t\t@components.Toast(\n\t\t\tcomponents.ToastProps{\n\t\t\t\tName:       \"warning-toast\",\n\t\t\t\tToastClass: \"absolute toast-end toast-bottom\",\n\t\t\t\tAlertClass: \"alert-warning\",\n\t\t\t},\n\t\t) {\n\t\t\t\u003cspan\u003eWarning toast\u003c/span\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl WarningToast() {\n\t\u003cdiv class=\"relative min-h-60\"\u003e\n\t\t@components.Toast(\n\t\t\tcomponents.ToastProps{\n\t\t\t\tName:       \"warning-toast\",\n\t\t\t\tToastClass: \"absolute toast-end toast-bottom\",\n\t\t\t\tAlertClass: \"alert-warning\",\n\t\t\t},\n\t\t) {\n\t\t\t\u003cspan\u003eWarning toast\u003c/span\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Warning-type toast"
     },
     {
       "name": "ErrorToast",
-      "code": "```go\ntempl ErrorToast() {\n\t\u003cdiv class=\"relative min-h-60\"\u003e\n\t\t@components.Toast(\n\t\t\tcomponents.ToastProps{\n\t\t\t\tName:       \"error-toast\",\n\t\t\t\tToastClass: \"absolute toast-center toast-top\",\n\t\t\t\tAlertClass: \"alert-error\",\n\t\t\t},\n\t\t) {\n\t\t\t\u003cspan\u003eError toast\u003c/span\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl ErrorToast() {\n\t\u003cdiv class=\"relative min-h-60\"\u003e\n\t\t@components.Toast(\n\t\t\tcomponents.ToastProps{\n\t\t\t\tName:       \"error-toast\",\n\t\t\t\tToastClass: \"absolute toast-center toast-top\",\n\t\t\t\tAlertClass: \"alert-error\",\n\t\t\t},\n\t\t) {\n\t\t\t\u003cspan\u003eError toast\u003c/span\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Error-type toast"
     },
     {
       "name": "InfoToastConfirm",
-      "code": "```go\ntempl InfoToastConfirm() {\n\t\u003cdiv class=\"relative min-h-60\"\u003e\n\t\t@components.Toast(components.ToastProps{\n\t\t\tName:       \"error-toast\",\n\t\t\tToastClass: \"absolute toast-end toast-top\",\n\t\t\tAlertClass: \"alert-info\",\n\t\t},\n\t\t) {\n\t\t\t\u003cspan\u003eInfo toast\u003c/span\u003e\n\t\t\t\u003cbutton onclick=\"remover(event)\" class=\"btn btn-info\"\u003eOK\u003c/button\u003e\n\t\t\t\u003cscript\u003e\n                function remover(evt) {\n                    evt.target.closest(\"div[name=toast-error]\").remove()\n                }\n            \u003c/script\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n```"
+      "code": "```go\ntempl InfoToastConfirm() {\n\t\u003cdiv class=\"relative min-h-60\"\u003e\n\t\t@components.Toast(components.ToastProps{\n\t\t\tName:       \"error-toast\",\n\t\t\tToastClass: \"absolute toast-end toast-top\",\n\t\t\tAlertClass: \"alert-info\",\n\t\t},\n\t\t) {\n\t\t\t\u003cspan\u003eInfo toast\u003c/span\u003e\n\t\t\t\u003cbutton onclick=\"remover(event)\" class=\"btn btn-info\"\u003eOK\u003c/button\u003e\n\t\t\t\u003cscript\u003e\n                function remover(evt) {\n                    evt.target.closest(\"div[name=toast-error]\").remove()\n                }\n            \u003c/script\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n```",
+      "title": "Info-type toast with button to remove it"
     }
   ],
   "toggle": [
     {
       "name": "DefaultToggle",
-      "code": "```go\ntempl DefaultToggle() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.Toggle(\n\t\t\tcomponents.ToggleProps{\n\t\t\t\tBefore: \"Check me out\",\n\t\t\t\tName:   \"checkbox1\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl DefaultToggle() {\n\t\u003cdiv class=\"max-w-52 mx-auto pt-4\"\u003e\n\t\t@components.Toggle(\n\t\t\tcomponents.ToggleProps{\n\t\t\t\tBefore: \"Check me out\",\n\t\t\t\tName:   \"checkbox1\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Basic toggle with label before"
     },
     {
       "name": "PrimaryToggle",
-      "code": "```go\ntempl PrimaryToggle() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.Toggle(\n\t\t\tcomponents.ToggleProps{\n\t\t\t\tBefore:  \"Check me out\",\n\t\t\t\tName:    \"checkbox2\",\n\t\t\t\tChecked: true,\n\t\t\t\tClass:   \"checkbox-primary\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl PrimaryToggle() {\n\t\u003cdiv class=\"max-w-52 mx-auto pt-4\"\u003e\n\t\t@components.Toggle(\n\t\t\tcomponents.ToggleProps{\n\t\t\t\tAfter:   \"Check me out\",\n\t\t\t\tName:    \"checkbox2\",\n\t\t\t\tChecked: true,\n\t\t\t\tClass:   \"checkbox-primary\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Primary toggle with label after"
     },
     {
       "name": "PrimaryToggleWithHighlight",
-      "code": "```go\ntempl PrimaryToggleWithHighlight() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.Toggle(\n\t\t\tcomponents.ToggleProps{\n\t\t\t\tBefore:    \"Paid monthly\",\n\t\t\t\tAfter:     \"Paid annually\",\n\t\t\t\tName:      \"checkbox3\",\n\t\t\t\tHighlight: true,\n\t\t\t\tClass:     \"checkbox-primary\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n```"
+      "code": "```go\ntempl PrimaryToggleWithHighlight() {\n\t\u003cdiv class=\"max-w-xs mx-auto pt-4\"\u003e\n\t\t@components.Toggle(\n\t\t\tcomponents.ToggleProps{\n\t\t\t\tBefore:    \"Paid monthly\",\n\t\t\t\tAfter:     \"Paid annually\",\n\t\t\t\tName:      \"checkbox3\",\n\t\t\t\tHighlight: true,\n\t\t\t\tClass:     \"checkbox-primary\",\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n```",
+      "title": "Primary toggle with highlight"
     }
   ],
   "tooltip": [
     {
       "name": "BasicTooltip",
-      "code": "```go\ntempl BasicTooltip() {\n\t\u003cdiv class=\"min-h-60 flex justify-center items-center\"\u003e\n\t\t@components.Tooltip(components.TooltipProps{Tip: \"Hello\"}) {\n\t\t\t\u003cbutton class=\"btn\"\u003eHover me\u003c/button\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n\n```"
+      "code": "```go\ntempl BasicTooltip() {\n\t\u003cdiv class=\"min-h-60 flex justify-center items-center\"\u003e\n\t\t@components.Tooltip(components.TooltipProps{Tip: \"Hello\"}) {\n\t\t\t\u003cbutton class=\"btn\"\u003eHover me\u003c/button\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Basic tooltip at the top"
     },
     {
       "name": "BasicTooltipError",
-      "code": "```go\ntempl BasicTooltipError() {\n\t\u003cdiv class=\"min-h-60 flex justify-center items-center\"\u003e\n\t\t@components.Tooltip(\n\t\t\tcomponents.TooltipProps{\n\t\t\t\tTip:   \"Hello\",\n\t\t\t\tClass: \"tooltip-bottom tooltip-error\",\n\t\t\t},\n\t\t) {\n\t\t\t\u003cbutton class=\"btn\"\u003eHover me\u003c/button\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n```"
+      "code": "```go\ntempl BasicTooltipError() {\n\t\u003cdiv class=\"min-h-60 flex justify-center items-center\"\u003e\n\t\t@components.Tooltip(\n\t\t\tcomponents.TooltipProps{\n\t\t\t\tTip:   \"Hello\",\n\t\t\t\tClass: \"tooltip-bottom tooltip-error\",\n\t\t\t},\n\t\t) {\n\t\t\t\u003cbutton class=\"btn\"\u003eHover me\u003c/button\u003e\n\t\t}\n\t\u003c/div\u003e\n}\n```",
+      "title": "Error-type tooltip on the bottom"
     }
   ]
 }

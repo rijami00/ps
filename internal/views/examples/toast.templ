@@ -3,6 +3,7 @@ package examples
 import "github.com/haatos/goshipit/internal/views/components"
 
 // example
+// Info-type toast
 templ InfoToast() {
 	<div class="relative min-h-60">
 		@components.Toast(
@@ -18,6 +19,7 @@ templ InfoToast() {
 }
 
 // example
+// Warning-type toast
 templ WarningToast() {
 	<div class="relative min-h-60">
 		@components.Toast(
@@ -33,6 +35,7 @@ templ WarningToast() {
 }
 
 // example
+// Error-type toast
 templ ErrorToast() {
 	<div class="relative min-h-60">
 		@components.Toast(
@@ -48,6 +51,7 @@ templ ErrorToast() {
 }
 
 // example
+// Info-type toast with button to remove it
 templ InfoToastConfirm() {
 	<div class="relative min-h-60">
 		@components.Toast(components.ToastProps{

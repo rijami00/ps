@@ -3,6 +3,7 @@ package examples
 import "github.com/haatos/goshipit/internal/views/components"
 
 // example
+// Basic select
 templ BasicSelect() {
 	<div class="max-w-xs mx-auto pt-4">
 		@components.Select(
@@ -20,6 +21,7 @@ templ BasicSelect() {
 }
 
 // example
+// Cascading select
 templ CascadingSelect() {
 	<div class="max-w-xs mx-auto py-8">
 		@components.Select(

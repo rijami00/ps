@@ -3,6 +3,7 @@ package examples
 import "github.com/haatos/goshipit/internal/views/components"
 
 // example
+// Basic tooltip at the top
 templ BasicTooltip() {
 	<div class="min-h-60 flex justify-center items-center">
 		@components.Tooltip(components.TooltipProps{Tip: "Hello"}) {
@@ -12,6 +13,7 @@ templ BasicTooltip() {
 }
 
 // example
+// Error-type tooltip on the bottom
 templ BasicTooltipError() {
 	<div class="min-h-60 flex justify-center items-center">
 		@components.Tooltip(

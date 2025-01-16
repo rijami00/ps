@@ -16,12 +16,16 @@ type ToggleProps struct {
 templ Toggle(props ToggleProps) {
 	<div class="form-control">
 		<label class="label cursor-pointer space-x-2">
-			<span
-				class={
-					"label-text",
-					templ.KV("text-primary", props.Highlight && !props.Checked),
-				}
-			>{ props.Before }</span>
+			if props.Before != "" {
+				<span
+					class={
+						"label-text",
+						templ.KV("text-primary", props.Highlight && !props.Checked),
+					}
+				>
+					{ props.Before }
+				</span>
+			}
 			<input
 				{ props.Attrs... }
 				type="checkbox"
@@ -37,12 +41,16 @@ templ Toggle(props ToggleProps) {
 					onclick="toggler(event)"
 				}
 			/>
-			<span
-				class={
-					"label-text",
-					templ.KV("text-primary", props.Highlight && props.Checked),
-				}
-			>{ props.After }</span>
+			if props.After != "" {
+				<span
+					class={
+						"label-text",
+						templ.KV("text-primary", props.Highlight && props.Checked),
+					}
+				>
+					{ props.After }
+				</span>
+			}
 		</label>
 		if props.Highlight {
 			<script>

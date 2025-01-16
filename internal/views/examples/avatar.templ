@@ -3,6 +3,7 @@ package examples
 import "github.com/haatos/goshipit/internal/views/components"
 
 // example
+// Multiple avatar sizes
 templ MultipleAvatarSizes() {
 	<div class="flex justify-center items-center space-x-4 pt-4">
 		@components.Avatar(components.AvatarProps{
@@ -19,6 +20,7 @@ templ MultipleAvatarSizes() {
 }
 
 // example
+// Avatar group
 templ GroupOfAvatars() {
 	<div class="flex justify-center items-center space-x-4 pt-4">
 		@components.AvatarGroup("-space-x-8") {
@@ -37,10 +39,7 @@ templ GroupOfAvatars() {
 }
 
 // example
-/*
-Avatar with online/offline indicator.
-*/
-
+// Avatar with online/offline indicator
 templ OnlineAndOffline() {
 	<div class="flex justify-center items-center space-x-4 pt-4">
 		@components.Avatar(components.AvatarProps{

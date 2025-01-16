@@ -3,6 +3,7 @@ package examples
 import "github.com/haatos/goshipit/internal/views/components"
 
 // example
+// Basic anchor
 templ BasicAnchor() {
 	@components.Anchor(components.AnchorProps{
 		Label: "Basic anchor",
@@ -11,6 +12,7 @@ templ BasicAnchor() {
 }
 
 // example
+// Primary anchor
 templ PrimaryAnchor() {
 	@components.Anchor(components.AnchorProps{
 		Label: "Primary anchor",
@@ -19,6 +21,7 @@ templ PrimaryAnchor() {
 }
 
 // example
+// Anchor with icon
 templ AnchorWithIcon() {
 	@components.Anchor(components.AnchorProps{
 		Label:    "GitHub profile",
@@ -28,6 +31,7 @@ templ AnchorWithIcon() {
 }
 
 // example
+// Socials anchors
 templ SocialAnchors() {
 	<div class="mx-auto">
 		<div class="flex space-x-4">

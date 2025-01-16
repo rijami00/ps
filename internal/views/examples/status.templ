@@ -3,6 +3,7 @@ package examples
 import "github.com/haatos/goshipit/internal/views/components"
 
 // example
+// 404 Not Found status
 templ StatusNotFound() {
 	@components.Status(components.StatusProps{
 		Code:              404,
@@ -13,6 +14,7 @@ templ StatusNotFound() {
 }
 
 // example
+// 403 Forbidden status
 templ StatusForbidden() {
 	@components.Status(components.StatusProps{
 		Code:              403,
@@ -23,6 +25,7 @@ templ StatusForbidden() {
 }
 
 // example
+// 401 Unauthorized status
 templ StatusUnauthorized() {
 	@components.Status(components.StatusProps{
 		Code:              401,
@@ -33,6 +36,7 @@ templ StatusUnauthorized() {
 }
 
 // example
+// 500 Internal Server Error status
 templ StatusInternalServerError() {
 	@components.Status(components.StatusProps{
 		Code:              500,

@@ -6,6 +6,7 @@ import (
 )
 
 // example
+// Basic modal
 templ BasicModal() {
 	<div class="flex justify-center items-center py-8">
 		@components.Modal(components.ModalProps{ID: "my_modal", Label: "Click me"}) {
@@ -16,6 +17,7 @@ templ BasicModal() {
 }
 
 // example
+// Multiple modals
 templ MultipleModals() {
 	<div class="flex justify-center items-center py-8">
 		<div class="grid grid-cols-3 gap-4">
@@ -30,6 +32,7 @@ templ MultipleModals() {
 }
 
 // example
+// Modal with action button
 templ ModalWithAction() {
 	<div class="flex justify-center items-center py-8">
 		@components.Modal(components.ModalProps{ID: "my_modal_actions", Label: "Click me"}) {
@@ -43,6 +46,7 @@ templ ModalWithAction() {
 }
 
 // example
+// Modal to confirm delete action
 templ ModalConfirmDelete() {
 	<div class="flex justify-center items-center py-8">
 		<div class="grid grid-cols-3 gap-4">
