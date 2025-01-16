@@ -17,7 +17,7 @@ Generate component code/json, generate templates and run the server:
 
 ## Code/data generation
 
-`cmd/generate/main.go` is used to generate JSON, markdown and Go code from source code. JSON is used to store and load component and example component source code to be displayed in HTML. The generator also generates a markdown file that contains up-to-date types for components (from `internal/model/components.go`), and .go file containing a mapping of example names to *templ* components.
+`cmd/generate/main.go` is used to generate JSON, markdown and Go code from source code. JSON is used to store and load component and example component source code to be displayed in HTML. The generator also generates a markdown file that contains up-to-date types for components (from `internal/model/components.go`), and .go file containing a mapping of example names to _templ_ components.
 
 ## Contributing
 
@@ -31,7 +31,13 @@ For example
 // data_display
 package components
 
-templ AccordionRow(label string) {
+type AccordionRowProps struct {
+	Label string
+	Type  string
+	Name  string
+}
+
+templ AccordionRow(props AccordionRowProps) {
 	<div class="collapse collapse-arrow bg-base-200 join-item">
 		<input type="checkbox" name="templ-accordion"/>
 		<div class="collapse-title text-xl font-medium">{ label }</div>
@@ -49,16 +55,13 @@ Each component also has an examples file with a corresponding name in `internal/
 ```go
 package examples
 
-import (
-	"github.com/haatos/goshipit/internal/model"
-	"github.com/haatos/goshipit/internal/views/components"
-)
+import "github.com/haatos/goshipit/internal/views/components"
 
 // example
 templ BasicTextarea() {
 	<div class="pt-4">
 		@components.Textarea(
-			model.Textarea{
+			components.TextareaProps{
 				Label: "Description",
 				Name:  "description",
 			},
@@ -70,7 +73,7 @@ templ BasicTextarea() {
 templ BasicTextareaWithError() {
 	<div class="pt-4">
 		@components.Textarea(
-			model.Textarea{
+			components.TextareaProps{
 				Label: "Description",
 				Name:  "description",
 				Err:   "Description cannot be empty",
