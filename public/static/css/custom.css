@@ -47,3 +47,9 @@ pre[class=chroma] button {
 pre[class=chroma] button:hover {
     cursor: pointer;
 }
+
+
+a[disabled="disabled"] {
+    pointer-events: none;
+    cursor: default;
+}
