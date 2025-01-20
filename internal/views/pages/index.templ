@@ -1,13 +1,14 @@
 package pages
 
 import (
-	"github.com/haatos/goshipit/internal/views/components"
+    "fmt"
 	"github.com/haatos/goshipit/internal/views/scripts"
+	"github.com/haatos/goshipit/internal/apollo"
 )
 
-templ IndexPage() {
+templ IndexPage(instances []apollo.Instance) {
 	@SideNavLayout(nil) {
-		@IndexPageContent()
+		@IndexPageContent(instances)
 	}
 }
 

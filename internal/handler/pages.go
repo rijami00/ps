@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/haatos/goshipit/internal/apollo"
 	"log"
 	"net/http"
 	"os"
@@ -46,10 +47,12 @@ func getTypesHTML() {
 }
 
 func GetIndexPage(c echo.Context) error {
+	// var content, _ = apollo.PrintInstancesHTML()
+	var instances, _ = apollo.GetInstances()
 	if isHXRequest(c) {
-		return render(c, http.StatusOK, pages.IndexPageContent())
+		return render(c, http.StatusOK, pages.IndexPageContent(instances))
 	}
-	return render(c, http.StatusOK, pages.IndexPage())
+	return render(c, http.StatusOK, pages.IndexPage(instances))
 }
 
 func GetAboutPage(c echo.Context) error {
