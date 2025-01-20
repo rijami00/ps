@@ -13,6 +13,12 @@ const disabledCss = {
 
 module.exports = {
 	content: ["internal/views/**/*.templ"],
+	// safelist: [
+	// 	{
+	// 		pattern: /brightness/,
+	// 		variants: ['sm', 'md', 'lg', 'xl', '2xl'],
+	// 	},
+	// ],
 	theme: {
 		extend: {
 			/* disable code block CSS */

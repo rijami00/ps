@@ -11,7 +11,7 @@ import (
 
 templ DefaultHead() {
 	@Head(
-		"goship.it",
+		"Apollo",
 		[]string{
 			"/static/css/tw.css",
 			"/static/css/custom.css",
@@ -72,7 +72,7 @@ templ SideNavLayout(head templ.Component) {
 							href="/"
 							class="group btn !shadow-none !bg-transparent !border-none flex items-center xl:hidden"
 						>
-							<img class="max-w-8 hidden dark:block" src="/static/images/dark.png" alt="Logo"/>
+							<img class="brightness-100 max-w-8 hidden dark:block" src="/static/images/dark.png" alt="Logo"/>
 							<img class="max-w-8 dark:hidden" src="/static/images/light.png" alt="Logo"/>
 						</a>
 					</div>
@@ -91,21 +91,22 @@ templ SideNavLayout(head templ.Component) {
 				@drawerSide(
 					[]model.Anchor{
 						{
-							Label: "Page 1",
+							Label: "Home",
 							Attrs: templ.Attributes{
-								"hx-get":      "/page1",
+								"hx-get":      "/",
 								"hx-target":   "main",
 								"hx-swap":     "innerHTML",
 								"hx-push-url": "true",
 							},
 						},
 						{
-							Label: "Page 2",
+							Label: "Manage",
 							Attrs: templ.Attributes{
-								"hx-get":      "/page2",
+								"hx-get":      "",
 								"hx-target":   "main",
 								"hx-swap":     "innerHTML",
 								"hx-push-url": "true",
+								"disabled":    "disabled",
 							},
 						},
 					},
@@ -171,7 +172,7 @@ templ drawerSide(anchors []model.Anchor) {
 		<ul class="menu bg-base-300 text-base-content min-h-full w-80 p-4 space-y-2">
 			<li class="pb-4">
 				<a href="/" class="group hover:!bg-transparent flex justify-center items-center">
-					<img class="max-w-12 hidden dark:block" src="/static/images/dark.png" alt="Logo"/>
+					<img class="brightness-200 max-w-12 hidden dark:block" src="/static/images/dark.png" alt="Logo"/>
 					<img class="max-w-12 dark:hidden" src="/static/images/light.png" alt="Logo"/>
 				</a>
 			</li>
