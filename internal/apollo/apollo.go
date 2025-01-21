@@ -7,8 +7,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sanity-io/litter"
-
 	containerTypes "github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/client"
 )
@@ -109,9 +107,9 @@ func GetInstances() ([]Instance, error) {
 		}
 	}
 
-	for _, instance := range instances {
-		litter.Dump(instance)
-		//break
-	}
+	//for _, instance := range instances {
+	//	litter.Dump(instance)
+	//	break
+	//}
 	return instances, nil
 }
