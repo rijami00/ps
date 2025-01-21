@@ -13,10 +13,13 @@ var Settings *AppSettings
 
 func NewSettings() *AppSettings {
 	settings := AppSettings{
-		Title:        "goship.it",
-		ContactEmail: os.Getenv("CONTACT_EMAIL"),
-		Domain:       getEnvOrDefault("DOMAIN", "localhost"),
-		Port:         getEnvOrDefault("PORT", ":8080"),
+		Title:          "Apollo",
+		ContactEmail:   os.Getenv("CONTACT_EMAIL"),
+		Domain:         getEnvOrDefault("DOMAIN", "localhost"),
+		Port:           getEnvOrDefault("PORT", ":8080"),
+		InstanceDomain: os.Getenv("INSTANCE_DOMAIN"),
+		ApolloDocker:   os.Getenv("APOLLO_DOCKER"),
+		ApolloDir:      os.Getenv("APOLLO_DIR"),
 	}
 	if !strings.HasPrefix(settings.Port, ":") {
 		settings.Port = ":" + settings.Port
@@ -33,10 +36,13 @@ func getEnvOrDefault(key, defaultValue string) string {
 }
 
 type AppSettings struct {
-	Title        string
-	ContactEmail string
-	Domain       string
-	Port         string
+	Title          string
+	ContactEmail   string
+	Domain         string
+	Port           string
+	InstanceDomain string
+	ApolloDocker   string
+	ApolloDir      string
 }
 
 func ReadDotenv() {

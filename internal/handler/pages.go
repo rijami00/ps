@@ -55,6 +55,11 @@ func GetIndexPage(c echo.Context) error {
 	return render(c, http.StatusOK, pages.IndexPage(instances))
 }
 
+func GetJsonApi(c echo.Context) error {
+	var instances, _ = apollo.GetInstances()
+	return c.JSON(http.StatusOK, instances)
+}
+
 func GetAboutPage(c echo.Context) error {
 	if isHXRequest(c) {
 		return render(c, http.StatusOK, pages.AboutPageMain())

@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"github.com/docker/docker/api/types"
+	"github.com/haatos/goshipit/internal"
 	"os"
 	"strings"
 )
@@ -13,6 +14,7 @@ import (
 // host, port, name, description, backend version, backend build number, cdm id provider, staging mode (development, staging, production), uptime, deployment time, default user/pass for login etc
 
 type Instance struct {
+	Id                 string
 	WorkingDir         string
 	Url                string
 	Port               uint16
@@ -50,7 +52,7 @@ func GetPublicPort(container types.Container) uint16 {
 // GetDomain Parse config file to get domain
 // config file should contain domain=MY_DOMAIN_HERE as the first line
 func GetDomain(configFile string) string {
-	const fallback = "apis-test.de"
+	var fallback = internal.Settings.InstanceDomain
 	// Open the file
 	file, err := os.Open(configFile)
 	if err != nil {
