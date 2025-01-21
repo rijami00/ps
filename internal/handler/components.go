@@ -45,10 +45,12 @@ func GetComponentPage(c echo.Context) error {
 	exampleCodes := internal.ComponentExampleCodeMap[name]
 	coms := make([]templ.Component, 0, len(exampleCodes))
 	for i, exampleCode := range exampleCodes {
-		tabs := []model.Tab{
+		tabs := []components.TabProps{
 			{
-				Label:   "Preview",
-				Content: templ.Raw(getHTMLFromComponent(generated.ExampleComponents[exampleCode.Name])),
+				Label: "Preview",
+				Content: templ.Raw(
+					getHTMLFromComponent(generated.ExampleComponents[exampleCode.Name]),
+				),
 			},
 			{
 				Label:   "Templ",
@@ -58,12 +60,19 @@ func GetComponentPage(c echo.Context) error {
 		if exampleCode.Handler != "" {
 			tabs = append(
 				tabs,
-				model.Tab{
+				components.TabProps{
 					Label:   "Handler",
 					Content: templ.Raw(markdown.GetHTMLFromMarkdown([]byte(exampleCode.Handler))),
 				})
 		}
-		coms = append(coms, pages.ComponentExampleTabs(exampleCode.Description, pages.ComponentTabs(fmt.Sprintf("%s-%d-tab", exampleCode.Name, i), tabs)))
+		coms = append(
+			coms,
+			pages.ComponentExampleTabs(
+				exampleCode.Title,
+				exampleCode.Description,
+				pages.ComponentTabs(fmt.Sprintf("%s-%d-tab", exampleCode.Name, i), tabs),
+			),
+		)
 	}
 
 	if isHXRequest(c) {
@@ -84,7 +93,10 @@ func GetComponentSearch(c echo.Context) error {
 	for category := range internal.ComponentCodeMap {
 		for i := range internal.ComponentCodeMap[category] {
 			if strings.Contains(
-				strings.ToLower(internal.SnakeCaseToCapitalized(internal.ComponentCodeMap[category][i].Name)), search,
+				strings.ToLower(
+					internal.SnakeCaseToCapitalized(internal.ComponentCodeMap[category][i].Name),
+				),
+				search,
 			) {
 				results = append(results, pages.ComponentSearchItem{
 					Category: category,
@@ -101,7 +113,7 @@ func GetComponentSearch(c echo.Context) error {
 func GetActiveSearchExample(c echo.Context) error {
 	time.Sleep(500 * time.Millisecond)
 
-	search := strings.ToLower(strings.TrimSpace(c.FormValue("search")))
+	search := strings.ToLower(strings.TrimSpace(c.FormValue("active-search-example")))
 
 	out := make([]templ.Component, 0, len(examples.ActiveSearchTableData))
 
@@ -131,7 +143,10 @@ func GetInfiniteScrollExample(c echo.Context) error {
 
 	rows := make([]templ.Component, 0, len(data))
 	for i := range data {
-		rows = append(rows, components.InfiniteScrollRow(data[i][0], data[i][1], 1, i+1 == 10 && hasMore))
+		rows = append(
+			rows,
+			components.InfiniteScrollRow(data[i][0], data[i][1], 1, i+1 == 10 && hasMore),
+		)
 	}
 
 	return render(c, http.StatusOK, components.InfiniteScrollTable(rows))
@@ -144,7 +159,10 @@ func GetInfiniteScrollExampleRows(c echo.Context) error {
 	pageStr := c.QueryParam("page")
 	page, err := strconv.Atoi(pageStr)
 	if err != nil {
-		return newErrorToast(http.StatusUnprocessableEntity, fmt.Sprintf("invalid page '%s'", pageStr))
+		return newErrorToast(
+			http.StatusUnprocessableEntity,
+			fmt.Sprintf("invalid page '%s'", pageStr),
+		)
 	}
 
 	// generate dummy date for the page
@@ -157,7 +175,10 @@ func GetInfiniteScrollExampleRows(c echo.Context) error {
 
 	rows := make([]templ.Component, 0, len(data))
 	for i := range data {
-		rows = append(rows, components.InfiniteScrollRow(data[i][0], data[i][1], page, i+1 == 10 && hasMore))
+		rows = append(
+			rows,
+			components.InfiniteScrollRow(data[i][0], data[i][1], page, i+1 == 10 && hasMore),
+		)
 	}
 
 	return render(c, http.StatusOK, components.InfiniteScrollRows(rows))
@@ -184,7 +205,7 @@ func GetPricingExample(c echo.Context) error {
 // PricingExample
 
 // CascadingSelect
-var modelOptions = map[string][]model.SelectOption{
+var modelOptions = map[string][]components.SelectOption{
 	"audi": {
 		{Label: "A1", Value: "a1"},
 		{Label: "A4", Value: "a4"},
@@ -219,7 +240,10 @@ func GetPaginationExamplePage(c echo.Context) error {
 	pageStr := c.QueryParam("page")
 	page, err := strconv.Atoi(pageStr)
 	if err != nil {
-		return newErrorToast(http.StatusUnprocessableEntity, fmt.Sprintf("invalid page '%s'", pageStr))
+		return newErrorToast(
+			http.StatusUnprocessableEntity,
+			fmt.Sprintf("invalid page '%s'", pageStr),
+		)
 	}
 
 	// generate dummy data for the page
@@ -234,7 +258,7 @@ func GetPaginationExamplePage(c echo.Context) error {
 
 	com := examples.BasicPagination(
 		"pagination-example-1",
-		model.PaginationItem{
+		components.PaginationProps{
 			URL:      c.Request().URL.Path,
 			Page:     page,
 			Low:      low,
@@ -302,3 +326,87 @@ func DeleteModalExample(c echo.Context) error {
 }
 
 // ModalConfirmDelete
+
+// BasicDatePicker
+func GetDatePicker(c echo.Context) error {
+	yearStr := c.QueryParam("year")
+	monthStr := c.QueryParam("month")
+
+	year, yErr := strconv.Atoi(yearStr)
+	month, mErr := strconv.Atoi(monthStr)
+	if month > 12 {
+		year += 1
+		month = 1
+	}
+	if month < 1 {
+		year -= 1
+		month = 12
+	}
+
+	if yErr != nil || mErr != nil {
+		return newErrorToast(http.StatusUnprocessableEntity, "Invalid year or month")
+	}
+
+	var selected time.Time
+	now := time.Now().UTC()
+	if year == now.Year() && time.Month(month) == now.Month() {
+		selected = now
+	}
+
+	return render(
+		c,
+		http.StatusOK,
+		components.DatePicker(
+			components.DatePickerProps{
+				Year:        year,
+				Month:       month,
+				Selected:    selected,
+				StartOfWeek: time.Monday,
+			}),
+	)
+}
+
+func PostDatePickerSelectDay(c echo.Context) error {
+	value := c.FormValue("date")
+	d, err := time.Parse("2006-01-02", value)
+	if err != nil {
+		return newErrorToast(
+			http.StatusUnprocessableEntity,
+			fmt.Sprintf("Invalid date '%s'", value),
+		)
+	}
+
+	return render(c, http.StatusOK, components.DatePickerInput(d))
+}
+
+func GetDatePickerMonthPicker(c echo.Context) error {
+	yearStr := c.QueryParam("year")
+
+	year, yErr := strconv.Atoi(yearStr)
+	if yErr != nil {
+		return newErrorToast(http.StatusUnprocessableEntity, "Invalid year")
+	}
+
+	dpp := components.DatePickerProps{
+		Year: year,
+	}
+
+	return render(c, http.StatusOK, components.DatePickerMonthPicker(dpp))
+}
+
+func GetDatePickerYearPicker(c echo.Context) error {
+	yearStr := c.QueryParam("year")
+
+	year, yErr := strconv.Atoi(yearStr)
+	if yErr != nil {
+		return newErrorToast(http.StatusUnprocessableEntity, "Invalid year")
+	}
+
+	dpp := components.DatePickerProps{
+		Year: year,
+	}
+
+	return render(c, http.StatusOK, components.DatePickerYearPicker(dpp))
+}
+
+// BasicDatePicker

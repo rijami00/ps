@@ -1,6 +1,6 @@
 module github.com/haatos/goshipit
 
-go 1.23.2
+go 1.23.4
 
 require (
 	github.com/PuerkitoBio/goquery v1.10.0

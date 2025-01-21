@@ -1,0 +1,17 @@
+package examples
+
+import "time"
+import "github.com/haatos/goshipit/internal/views/components"
+
+// example
+templ BasicDatePicker() {
+	{{ now := time.Now().UTC() }}
+	@components.DatePicker(
+		components.DatePickerProps{
+			Year:        now.Year(),
+			Month:       int(now.Month()),
+			Selected:    now,
+			StartOfWeek: time.Monday,
+		},
+	)
+}
