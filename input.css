@@ -76,3 +76,19 @@
   --noise: 0;
 }
 
+a[target="_blank"] {
+    @apply no-underline;
+    position: relative;
+    white-space: nowrap;
+}
+
+a[target="_blank"]::after {
+    content: '⌝'; /* Add the arrow character */
+
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+a[target="_blank"]:hover::after {
+    transform: translateX(5px);
+}

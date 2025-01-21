@@ -14,74 +14,7 @@ templ IndexPage(instances []apollo.Instance) {
 
 templ IndexPageContent(instances []apollo.Instance) {
 	// @openSourceToast()
-	<div class="p-4">
-        <div class="mb-4">
-            <h1 class="text-2xl font-bold mb-2">Instances</h1>
-            <div class="space-x-2">
-                <button class="px-2 py-1 bg-blue-500 text-white rounded" onclick="toggleColumn(0)">Toggle WorkingDir</button>
-                <button class="px-2 py-1 bg-blue-500 text-white rounded" onclick="toggleColumn(1)">Toggle Url</button>
-                <button class="px-2 py-1 bg-blue-500 text-white rounded" onclick="toggleColumn(2)">Toggle Port</button>
-                <button class="px-2 py-1 bg-blue-500 text-white rounded" onclick="toggleColumn(3)">Toggle Name</button>
-                <button class="px-2 py-1 bg-blue-500 text-white rounded" onclick="toggleColumn(4)">Toggle Description</button>
-                <button class="px-2 py-1 bg-blue-500 text-white rounded" onclick="toggleColumn(5)">Toggle Image</button>
-                <button class="px-2 py-1 bg-blue-500 text-white rounded" onclick="toggleColumn(6)">Toggle ContainerState</button>
-                <button class="px-2 py-1 bg-blue-500 text-white rounded" onclick="toggleColumn(7)">Toggle ContainerStatus</button>
-                <button class="px-2 py-1 bg-blue-500 text-white rounded" onclick="toggleColumn(8)">Toggle ApiStatus</button>
-                <button class="px-2 py-1 bg-blue-500 text-white rounded" onclick="toggleColumn(9)">Toggle BackendVersion</button>
-                <button class="px-2 py-1 bg-blue-500 text-white rounded" onclick="toggleColumn(10)">Toggle BackendBuildNumber</button>
-                <button class="px-2 py-1 bg-blue-500 text-white rounded" onclick="toggleColumn(11)">Toggle CdmIdProvider</button>
-                <button class="px-2 py-1 bg-blue-500 text-white rounded" onclick="toggleColumn(12)">Toggle StagingMode</button>
-                <button class="px-2 py-1 bg-blue-500 text-white rounded" onclick="toggleColumn(13)">Toggle Uptime</button>
-                <button class="px-2 py-1 bg-blue-500 text-white rounded" onclick="toggleColumn(14)">Toggle DeploymentTime</button>
-                <button class="px-2 py-1 bg-blue-500 text-white rounded" onclick="toggleColumn(15)">Toggle DbConnectionStatus</button>
-            </div>
-        </div>
-
-        <table class="table-auto border-collapse border border-gray-300 w-full">
-            <thead>
-                <tr class="bg-gray-100">
-                    <th class="border border-gray-300 px-4 py-2">WorkingDir</th>
-                    <th class="border border-gray-300 px-4 py-2">Url</th>
-                    <th class="border border-gray-300 px-4 py-2">Port</th>
-                    <th class="border border-gray-300 px-4 py-2">Name</th>
-                    <th class="border border-gray-300 px-4 py-2">Description</th>
-                    <th class="border border-gray-300 px-4 py-2">Image</th>
-                    <th class="border border-gray-300 px-4 py-2">ContainerState</th>
-                    <th class="border border-gray-300 px-4 py-2">ContainerStatus</th>
-                    <th class="border border-gray-300 px-4 py-2">ApiStatus</th>
-                    <th class="border border-gray-300 px-4 py-2">BackendVersion</th>
-                    <th class="border border-gray-300 px-4 py-2">BackendBuildNumber</th>
-                    <th class="border border-gray-300 px-4 py-2">CdmIdProvider</th>
-                    <th class="border border-gray-300 px-4 py-2">StagingMode</th>
-                    <th class="border border-gray-300 px-4 py-2">Uptime</th>
-                    <th class="border border-gray-300 px-4 py-2">DeploymentTime</th>
-                    <th class="border border-gray-300 px-4 py-2">DbConnectionStatus</th>
-                </tr>
-            </thead>
-            <tbody>
-               for _, instance := range instances {
-               <tr>
-                   <td class="border border-gray-300 px-4 py-2">{ instance.WorkingDir }</td>
-                   <td class="border border-gray-300 px-4 py-2">{ instance.Url }</td>
-                   <td class="border border-gray-300 px-4 py-2">{ fmt.Sprintf("%d", instance.Port) }</td>
-                   <td class="border border-gray-300 px-4 py-2">{ instance.Name }</td>
-                   <td class="border border-gray-300 px-4 py-2">{ instance.Description }</td>
-                   <td class="border border-gray-300 px-4 py-2">{ instance.Image }</td>
-                   <td class="border border-gray-300 px-4 py-2">{ instance.ContainerState }</td>
-                   <td class="border border-gray-300 px-4 py-2">{ instance.ContainerStatus }</td>
-                   <td class="border border-gray-300 px-4 py-2">{ instance.ApiStatus }</td>
-                   <td class="border border-gray-300 px-4 py-2">{ instance.BackendVersion }</td>
-                   <td class="border border-gray-300 px-4 py-2">{ instance.BackendBuildNumber }</td>
-                   <td class="border border-gray-300 px-4 py-2">{ instance.CdmIdProvider }</td>
-                   <td class="border border-gray-300 px-4 py-2">{ instance.StagingMode }</td>
-                   <td class="border border-gray-300 px-4 py-2">{ instance.Uptime }</td>
-                   <td class="border border-gray-300 px-4 py-2">{ instance.DeploymentTime }</td>
-                   <td class="border border-gray-300 px-4 py-2">{ instance.DbConnectionStatus }</td>
-               </tr>
-             }
-            </tbody>
-        </table>
-    </div>
+	@InstancesTable(instances)
 }
 
 templ openSourceToast() {

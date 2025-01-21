@@ -34,6 +34,7 @@ func main() {
 	e.Static("/", "public")
 
 	e.GET("/", handler.GetIndexPage)
+	e.GET("/json", handler.GetJsonApi)
 	e.GET("/about", handler.GetAboutPage)
 	e.GET("/get-started", handler.GetGettingStartedPage)
 	e.GET("/types", handler.GetTypesPage)

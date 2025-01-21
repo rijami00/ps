@@ -1,0 +1,253 @@
+package pages
+
+import (
+	"fmt"
+	"strings"
+	"github.com/haatos/goshipit/internal/apollo"
+	"github.com/haatos/goshipit/internal/views/components"
+)
+
+templ InstancesTable(instances []apollo.Instance) {
+    {{ rows := []templ.Component{}
+        for _, instance := range instances {
+            rows = append(rows, InstanceRow(instance))
+        }
+    }}
+
+    @components.Table(
+        []templ.Component{
+            components.PlainText("Name"),
+            components.PlainText("Container"),
+            StackItems(
+                []templ.Component{
+                    components.PlainText("Server"),
+                    components.PlainText("Version"),
+                    components.PlainText("Build"),
+                },
+            ),
+            components.PlainText("DB"),
+            components.PlainText("IdP"),
+            components.PlainText("Mode"),
+            components.PlainText("Login"),
+            components.PlainText("More Info"),
+        },
+        rows,
+        templ.Attributes{
+            "class": "table table-zebra table-pin-rows table-pin-cols w-full",
+        },
+    )
+}
+
+// vertically stack items using flexbox
+templ StackItems(items []templ.Component) {
+    <div class="flex flex-col">
+        for _, item := range items {
+            <div class="">
+                @item
+            </div>
+        }
+    </div>
+}
+
+templ InstanceRow(instance apollo.Instance) {
+    <tr>
+        // Name
+        <th>
+            @components.Anchor(components.AnchorProps {
+                    Label: instance.Name,
+                    Class: "link p-4",
+                    Href: instance.Url,
+                    Attrs: templ.Attributes{
+                        "target": "_blank",
+                    },
+                },
+            )
+            <br>
+            @components.PlainText(instance.Description)
+        </th>
+
+        // Container
+        <td>
+            @components.PlainText(instance.ContainerState)
+            <br>
+            @components.PlainText(instance.ContainerStatus)
+        </td>
+
+        // Server
+        <td>
+            @components.PlainText(instance.ApiStatus)
+            <br>
+            @components.PlainText(instance.BackendVersion)
+            <br>
+            @components.PlainText(instance.BackendBuildNumber)
+        </td>
+
+        // Db
+        <td>
+            @components.PlainText(instance.DbConnectionStatus)
+        </td>
+
+        // IdP
+        <td>
+            @components.PlainText(instance.CdmIdProvider)
+        </td>
+
+        // Mode
+        <td>
+            @components.PlainText(instance.StagingMode)
+        </td>
+
+        // Login
+        <td>
+            @LoginPassInfo(instance)
+            {{
+                rootLoginAvailable := "✘"
+                rootLoginAvailableColor := "text-red-600"
+                if instance.StagingMode == "staging" && instance.CdmIdProvider != "azure" {
+                    rootLoginAvailable = "✔"
+                    rootLoginAvailableColor = "text-green-600"
+                }
+            }}
+            <div class="flex items-center space-x-3">
+                <span class={ "flex items-center justify-center w-2 h-2 rounded-full", rootLoginAvailableColor }>
+                  <span class="">{ rootLoginAvailable }</span>
+                </span>
+                <p class=""><code>root</code> Login</p>
+            </div>
+        </td>
+
+        // More Info
+        <td>
+            @MoreInfoView(instance)
+        </td>
+
+    </tr>
+}
+
+templ LoginPassInfo(instance apollo.Instance) {
+    {{
+        login := "[as created]"
+        sampleLogin := "rijami00"
+        pass := "[as created]"
+        samplePass := "rijami00"
+        switch instance.CdmIdProvider {
+            case "azure":
+                login = "[email]"
+                sampleLogin = "riasat.al.jamil@apis.de"
+                pass = "[windows login]"
+                samplePass = "hunter2"
+            case "ldaps":
+                if strings.HasSuffix(instance.Name, "-ms") {
+                    login = "[full name]"
+                    sampleLogin = "Riasat Al Jamil"
+                    pass = "[username]"
+                    samplePass = "rijami00"
+                } else {
+                    login = "[username]"
+                    sampleLogin = "rijami00"
+                    pass = "[username]"
+                    samplePass = "rijami00"
+                }
+        }
+    }}
+
+    <div class="flex justify-between">
+        <div class="flex items-center space-x-3">
+            <span class="flex items-center justify-center w-2 h-2 rounded-full">
+              <span class="">👤</span>
+            </span>
+            <p class="">{ login }</p>
+        </div>
+        @LoginTooltipInfo(sampleLogin, samplePass)
+    </div>
+    <div class="flex items-center space-x-3">
+        <span class="flex items-center justify-center w-2 h-2 rounded-full">
+          <span class="">🔑</span>
+        </span>
+        <p class="">{ pass }</p>
+    </div>
+}
+
+templ LoginTooltipInfo(sampleLogin string, samplePass string) {
+    @components.Tooltip(
+        components.TooltipProps{
+            Tip:   fmt.Sprintf("Login: %s, Pass: %s", sampleLogin, samplePass),
+            Class: "tooltip-bottom tooltip-info",
+        },
+    ) {
+        <button class="btn btn-outline btn-circle btn-xs btn-info">❔</button>
+    }
+}
+
+
+script MoreInfoViewClose(id string) {
+    document.getElementById(id).close()
+}
+
+templ MoreInfoView(instance apollo.Instance) {
+    {{ nameId := fmt.Sprintf("more_info_%s", instance.Id) }}
+    <div class="flex justify-center items-center">
+        @components.Modal(components.ModalProps{ID: nameId, Label: "📃"}) {
+            <h3 class="text-3xl">More Info - { instance.Name }</h3>
+            <div>
+                <p><strong>WorkingDir:</strong> { instance.WorkingDir }</p>
+                <p><strong>Url:</strong> { instance.Url }</p>
+                <p><strong>Port:</strong> { fmt.Sprintf("%d", instance.Port) }</p>
+                <p><strong>Image:</strong> { instance.Image }</p>
+                <p><strong>DeploymentTime:</strong> { instance.DeploymentTime }</p>
+            </div>
+            <div class="modal-action">
+                <button class="btn" onclick={ MoreInfoViewClose(nameId)  } >Close</button>
+            </div>
+        }
+    </div>
+}
+
+templ comment(instances []apollo.Instance) {
+	<div class="p-4">
+		<table class="table-auto border-collapse border border-gray-300 w-full">
+			<thead>
+				<tr class="bg-gray-100">
+					<th class="border border-gray-300 px-4 py-2">WorkingDir</th>
+					<th class="border border-gray-300 px-4 py-2">Url</th>
+					<th class="border border-gray-300 px-4 py-2">Port</th>
+					<th class="border border-gray-300 px-4 py-2">Name</th>
+					<th class="border border-gray-300 px-4 py-2">Description</th>
+					<th class="border border-gray-300 px-4 py-2">Image</th>
+					<th class="border border-gray-300 px-4 py-2">ContainerState</th>
+					<th class="border border-gray-300 px-4 py-2">ContainerStatus</th>
+					<th class="border border-gray-300 px-4 py-2">ApiStatus</th>
+					<th class="border border-gray-300 px-4 py-2">BackendVersion</th>
+					<th class="border border-gray-300 px-4 py-2">BackendBuildNumber</th>
+					<th class="border border-gray-300 px-4 py-2">CdmIdProvider</th>
+					<th class="border border-gray-300 px-4 py-2">StagingMode</th>
+					<th class="border border-gray-300 px-4 py-2">Uptime</th>
+					<th class="border border-gray-300 px-4 py-2">DeploymentTime</th>
+					<th class="border border-gray-300 px-4 py-2">DbConnectionStatus</th>
+				</tr>
+			</thead>
+			<tbody>
+				for _, instance := range instances {
+					<tr>
+						<td class="border border-gray-300 px-4 py-2">{ instance.WorkingDir }</td>
+						<td class="border border-gray-300 px-4 py-2">{ instance.Url }</td>
+						<td class="border border-gray-300 px-4 py-2">{ fmt.Sprintf("%d", instance.Port) }</td>
+						<td class="border border-gray-300 px-4 py-2">{ instance.Name }</td>
+						<td class="border border-gray-300 px-4 py-2">{ instance.Description }</td>
+						<td class="border border-gray-300 px-4 py-2">{ instance.Image }</td>
+						<td class="border border-gray-300 px-4 py-2">{ instance.ContainerState }</td>
+						<td class="border border-gray-300 px-4 py-2">{ instance.ContainerStatus }</td>
+						<td class="border border-gray-300 px-4 py-2">{ instance.ApiStatus }</td>
+						<td class="border border-gray-300 px-4 py-2">{ instance.BackendVersion }</td>
+						<td class="border border-gray-300 px-4 py-2">{ instance.BackendBuildNumber }</td>
+						<td class="border border-gray-300 px-4 py-2">{ instance.CdmIdProvider }</td>
+						<td class="border border-gray-300 px-4 py-2">{ instance.StagingMode }</td>
+						<td class="border border-gray-300 px-4 py-2">{ instance.Uptime }</td>
+						<td class="border border-gray-300 px-4 py-2">{ instance.DeploymentTime }</td>
+						<td class="border border-gray-300 px-4 py-2">{ instance.DbConnectionStatus }</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+}

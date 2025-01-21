@@ -53,11 +53,11 @@ templ SideNavLayout(head templ.Component) {
 	<html data-theme="getColorScheme()" lang="en">
 		@DefaultHead()
 		<body>
-			<div class="drawer xl:drawer-open">
+			<div class="drawer">
 				<input id="nav-drawer" type="checkbox" class="drawer-toggle"/>
 				<div class="drawer-content">
 					<div class="flex space-x-1 items-center">
-						<label for="nav-drawer" class="cursor-pointer btn btn-ghost drawer-button xl:hidden">
+						<label for="nav-drawer" class="cursor-pointer btn btn-ghost drawer-button">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								class="h-5 w-5"
@@ -75,13 +75,13 @@ templ SideNavLayout(head templ.Component) {
 						</label>
 						<a
 							href="/"
-							class="group btn !shadow-none !bg-transparent !border-none flex items-center xl:hidden"
+							class="group btn !shadow-none !bg-transparent !border-none flex items-center"
 						>
-							<img class="brightness-100 max-w-8 hidden dark:block" src="/static/images/dark.png" alt="Logo"/>
+							<img class="brightness-200 max-w-8 hidden dark:block" src="/static/images/dark.png" alt="Logo"/>
 							<img class="max-w-8 dark:hidden" src="/static/images/light.png" alt="Logo"/>
 						</a>
 					</div>
-					<main class="w-full max-w-screen-lg min-h-svh pl-8 pr-8 xl:pr-0">
+					<main class="w-full min-h-svh pl-8 pr-8 xl:pr-0">
 						{ children... }
 					</main>
 					@components.Footer(
@@ -203,7 +203,7 @@ templ SideNavLayout(head templ.Component) {
 }
 
 templ drawerSide(anchors []components.AnchorProps) {
-	<div class="drawer-side">
+	<div class="drawer-side z-50">
 		<label for="nav-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
 		<ul class="menu bg-base-300 text-base-content min-h-full w-[330px] p-4 space-y-2">
 			<li class="pb-4">

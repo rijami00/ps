@@ -3,6 +3,7 @@ package apollo
 import (
 	"context"
 	"fmt"
+	"github.com/haatos/goshipit/internal"
 	"strings"
 	"time"
 
@@ -18,11 +19,11 @@ func GetInstances() ([]Instance, error) {
 	// Create a context and Docker client for the remote Docker host
 	ctx := context.Background()
 	cli, err := client.NewClientWithOpts(
-		client.WithHost("tcp://192.168.1.17:2376"),
+		client.WithHost(internal.Settings.ApolloDocker),
 		client.WithAPIVersionNegotiation(),
 	)
-	const apolloDir = "/home/cdm/apollo/"
-	const apolloConfig = apolloDir + ".config"
+	var apolloDir = internal.Settings.ApolloDir
+	var apolloConfig = apolloDir + ".config"
 	var domain = GetDomain(apolloConfig)
 
 	if err != nil {
@@ -59,6 +60,7 @@ func GetInstances() ([]Instance, error) {
 		// Check if the Compose file path contains "/apollo/instances/"
 		if strings.Contains(workingDir, apolloDir) {
 			// extract more details:
+			id := container.ID
 			name := container.Labels["com.docker.compose.project"]
 			port := GetPublicPort(container)
 			url := BuildUrl(name, domain, port)
@@ -78,6 +80,7 @@ func GetInstances() ([]Instance, error) {
 			// We could parse container.Ports to get the actual port if needed
 			// For now, just fill what we can
 			i := Instance{
+				Id:              id,
 				WorkingDir:      workingDir,
 				Image:           image,
 				ContainerState:  state,
