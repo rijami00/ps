@@ -1,15 +1,13 @@
 package examples
 
-import (
-	"github.com/haatos/goshipit/internal/model"
-	"github.com/haatos/goshipit/internal/views/components"
-)
+import "github.com/haatos/goshipit/internal/views/components"
 
 // example
+// Info-type toast
 templ InfoToast() {
 	<div class="relative min-h-60">
 		@components.Toast(
-			model.Toast{
+			components.ToastProps{
 				Name:       "info-toast",
 				ToastClass: "absolute toast-end toast-top",
 				AlertClass: "alert-info",
@@ -21,10 +19,11 @@ templ InfoToast() {
 }
 
 // example
+// Warning-type toast
 templ WarningToast() {
 	<div class="relative min-h-60">
 		@components.Toast(
-			model.Toast{
+			components.ToastProps{
 				Name:       "warning-toast",
 				ToastClass: "absolute toast-end toast-bottom",
 				AlertClass: "alert-warning",
@@ -36,10 +35,11 @@ templ WarningToast() {
 }
 
 // example
+// Error-type toast
 templ ErrorToast() {
 	<div class="relative min-h-60">
 		@components.Toast(
-			model.Toast{
+			components.ToastProps{
 				Name:       "error-toast",
 				ToastClass: "absolute toast-center toast-top",
 				AlertClass: "alert-error",
@@ -51,9 +51,10 @@ templ ErrorToast() {
 }
 
 // example
+// Info-type toast with button to remove it
 templ InfoToastConfirm() {
 	<div class="relative min-h-60">
-		@components.Toast(model.Toast{
+		@components.Toast(components.ToastProps{
 			Name:       "error-toast",
 			ToastClass: "absolute toast-end toast-top",
 			AlertClass: "alert-info",
@@ -62,10 +63,10 @@ templ InfoToastConfirm() {
 			<span>Info toast</span>
 			<button onclick="remover(event)" class="btn btn-info">OK</button>
 			<script>
-            function remover(evt) {
-                evt.target.closest("div[name=toast-error]").remove()
-            }
-        </script>
+                function remover(evt) {
+                    evt.target.closest("div[name=toast-error]").remove()
+                }
+            </script>
 		}
 	</div>
 }

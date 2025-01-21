@@ -1,15 +1,13 @@
 package examples
 
-import (
-	"github.com/haatos/goshipit/internal/model"
-	"github.com/haatos/goshipit/internal/views/components"
-)
+import "github.com/haatos/goshipit/internal/views/components"
 
 // example
+// Basic card
 templ BasicCard() {
 	<div class="flex justify-center items-center py-4">
 		@components.Card(
-			model.Card{
+			components.CardProps{
 				Title:   "This is a card",
 				Content: "And this is the card's content.",
 				Class:   "bg-base-100 w-96 shadow-xl",
@@ -19,10 +17,11 @@ templ BasicCard() {
 }
 
 // example
+// Card with image
 templ BasicCardWithImage() {
 	<div class="flex justify-center items-center py-4">
 		@components.Card(
-			model.Card{
+			components.CardProps{
 				Title:   "Card with image",
 				Content: "Card with image content",
 				Source:  "/static/images/avatar.jpg",

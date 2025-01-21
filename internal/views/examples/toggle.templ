@@ -1,15 +1,13 @@
 package examples
 
-import (
-	"github.com/haatos/goshipit/internal/model"
-	"github.com/haatos/goshipit/internal/views/components"
-)
+import "github.com/haatos/goshipit/internal/views/components"
 
 // example
+// Basic toggle with label before
 templ DefaultToggle() {
-	<div class="max-w-xs mx-auto pt-4">
+	<div class="max-w-52 mx-auto pt-4">
 		@components.Toggle(
-			model.Toggle{
+			components.ToggleProps{
 				Before: "Check me out",
 				Name:   "checkbox1",
 			},
@@ -18,11 +16,12 @@ templ DefaultToggle() {
 }
 
 // example
+// Primary toggle with label after
 templ PrimaryToggle() {
-	<div class="max-w-xs mx-auto pt-4">
+	<div class="max-w-52 mx-auto pt-4">
 		@components.Toggle(
-			model.Toggle{
-				Before:  "Check me out",
+			components.ToggleProps{
+				After:   "Check me out",
 				Name:    "checkbox2",
 				Checked: true,
 				Class:   "checkbox-primary",
@@ -32,10 +31,11 @@ templ PrimaryToggle() {
 }
 
 // example
+// Primary toggle with highlight
 templ PrimaryToggleWithHighlight() {
 	<div class="max-w-xs mx-auto pt-4">
 		@components.Toggle(
-			model.Toggle{
+			components.ToggleProps{
 				Before:    "Paid monthly",
 				After:     "Paid annually",
 				Name:      "checkbox3",
