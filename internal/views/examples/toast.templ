@@ -61,11 +61,13 @@ templ InfoToastConfirm() {
 		},
 		) {
 			<span>Info toast</span>
-			<button onclick="remover(event)" class="btn btn-info">OK</button>
+			<button id="toast-remover-btn" class="btn btn-info">OK</button>
 			<script>
-                function remover(evt) {
-                    evt.target.closest("div[name=toast-error]").remove()
-                }
+                ((toast) => {
+                    document.getElementById("toast-remover-btn").addEventListener("click", () => {
+                            toast.remove()
+                        })
+                })(document.currentScript.closest("div.toast"))
             </script>
 		}
 	</div>
