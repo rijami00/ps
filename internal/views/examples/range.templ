@@ -3,9 +3,26 @@ package examples
 import "github.com/haatos/goshipit/internal/views/components"
 
 // example
+// Range component using alpine.js
 templ BasicRange() {
 	<div class="max-w-sm mx-auto pt-4">
 		@components.Range(
+			components.RangeProps{
+				Name:  "my-range",
+				Value: 25,
+				Min:   0,
+				Max:   100,
+				Step:  5,
+			},
+		)
+	</div>
+}
+
+// example
+// Range component using datastar.js
+templ DatastarRange() {
+	<div class="max-w-sm mx-auto pt-4">
+		@components.DatastarRange(
 			components.RangeProps{
 				Name:  "my-range",
 				Value: 25,

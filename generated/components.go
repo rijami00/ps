@@ -60,6 +60,7 @@ var ExampleComponents = map[string]templ.Component{
 	"DefaultRadio":               examples.DefaultRadio(),
 	"PrimaryRadio":               examples.PrimaryRadio(),
 	"BasicRange":                 examples.BasicRange(),
+	"DatastarRange":              examples.DatastarRange(),
 	"RatingFromOneToFive":        examples.RatingFromOneToFive(),
 	"RatingFromZeroToFive":       examples.RatingFromZeroToFive(),
 	"BasicSelect":                examples.BasicSelect(),

@@ -321,7 +321,13 @@
   "range": [
     {
       "name": "BasicRange",
-      "code": "```go\ntempl BasicRange() {\n\t\u003cdiv class=\"max-w-sm mx-auto pt-4\"\u003e\n\t\t@components.Range(\n\t\t\tcomponents.RangeProps{\n\t\t\t\tName:  \"my-range\",\n\t\t\t\tValue: 25,\n\t\t\t\tMin:   0,\n\t\t\t\tMax:   100,\n\t\t\t\tStep:  5,\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n```"
+      "code": "```go\ntempl BasicRange() {\n\t\u003cdiv class=\"max-w-sm mx-auto pt-4\"\u003e\n\t\t@components.Range(\n\t\t\tcomponents.RangeProps{\n\t\t\t\tName:  \"my-range\",\n\t\t\t\tValue: 25,\n\t\t\t\tMin:   0,\n\t\t\t\tMax:   100,\n\t\t\t\tStep:  5,\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n\n```",
+      "title": "Range component using alpine.js"
+    },
+    {
+      "name": "DatastarRange",
+      "code": "```go\ntempl DatastarRange() {\n\t\u003cdiv class=\"max-w-sm mx-auto pt-4\"\u003e\n\t\t@components.DatastarRange(\n\t\t\tcomponents.RangeProps{\n\t\t\t\tName:  \"my-range\",\n\t\t\t\tValue: 25,\n\t\t\t\tMin:   0,\n\t\t\t\tMax:   100,\n\t\t\t\tStep:  5,\n\t\t\t},\n\t\t)\n\t\u003c/div\u003e\n}\n```",
+      "title": "Range component using datastar.js"
     }
   ],
   "rating": [
