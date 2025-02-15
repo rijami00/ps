@@ -26,10 +26,10 @@ func renderErrorConfirm(c echo.Context, status int, errs []string) error {
 	return render(c, status, custom.ToastErrorConfirm(errs...))
 }
 
-func renderSuccessFade(c echo.Context, status int, errs []string) error {
+func renderInfoFade(c echo.Context, status int, messages []string) error {
 	hxRetarget(c, "body")
 	hxReswap(c, "beforeend")
-	return render(c, status, custom.HXToastInfoFade(errs...))
+	return render(c, status, custom.HXToastInfoFade(messages...))
 }
 
 func getHTMLFromComponent(com templ.Component) string {
