@@ -3,10 +3,25 @@ package examples
 import "github.com/haatos/goshipit/internal/views/components"
 
 // example
-templ BasicFileInput() {
+// Different size file inputs
+templ DifferentSizeFileInputs() {
 	@components.FileInput(components.FileInputProps{
 		Label: "File upload",
-		Name:  "file",
-		Class: "input-bordered",
+		Size:  "xs",
+	})
+	@components.FileInput(components.FileInputProps{
+		Label: "File upload",
+		Size:  "sm",
+	})
+	@components.FileInput(components.FileInputProps{
+		Label: "File upload",
+	})
+	@components.FileInput(components.FileInputProps{
+		Label: "File upload",
+		Size:  "lg",
+	})
+	@components.FileInput(components.FileInputProps{
+		Label: "File upload",
+		Size:  "xl",
 	})
 }
