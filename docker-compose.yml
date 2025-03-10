@@ -1,0 +1,15 @@
+services:
+  ps:
+    image: "${CONTAINER_REGISTRY_IMAGE}:latest"
+    build: .
+    ports:
+      - "8082:8082"
+    volumes:
+      - .env:/app/.env:ro  # Mount the .env file as read-only
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "--quiet", "--tries=1", "http://localhost:8082"]
+      interval: 3s
+      timeout: 2s
+      retries: 5
+      start_period: 1s
