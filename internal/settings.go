@@ -20,6 +20,7 @@ func NewSettings() *AppSettings {
 		InstanceDomain: os.Getenv("INSTANCE_DOMAIN"),
 		ApolloDocker:   os.Getenv("APOLLO_DOCKER"),
 		ApolloDir:      os.Getenv("APOLLO_DIR"),
+		GitHubInstance: os.Getenv("GITHUB_INSTANCE"),
 	}
 	if !strings.HasPrefix(settings.Port, ":") {
 		settings.Port = ":" + settings.Port
@@ -43,6 +44,7 @@ type AppSettings struct {
 	InstanceDomain string
 	ApolloDocker   string
 	ApolloDir      string
+	GitHubInstance string
 }
 
 func ReadDotenv() {
