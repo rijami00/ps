@@ -34,7 +34,7 @@ RUN npm install
 RUN npm install -g tailwindcss
 
 # Check if Tailwind is installed
-RUN npx tailwindcss -v || (echo "TailwindCSS is not installed!" && exit 1)
+RUN npx tailwindcss --help > /dev/null || (echo "TailwindCSS is not installed!" && exit 1)
 
 # Copy full source (needed for Tailwind's scanning)
 COPY --from=build /app /app
