@@ -27,7 +27,7 @@ FROM node:22-alpine AS css
 WORKDIR /app
 
 # Copy package.json and install dependencies
-COPY package.json package-lock.json ./
+COPY package.json ./
 RUN npm install
 
 # Install TailwindCSS
