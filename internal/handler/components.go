@@ -311,7 +311,7 @@ func PostComboboxSubmit(c echo.Context) error {
 	name := c.Param("name")
 	comboboxPostData := urlValues[name]
 
-	return renderSuccessFade(c, http.StatusOK, comboboxPostData)
+	return renderInfoFade(c, http.StatusOK, comboboxPostData)
 }
 
 // BasicCombobox
@@ -410,3 +410,62 @@ func GetDatePickerYearPicker(c echo.Context) error {
 }
 
 // BasicDatePicker
+
+// BasicTimeSlotPicker
+func GetTimeSlotPicker(c echo.Context) error {
+	dateStr := c.QueryParam("date")
+	date, err := time.Parse("2006-01-02", dateStr)
+	if err != nil {
+		return newErrorToast(http.StatusUnprocessableEntity, "Invalid date")
+	}
+
+	props := components.TimeSlotPickerProps{
+		ID:          "time-slot-picker-example",
+		CurrentDate: date,
+		PickerURL:   "/timeslotpicker",
+		ReserveURL:  "/timeslotpicker/reserve",
+		TimeSlots:   getTimeSlots(date),
+	}
+	return render(c, http.StatusOK, components.TimeSlotPicker(props))
+}
+
+func getTimeSlots(date time.Time) []components.TimeSlot {
+	slots := make([]components.TimeSlot, 32)
+
+	for i := range 32 {
+		slots[i] = components.TimeSlot{
+			Start: date.Add(time.Duration(10+i*2) * time.Hour),
+			End:   date.Add(time.Duration(11+i*2) * time.Hour),
+		}
+	}
+
+	return slots
+}
+
+func PostTimeSlotPickerReserve(c echo.Context) error {
+	startStr := c.QueryParam("start")
+	start, err := time.Parse("2006-01-02-15-04", startStr)
+	if err != nil {
+		return newErrorToast(http.StatusUnprocessableEntity, "Invalid start date")
+	}
+	endStr := c.QueryParam("end")
+	end, err := time.Parse("2006-01-02-15-04", endStr)
+	if err != nil {
+		return newErrorToast(http.StatusUnprocessableEntity, "Invalid end date")
+	}
+
+	return renderInfoFade(
+		c,
+		http.StatusOK,
+		[]string{
+			fmt.Sprintf(
+				"Time slot on %s, %s - %s reserved!",
+				start.Format("Mon Jan 02"),
+				start.Format("15:04"),
+				end.Format("15:04"),
+			),
+		},
+	)
+}
+
+// BasicTimeSlotPicker
