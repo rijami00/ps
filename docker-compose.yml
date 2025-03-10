@@ -8,7 +8,7 @@ services:
       - .env:/app/.env:ro  # Mount the .env file as read-only
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--spider", "--quiet", "--tries=1", "http://localhost:8082"]
+      test: ["CMD", "wget", "--spider", "--quiet", "--tries=1", "http://localhost:8082/up"]
       interval: 3s
       timeout: 2s
       retries: 5
