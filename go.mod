@@ -3,15 +3,15 @@ module github.com/haatos/goshipit
 go 1.24
 
 require (
-	github.com/PuerkitoBio/goquery v1.10.1
+	github.com/PuerkitoBio/goquery v1.10.2
 	github.com/a-h/templ v0.3.833
 	github.com/alecthomas/chroma v0.10.0
 	github.com/docker/docker v28.0.1+incompatible
-	github.com/labstack/echo/v4 v4.12.0
+	github.com/labstack/echo/v4 v4.13.3
 	github.com/labstack/gommon v0.4.2
 	github.com/mattn/go-sqlite3 v1.14.24
 	github.com/russross/blackfriday v1.6.0
-	golang.org/x/time v0.7.0
+	golang.org/x/time v0.11.0
 )
 
 require (
@@ -26,7 +26,6 @@ require (
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
-	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/moby/docker-image-spec v1.3.1 // indirect

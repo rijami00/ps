@@ -34,6 +34,8 @@ func main() {
 	e.Static("/", "public")
 
 	e.GET("/", handler.GetIndexPage)
+	// healthcheck endpoint, just return 200
+	e.GET("/up", handler.GetUp)
 	e.GET("/json", handler.GetJsonApi)
 	e.GET("/about", handler.GetAboutPage)
 	e.GET("/get-started", handler.GetGettingStartedPage)

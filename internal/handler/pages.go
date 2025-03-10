@@ -60,6 +60,11 @@ func GetJsonApi(c echo.Context) error {
 	return c.JSON(http.StatusOK, instances)
 }
 
+func GetUp(c echo.Context) error {
+	// just return 200 and a json saying status: up
+	return c.JSON(http.StatusOK, map[string]string{"status": "up"})
+}
+
 func GetAboutPage(c echo.Context) error {
 	if isHXRequest(c) {
 		return render(c, http.StatusOK, pages.AboutPageMain())
