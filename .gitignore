@@ -7,3 +7,4 @@ node_modules/
 package-lock.json
 public/static/css/tw.css
 generated/*.json
+.DS_Store
