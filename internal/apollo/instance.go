@@ -23,14 +23,26 @@ type Instance struct {
 	Image              string
 	ContainerState     string
 	ContainerStatus    string
+	ContainerDetails   []ContainerDetails
 	ApiStatus          string
 	BackendVersion     string
 	BackendBuildNumber string
+	BackendCommitHash  string
+	BackendCommitUrl   string
 	CdmIdProvider      string
 	StagingMode        string
 	Uptime             string
 	DeploymentTime     string
 	DbConnectionStatus string
+}
+
+type ContainerDetails struct {
+	Id              string
+	Name            string
+	Service         string
+	Image           string
+	ContainerState  string
+	ContainerStatus string
 }
 
 const (
@@ -43,7 +55,15 @@ func BuildUrl(name string, domain string, port uint16) string {
 }
 
 func GetPublicPort(container types.Container) uint16 {
-	if len(container.Ports) > 0 && container.Ports[0].PublicPort != 0 {
+	// loop on container.Ports
+	// find PrivatePort == 443 and then take the PublicPort
+	// if not found, return 0
+	for _, port := range container.Ports {
+		if port.PrivatePort == 443 {
+			return port.PublicPort
+		}
+	}
+	if len(container.Ports) > 0 {
 		return container.Ports[0].PublicPort
 	}
 	return 0
