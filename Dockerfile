@@ -36,7 +36,7 @@ RUN npm install -g tailwindcss
 COPY --from=generate /app /app
 
 # Generate TailwindCSS output
-RUN npx tailwindcss -o ./public/static/css/tw.css --minify
+RUN npx tailwindcss -i input.css -o ./public/static/css/tw.css --minify
 
 # Stage 3: Build final Go binary
 FROM golang:1.24-alpine AS build
