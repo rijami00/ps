@@ -25,8 +25,9 @@ func GetInstances() ([]Instance, error) {
 		client.WithAPIVersionNegotiation(),
 	)
 	var apolloDir = internal.Settings.ApolloDir
-	var apolloConfig = apolloDir + ".config"
-	var domain = GetDomain(apolloConfig)
+	// var apolloConfig = apolloDir + ".config"
+	// var domain = GetDomain(apolloConfig)
+	var domain = internal.Settings.Domain
 
 	if err != nil {
 		return nil, fmt.Errorf("error creating Docker client: %w", err)
