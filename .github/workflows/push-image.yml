@@ -33,7 +33,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.PAT_APIS_PS }}
 
       - name: Extract Metadata (tags, labels)
         id: meta
