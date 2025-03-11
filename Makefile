@@ -4,7 +4,7 @@ GOOS := "linux"
 GOARCH := "amd64"
 
 deploy:
-	npx @tailwindcss/cli -o ./public/static/css/tw.css --minify
+	npx @tailwindcss/cli -i input.css -o ./public/static/css/tw.css --minify
 	go run cmd/generate/main.go
 	templ generate
 	GOOS=$(GOOS) GOARCH=$(GOARCH) go build -ldflags "-s -w" -o bin/main cmd/server/main.go
