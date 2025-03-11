@@ -56,7 +56,17 @@ func GetIndexPage(c echo.Context) error {
 }
 
 func GetJsonApi(c echo.Context) error {
-	var instances, _ = apollo.GetInstances()
+	instances, err := apollo.GetInstances()
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{
+			"error": err.Error(),
+		})
+	}
+	if instances == nil {
+		return c.JSON(http.StatusNotFound, map[string]string{
+			"error": "No instances found (nil)",
+		})
+	}
 	return c.JSON(http.StatusOK, instances)
 }
 
