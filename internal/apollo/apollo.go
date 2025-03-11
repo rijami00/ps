@@ -27,7 +27,7 @@ func GetInstances() ([]Instance, error) {
 	var apolloDir = internal.Settings.ApolloDir
 	// var apolloConfig = apolloDir + ".config"
 	// var domain = GetDomain(apolloConfig)
-	var domain = internal.Settings.Domain
+	var domain = internal.Settings.InstanceDomain
 
 	if err != nil {
 		return nil, fmt.Errorf("error creating Docker client: %w", err)
