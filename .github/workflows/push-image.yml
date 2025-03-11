@@ -62,6 +62,15 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Copy Files to Target Server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ vars.SSH_HOST }}
+          username: ${{ vars.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "docker-compose.yml,.env.example"
+          target: "~/ps"
+
       - name: Copy and Execute Deployment Steps
         uses: appleboy/ssh-action@v1.2.2
         with:
@@ -72,23 +81,6 @@ jobs:
             set -e
   
             DEPLOY_DIR="$HOME/ps"
-  
-            echo "Checking if $DEPLOY_DIR exists..."
-            if [ ! -d "$DEPLOY_DIR" ]; then
-                echo "First-time deployment..."
-                mkdir -p "$DEPLOY_DIR"
-            else
-                echo "Existing deployment found."
-            fi
-  
-            echo "Copying docker-compose.yml and .env.example..."
-            cat > "$DEPLOY_DIR/docker-compose.yml" << 'EOF'
-            $(cat docker-compose.yml)
-            EOF
-  
-            cat > "$DEPLOY_DIR/.env.example" << 'EOF'
-            $(cat .env.example)
-            EOF
   
             if [ ! -f "$DEPLOY_DIR/.env" ]; then
                 echo "First-time setup: Please update the .env file in $DEPLOY_DIR before starting services."
