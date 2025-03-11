@@ -54,3 +54,53 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+  deploy:
+    needs: build-and-push
+    runs-on: self-hosted
+    timeout-minutes: 5
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Copy and Execute Deployment Steps
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            set -e
+  
+            DEPLOY_DIR="$HOME/ps"
+  
+            echo "Checking if $DEPLOY_DIR exists..."
+            if [ ! -d "$DEPLOY_DIR" ]; then
+                echo "First-time deployment..."
+                mkdir -p "$DEPLOY_DIR"
+            else
+                echo "Existing deployment found."
+            fi
+  
+            echo "Copying docker-compose.yml and .env.example..."
+            cat > "$DEPLOY_DIR/docker-compose.yml" << 'EOF'
+            $(cat docker-compose.yml)
+            EOF
+  
+            cat > "$DEPLOY_DIR/.env.example" << 'EOF'
+            $(cat .env.example)
+            EOF
+  
+            if [ ! -f "$DEPLOY_DIR/.env" ]; then
+                echo "First-time setup: Please update the .env file in $DEPLOY_DIR before starting services."
+                exit 0
+            fi
+  
+            echo "Pulling latest Docker image..."
+            cd "$DEPLOY_DIR"
+            docker compose pull
+  
+            echo "Restarting Docker services..."
+            docker compose down
+            docker compose up -d
+  
+            echo "Deployment completed."
