@@ -16,7 +16,7 @@ templ ComponentPage(cc model.ComponentCode, examples []templ.Component) {
 
 templ ComponentMain(cc model.ComponentCode, examples []templ.Component) {
 	<div class="w-full min-h-svh pt-8">
-		<section class="relative w-full !max-w-screen-lg">
+		<section class="relative w-full">
 			<h1 class="text-4xl font-bold pb-8">
 				{ cc.Label }
 				if cc.DaisyUIURL != "" {

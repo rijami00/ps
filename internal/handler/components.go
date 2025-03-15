@@ -195,15 +195,6 @@ func GetLazyLoadExample(c echo.Context) error {
 
 // LazyLoadExample
 
-// PricingExample
-func GetPricingExample(c echo.Context) error {
-	yearly := c.QueryParam("period") == "on"
-
-	return render(c, http.StatusOK, components.PriceGrid(examples.PriceDataExample(yearly)))
-}
-
-// PricingExample
-
 // CascadingSelect
 var modelOptions = map[string][]components.SelectOption{
 	"audi": {

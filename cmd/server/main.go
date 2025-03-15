@@ -50,7 +50,6 @@ func main() {
 	e.GET("/infinite-scroll-rows", handler.GetInfiniteScrollExampleRows)
 	e.GET("/active-search", handler.GetActiveSearchExample)
 	e.GET("/lazy-load", handler.GetLazyLoadExample)
-	e.GET("/pricing", handler.GetPricingExample)
 	e.GET("/models", handler.GetCascadingSelectExample)
 	e.GET("/pagination-pages", handler.GetPaginationExamplePage)
 	e.POST("/combobox/:name/:value", handler.PostCombobox)

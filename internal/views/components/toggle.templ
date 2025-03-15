@@ -15,8 +15,8 @@ type ToggleProps struct {
 }
 
 templ Toggle(props ToggleProps) {
-	<div>
-		<label class="label cursor-pointer space-x-2">
+	<div class="flex justify-center">
+		<label class="label cursor-pointer space-x-2 mx-auto">
 			if props.Before != "" {
 				<span
 					class={

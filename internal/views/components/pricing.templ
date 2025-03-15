@@ -1,13 +1,22 @@
 // data_display
 package components
 
-type PricingProps []PriceProps
+import "slices"
+
+type PricingProps struct {
+	Checked bool
+	Prices  []PriceProps
+}
 
 type PriceProps struct {
 	Title            string
 	Description      string
-	Price            string
-	Per              string
+	PriceMonthly     string
+	PerMonthly       string
+	PriceAnnually    string
+	PerAnnually      string
+	PerUser          bool
+	Promotion        string
 	IncludedFeatures []string
 	ExcludedFeatures []string
 	CallToAction     PriceButtonProps
@@ -19,30 +28,33 @@ type PriceButtonProps struct {
 	Attrs templ.Attributes
 }
 
-templ Pricing(checked bool, props PricingProps) {
-	<div class="w-full mx-auto py-8 max-w-screen-md">
-		<div class="max-w-xs mx-auto">
+// NOTE: Requires Alpine.js
+templ Pricing(props PricingProps) {
+	<script src="/static/js/alpine.js" defer></script>
+	<div x-data="{ yearly: true }" class="w-full mx-auto py-8 max-w-screen-xl">
+		<div class="max-w-xs mx-auto my-6">
 			@Toggle(ToggleProps{
-				Before:    "Paid monthly",
-				After:     "Paid annually",
+				Before:    "Billed monthly",
+				After:     "Billed annually",
 				Name:      "period",
-				Checked:   checked,
+				Checked:   props.Checked,
 				Highlight: true,
 				Attrs: templ.Attributes{
-					"hx-get":    "/pricing",
-					"hx-target": "#price-grid",
-					"hx-swap":   "outerHTML",
+					"x-on:click": "yearly = !yearly",
 				},
 			})
 		</div>
-		@PriceGrid(props)
+		@PriceGrid(props.Prices)
 	</div>
 }
 
-templ PriceGrid(prices PricingProps) {
+templ PriceGrid(prices []PriceProps) {
 	<div
 		id="price-grid"
-		class="grid grid-cols-1 md:grid-cols-3 px-4 pt-4 gap-4 w-full mx-auto"
+		class={ "grid grid-flow-row lg:grid-flow-col pt-4 w-full mx-auto gap-4",
+            templ.KV("gap-8", slices.ContainsFunc(prices, func(pp PriceProps) bool {
+                    return pp.Promotion != ""
+                })) }
 	>
 		for i := range prices {
 			@Price(prices[i], nil)
@@ -51,36 +63,63 @@ templ PriceGrid(prices PricingProps) {
 }
 
 templ Price(price PriceProps, footer templ.Component) {
-	<div class="card ring-1 ring-base-content/60 rounded-box w-full max-w-xs p-6 space-y-8 mx-auto">
-		<div class="card-title text-3xl"><h2 class="mx-auto">{ price.Title }</h2></div>
-		<p class="text-center text-3xl font-bold">{ price.Price } <span class="text-xs font-normal">{ price.Per }</span></p>
-		<button { price.CallToAction.Attrs... }>
-			{ price.CallToAction.Label }
-		</button>
-		<div class="text-sm">
-			<ul class="space-y-4">
-				for i := range price.IncludedFeatures {
-					<li class="flex items-center space-x-2">
-						<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
-							<path class="fill-base-content" fill-rule="evenodd" clip-rule="evenodd" d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path>
-						</svg>
-						<span>{ price.IncludedFeatures[i] }</span>
-					</li>
-				}
-			</ul>
-			if len(price.ExcludedFeatures) > 0 {
-				<div class="divider !my-2"></div>
+	<div class={ "relative", templ.KV("scale-110", price.Promotion != "") }>
+		<div
+			class={
+				"card rounded-box w-full max-w-xs p-6 mx-auto shadow-xl shadow-base-300",
+				"bg-gradient-to-br from-base-200 dark:from-base-300 via-base-100 to-base-200 dark:to-base-300",
+				templ.KV("ring-base-content/60", price.Promotion == ""),
+				templ.KV("ring-1 ring-accent", price.Promotion != ""),
 			}
-			<ul class="space-y-4">
-				for i := range price.ExcludedFeatures {
-					<li class="flex items-center space-x-2 pl-6">
-						<span class="text-base-content/50">{ price.ExcludedFeatures[i] }</span>
-					</li>
+		>
+			if price.Promotion != "" {
+				<span class="absolute top-0 right-0 bg-accent px-2 rounded-tr-box rounded-bl-box">
+					{ price.Promotion }
+				</span>
+			}
+			<div class="card-title text-3xl mt-8"><h2 class="mx-auto">{ price.Title }</h2></div>
+			<p x-show="yearly" class="text-center text-3xl font-bold mt-8">
+				{ price.PriceAnnually }
+				<span class="text-xs font-normal">
+					{ price.PerAnnually }
+				</span>
+				if price.PerUser {
+					<span class="text-sm font-normal">
+						{ " / user" }
+					</span>
 				}
-			</ul>
+			</p>
+			<p x-show="!yearly" class="text-center text-3xl font-bold mt-8">
+				{ price.PriceMonthly } <span class="text-xs font-normal">{ price.PerMonthly }</span>
+			</p>
+			<button { price.CallToAction.Attrs... }>
+				{ price.CallToAction.Label }
+			</button>
+			<div class="text-sm mt-8">
+				<ul class="space-y-4">
+					for i := range price.IncludedFeatures {
+						<li class="flex items-center space-x-2">
+							<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+								<path class="fill-base-content" fill-rule="evenodd" clip-rule="evenodd" d="M21.5821 5.54289C21.9726 5.93342 21.9726 6.56658 21.5821 6.95711L10.2526 18.2867C9.86452 18.6747 9.23627 18.6775 8.84475 18.293L2.29929 11.8644C1.90527 11.4774 1.89956 10.8443 2.28655 10.4503C2.67354 10.0562 3.30668 10.0505 3.70071 10.4375L9.53911 16.1717L20.1679 5.54289C20.5584 5.15237 21.1916 5.15237 21.5821 5.54289Z"></path>
+							</svg>
+							<span>{ price.IncludedFeatures[i] }</span>
+						</li>
+					}
+				</ul>
+				if len(price.ExcludedFeatures) > 0 {
+					<div class="divider !my-2"></div>
+				}
+				<ul class="space-y-4">
+					for i := range price.ExcludedFeatures {
+						<li class="flex items-center space-x-2 pl-6">
+							<span class="text-base-content/50">{ price.ExcludedFeatures[i] }</span>
+						</li>
+					}
+				</ul>
+			</div>
+			if footer != nil {
+				@footer
+			}
 		</div>
-		if footer != nil {
-			@footer
-		}
 	</div>
 }

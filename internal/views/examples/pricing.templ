@@ -1,66 +1,140 @@
 package examples
 
-import "fmt"
 import "github.com/haatos/goshipit/internal/views/components"
 
 // example
+// Basic pricing section
 templ PricingExample() {
-	@components.Pricing(true, PriceDataExample(true))
+	@components.Pricing(
+		components.PricingProps{
+			Checked: true,
+			Prices: []components.PriceProps{
+				{
+					Title:            "Free",
+					Description:      "My free plan",
+					PriceMonthly:     "$ 0",
+					PerMonthly:       "/ month",
+					PriceAnnually:    "$ 0",
+					PerAnnually:      "/ month",
+					IncludedFeatures: []string{"Feature 1", "Feature 2", "Feature 3"},
+					ExcludedFeatures: []string{"Feature 4", "Feature 5"},
+					CallToAction: components.PriceButtonProps{
+						Label: "Start free",
+						Attrs: templ.Attributes{
+							"class": "btn btn-outline mt-8",
+						},
+					},
+				},
+				{
+					Title:            "Starter",
+					Description:      "Starter plan",
+					PriceMonthly:     "$ 12",
+					PerMonthly:       "/ month",
+					PriceAnnually:    "$ 10",
+					PerAnnually:      "/ month",
+					IncludedFeatures: []string{"Feature 1", "Feature 2", "Feature 3"},
+					ExcludedFeatures: []string{"Feature 4", "Feature 5"},
+					CallToAction: components.PriceButtonProps{
+						Label: "Get started",
+						Attrs: templ.Attributes{
+							"class": "btn btn-primary mt-8",
+						},
+					},
+				},
+				{
+					Title:            "Professional",
+					Description:      "Professional plan",
+					PriceMonthly:     "$ 20",
+					PerMonthly:       "/ month",
+					PriceAnnually:    "$ 16",
+					PerAnnually:      "/ month",
+					IncludedFeatures: []string{"Feature 1", "Feature 2", "Feature 3"},
+					ExcludedFeatures: []string{"Feature 4", "Feature 5"},
+					CallToAction: components.PriceButtonProps{
+						Label: "Get started",
+						Attrs: templ.Attributes{
+							"class": "btn btn-primary mt-8",
+						},
+					},
+				},
+			},
+		},
+	)
 }
 
-var ProductPrices = map[string]map[bool]int{
-	"Starter": {
-		true:  10,
-		false: 12,
-	},
-	"Professional": {
-		true:  20,
-		false: 24,
-	},
-}
-
-func PriceDataExample(yearly bool) components.PricingProps {
-	return components.PricingProps{
-		{
-			Title:            "Free",
-			Description:      "My free plan",
-			Price:            "$ 0",
-			Per:              "/ month",
-			IncludedFeatures: []string{"Feature 1", "Feature 2", "Feature 3"},
-			ExcludedFeatures: []string{"Feature 4", "Feature 5"},
-			CallToAction: components.PriceButtonProps{
-				Label: "Start now",
-				Attrs: templ.Attributes{
-					"class": "btn btn-outline btn-sm",
+// example
+// Pricing section with promotion
+templ PricingWithPromotionExample() {
+	@components.Pricing(
+		components.PricingProps{
+			Checked: true,
+			Prices: []components.PriceProps{
+				{
+					Title:            "Free",
+					Description:      "My free plan",
+					PriceMonthly:     "$ 0",
+					PerMonthly:       "/ month",
+					PriceAnnually:    "$ 0",
+					PerAnnually:      "/ month",
+					IncludedFeatures: []string{"Feature 1", "Feature 2", "Feature 3"},
+					ExcludedFeatures: []string{"Feature 4", "Feature 5"},
+					CallToAction: components.PriceButtonProps{
+						Label: "Start free",
+						Attrs: templ.Attributes{
+							"class": "btn btn-outline mt-8",
+						},
+					},
+				},
+				{
+					Title:            "Starter",
+					Description:      "Starter plan",
+					PriceMonthly:     "$ 12",
+					PerMonthly:       "/ month",
+					PriceAnnually:    "$ 10",
+					PerAnnually:      "/ month",
+					IncludedFeatures: []string{"Feature 1", "Feature 2", "Feature 3"},
+					ExcludedFeatures: []string{"Feature 4", "Feature 5"},
+					CallToAction: components.PriceButtonProps{
+						Label: "Get started",
+						Attrs: templ.Attributes{
+							"class": "btn btn-primary mt-8",
+						},
+					},
+				},
+				{
+					Title:            "Professional",
+					Description:      "Professional plan",
+					PriceMonthly:     "$ 20",
+					PerMonthly:       "/ month",
+					PriceAnnually:    "$ 16",
+					PerAnnually:      "/ month",
+					Promotion:        "Popular",
+					IncludedFeatures: []string{"Feature 1", "Feature 2", "Feature 3"},
+					ExcludedFeatures: []string{"Feature 4", "Feature 5"},
+					CallToAction: components.PriceButtonProps{
+						Label: "Get started",
+						Attrs: templ.Attributes{
+							"class": "btn btn-primary mt-8",
+						},
+					},
+				},
+				{
+					Title:            "Ultimate",
+					Description:      "Ultimate plan",
+					PriceMonthly:     "$ 30",
+					PerMonthly:       "/ month",
+					PriceAnnually:    "$ 25",
+					PerAnnually:      "/ month",
+					IncludedFeatures: []string{"Feature 1", "Feature 2", "Feature 3"},
+					ExcludedFeatures: []string{"Feature 4", "Feature 5"},
+					CallToAction: components.PriceButtonProps{
+						Label: "Get started",
+						Attrs: templ.Attributes{
+							"class": "btn btn-primary mt-8",
+						},
+					},
 				},
 			},
 		},
-		{
-			Title:            "Starter",
-			Description:      "My starter plan",
-			Price:            fmt.Sprintf("$ %d", ProductPrices["Starter"][yearly]),
-			Per:              "/ month",
-			IncludedFeatures: []string{"Feature 1", "Feature 2", "Feature 3", "Feature 4"},
-			ExcludedFeatures: []string{"Feature 4"},
-			CallToAction: components.PriceButtonProps{
-				Label: "Start free trial",
-				Attrs: templ.Attributes{
-					"class": "btn btn-primary btn-sm",
-				},
-			},
-		},
-		{
-			Title:            "Professional",
-			Description:      "My professional plan",
-			Price:            fmt.Sprintf("$ %d", ProductPrices["Professional"][yearly]),
-			Per:              "/ month",
-			IncludedFeatures: []string{"Feature 1", "Feature 2", "Feature 3", "Feature 4", "Feature 5"},
-			CallToAction: components.PriceButtonProps{
-				Label: "Start free trial",
-				Attrs: templ.Attributes{
-					"class": "btn btn-primary btn-sm",
-				},
-			},
-		},
-	}
+	)
 }
