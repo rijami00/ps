@@ -69,7 +69,7 @@ jobs:
           username: ${{ vars.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           source: "docker-compose.yml,.env.example"
-          target: "~/ps"
+          target: "/opt/cdm/ps"
 
       - name: Copy and Execute Deployment Steps
         uses: appleboy/ssh-action@v1.2.2
@@ -80,7 +80,7 @@ jobs:
           script: |
             set -e
   
-            DEPLOY_DIR="$HOME/ps"
+            DEPLOY_DIR="/opt/cdm/ps"
   
             if [ ! -f "$DEPLOY_DIR/.env" ]; then
                 echo "First-time setup: Please update the .env file in $DEPLOY_DIR before starting services."
