@@ -51,7 +51,8 @@ const (
 )
 
 func BuildUrl(name string, domain string, port uint16) string {
-	return fmt.Sprintf("https://%s.%s:%d", name, domain, port)
+	// return fmt.Sprintf("https://%s.%s:%d", name, domain, port)
+	return fmt.Sprintf("https://%s.%s", name, domain)
 }
 
 func GetPublicPort(container types.Container) uint16 {
