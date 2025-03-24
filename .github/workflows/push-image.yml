@@ -55,6 +55,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
   deploy:
+    if: github.event_name != 'pull_request'  # Skip deployment on PRs
     needs: build-and-push
     runs-on: self-hosted
     timeout-minutes: 5
