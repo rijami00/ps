@@ -171,13 +171,24 @@ func GetInstances() ([]Instance, error) {
 				} else {
 					instance.BackendVersion = responseUp.Details.Version
 					instance.BackendCommitHash = responseUp.Details.CommitHash
-					instance.BackendCommitUrl = fmt.Sprintf(internal.Settings.GitHubInstance + "/commit/" + responseUp.Details.CommitHash)
+					instance.BackendCommitUrl = fmt.Sprintf(internal.Settings.GitHubInstanceBackend + "/commit/" + responseUp.Details.CommitHash)
 					instance.CdmIdProvider = responseUp.Details.IDProvider
 					instance.StagingMode = responseUp.Details.Stage
 					instance.BackendBuildNumber = responseUp.Details.BuildNumber
 					instance.DbConnectionStatus = responseUp.Details.Database.Status
 				}
 			}
+
+			// get the frontend version
+			responseUpFe, err := getUpFe(url)
+
+			if err == nil && responseUpFe != nil {
+				instance.FrontendVersion = responseUpFe.Version
+				instance.FrontendBuildNumber = responseUpFe.BuildNumber
+				instance.FrontendCommitHash = responseUpFe.CommitHash
+				instance.FrontendCommitUrl = fmt.Sprintf(internal.Settings.GitHubInstanceFrontend + "/commit/" + responseUpFe.CommitHash)
+			}
+
 			instances = append(instances, instance)
 		}
 	}
