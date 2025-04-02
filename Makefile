@@ -41,4 +41,4 @@ test:
 	go version
 
 dev: gen
-	@templ generate -watch -proxyport=7332 -proxy="http://localhost:8082" -open-browser=false -cmd="go run cmd/server/main.go"
+	@templ generate -watch -proxyport=7332 -proxy="http://localhost:8080" -open-browser=false -cmd="go run cmd/server/main.go"

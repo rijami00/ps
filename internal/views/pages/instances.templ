@@ -16,7 +16,12 @@ templ InstancesTable(instances []apollo.Instance) {
 
     @components.Table(
         []templ.Component{
-            components.PlainText("Name"),
+            StackItems(
+                []templ.Component{
+                    components.PlainText("Name"),
+                    components.PlainText("Description"),
+                },
+            ),
             components.PlainText("Containers"),
             StackItems(
                 []templ.Component{
@@ -54,17 +59,25 @@ templ InstanceRow(instance apollo.Instance) {
     <tr>
         // Name
         <th>
+            <button class="btn btn-sm" onclick={ templ.JSFuncCall("copyUrl", instance.Url) } title="Copy URL for IQ">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-4 h-4 inline-block align-middle fill-current text-gray-600"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M208 0L332.1 0c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9L448 336c0 26.5-21.5 48-48 48l-192 0c-26.5 0-48-21.5-48-48l0-288c0-26.5 21.5-48 48-48zM48 128l80 0 0 64-64 0 0 256 192 0 0-32 64 0 0 48c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 176c0-26.5 21.5-48 48-48z"/></svg>
+            </button>
             @components.Anchor(components.AnchorProps {
                     Label: instance.Name,
-                    Class: "link p-4",
+                    Class: "link p-4 text-lg",
                     Href: instance.Url,
                     Attrs: templ.Attributes{
                         "target": "_blank",
                     },
                 },
             )
+            <script>
+                function copyUrl(url) {
+                  navigator.clipboard.writeText(url);
+                }
+            </script>
             <br>
-            @components.PlainText(instance.Description)
+            @InstanceDescription(instance.Description)
         </th>
 
         // Container
@@ -195,7 +208,7 @@ templ LoginPassInfo(instance apollo.Instance) {
 templ LoginTooltipInfo(sampleLogin string, samplePass string) {
     @components.Tooltip(
         components.TooltipProps{
-            Tip:   fmt.Sprintf("Login: %s, Pass: %s", sampleLogin, samplePass),
+            Tip:   fmt.Sprintf("EXAMPLE/NOT REAL -> Login: %s, Pass: %s", sampleLogin, samplePass),
             Class: "tooltip-bottom tooltip-info",
         },
     ) {
@@ -224,5 +237,11 @@ templ MoreInfoView(instance apollo.Instance) {
                 <button class="btn" onclick={ MoreInfoViewClose(nameId)  } >Close</button>
             </div>
         }
+    </div>
+}
+
+templ InstanceDescription(description string) {
+    <div class="pt-4 max-w-xs text-xs text-balance text-gray-400">
+        { description }
     </div>
 }

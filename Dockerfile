@@ -75,6 +75,7 @@ RUN chmod +x /app/main
 COPY --from=build /app/public /app/public
 COPY --from=build /app/generated /app/generated
 COPY --from=build /app/content /app/content
+COPY --from=build /app/description.json /app/description.json
 
 # Expose the application port
 EXPOSE 8080

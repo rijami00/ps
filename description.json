@@ -1,0 +1,25 @@
+{
+  "descriptions":
+    [
+      {
+        "instance": "main",
+        "description": "Always the most up-to-date. Redeployment rate is high."
+      },
+      {
+        "instance": "test",
+        "description": "Placeholder description."
+      },
+      {
+        "instance": "testiq",
+        "description": "IQ (automated) testing. Redeployment rate is moderate."
+      },
+      {
+        "instance": "staging",
+        "description": "Day to day usage for everyone."
+      },
+      {
+        "instance": "v",
+        "description": "Released version archive. Use as needed."
+      }
+    ]
+}

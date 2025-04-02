@@ -94,6 +94,7 @@ func GetInstances() ([]Instance, error) {
 			// extract more details:
 			id := container.ID
 			name := container.Labels["com.docker.compose.project"]
+			description := GetContainerDescription(name)
 			port := GetPublicPort(container)
 			url := BuildUrl(name, domain, port)
 			image := container.Image
@@ -118,6 +119,7 @@ func GetInstances() ([]Instance, error) {
 				ContainerState:  state,
 				ContainerStatus: status,
 				Name:            name,
+				Description:     description,
 				Port:            port,
 				Url:             url,
 				DeploymentTime:  created,
