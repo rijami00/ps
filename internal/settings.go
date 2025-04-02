@@ -13,14 +13,15 @@ var Settings *AppSettings
 
 func NewSettings() *AppSettings {
 	settings := AppSettings{
-		Title:          "Apollo",
-		ContactEmail:   os.Getenv("CONTACT_EMAIL"),
-		Domain:         getEnvOrDefault("DOMAIN", "localhost"),
-		Port:           getEnvOrDefault("PORT", ":8080"),
-		InstanceDomain: os.Getenv("INSTANCE_DOMAIN"),
-		ApolloDocker:   os.Getenv("APOLLO_DOCKER"),
-		ApolloDir:      os.Getenv("APOLLO_DIR"),
-		GitHubInstance: os.Getenv("GITHUB_INSTANCE"),
+		Title:                  "Apollo",
+		ContactEmail:           os.Getenv("CONTACT_EMAIL"),
+		Domain:                 getEnvOrDefault("DOMAIN", "localhost"),
+		Port:                   getEnvOrDefault("PORT", ":8080"),
+		InstanceDomain:         os.Getenv("INSTANCE_DOMAIN"),
+		ApolloDocker:           os.Getenv("APOLLO_DOCKER"),
+		ApolloDir:              os.Getenv("APOLLO_DIR"),
+		GitHubInstanceFrontend: os.Getenv("GITHUB_INSTANCE_FRONTEND"),
+		GitHubInstanceBackend:  os.Getenv("GITHUB_INSTANCE_BACKEND"),
 	}
 	if !strings.HasPrefix(settings.Port, ":") {
 		settings.Port = ":" + settings.Port
@@ -37,14 +38,15 @@ func getEnvOrDefault(key, defaultValue string) string {
 }
 
 type AppSettings struct {
-	Title          string
-	ContactEmail   string
-	Domain         string
-	Port           string
-	InstanceDomain string
-	ApolloDocker   string
-	ApolloDir      string
-	GitHubInstance string
+	Title                  string
+	ContactEmail           string
+	Domain                 string
+	Port                   string
+	InstanceDomain         string
+	ApolloDocker           string
+	ApolloDir              string
+	GitHubInstanceFrontend string
+	GitHubInstanceBackend  string
 }
 
 func ReadDotenv() {

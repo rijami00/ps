@@ -2,246 +2,266 @@ package pages
 
 import (
 	"fmt"
-	"strings"
 	"github.com/haatos/goshipit/internal/apollo"
 	"github.com/haatos/goshipit/internal/views/components"
+	"strings"
 )
 
 templ InstancesTable(instances []apollo.Instance) {
-    {{ rows := []templ.Component{}
-        for _, instance := range instances {
-            rows = append(rows, InstanceRow(instance))
-        }
-    }}
-
-    @components.Table(
-        []templ.Component{
-            StackItems(
-                []templ.Component{
-                    components.PlainText("Name"),
-                    components.PlainText("Description"),
-                },
-            ),
-            components.PlainText("Containers"),
-            StackItems(
-                []templ.Component{
-                    components.PlainText("Server"),
-                    components.PlainText("Version"),
-                    components.PlainText("Build"),
-                    components.PlainText("Hash"),
-                },
-            ),
-            components.PlainText("API⇢DB"),
-            components.PlainText("IdP"),
-            components.PlainText("Mode"),
-            components.PlainText("Login"),
-            components.PlainText("More Info"),
-        },
-        rows,
-        templ.Attributes{
-            "class": "table table-zebra table-pin-rows table-pin-cols w-full",
-        },
-    )
+	{{rows := []templ.Component{}
+for _, instance := range instances {
+	rows = append(rows, InstanceRow(instance))
+}
+	}}
+	@components.Table(
+		[]templ.Component{
+			StackItems(
+				[]templ.Component{
+					components.PlainText("Name"),
+					components.PlainText("Description"),
+				},
+			),
+			components.PlainText("Containers"),
+			StackItems(
+				[]templ.Component{
+					components.PlainText("Server"),
+					components.PlainText("Version"),
+					components.PlainText("Build"),
+					components.PlainText("Hash"),
+				},
+			),
+			StackItems(
+				[]templ.Component{
+					components.PlainText("Rweb"),
+					components.PlainText("Version"),
+					components.PlainText("Build"),
+					components.PlainText("Hash"),
+				},
+			),
+			components.PlainText("API⇢DB"),
+			StackItems(
+				[]templ.Component{
+					components.PlainText("IdP"),
+					components.PlainText("Mode"),
+				},
+			),
+			components.PlainText("Login"),
+			components.PlainText("More Info"),
+		},
+		rows,
+		templ.Attributes{
+			"class": "table table-zebra table-pin-rows table-pin-cols w-full",
+		},
+	)
 }
 
 // vertically stack items using flexbox
 templ StackItems(items []templ.Component) {
-    <div class="flex flex-col">
-        for _, item := range items {
-            <div class="">
-                @item
-            </div>
-        }
-    </div>
+	<div class="flex flex-col">
+		for _, item := range items {
+			<div class="">
+				@item
+			</div>
+		}
+	</div>
 }
 
 templ InstanceRow(instance apollo.Instance) {
-    <tr>
-        // Name
-        <th>
-            <button class="btn btn-sm" onclick={ templ.JSFuncCall("copyUrl", instance.Url) } title="Copy URL for IQ">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-4 h-4 inline-block align-middle fill-current text-gray-600"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M208 0L332.1 0c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9L448 336c0 26.5-21.5 48-48 48l-192 0c-26.5 0-48-21.5-48-48l0-288c0-26.5 21.5-48 48-48zM48 128l80 0 0 64-64 0 0 256 192 0 0-32 64 0 0 48c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 176c0-26.5 21.5-48 48-48z"/></svg>
-            </button>
-            @components.Anchor(components.AnchorProps {
-                    Label: instance.Name,
-                    Class: "link p-4 text-lg",
-                    Href: instance.Url,
-                    Attrs: templ.Attributes{
-                        "target": "_blank",
-                    },
-                },
-            )
-            <script>
+	<tr>
+		// Name
+		<th>
+			<button class="btn btn-sm" onclick={ templ.JSFuncCall("copyUrl", instance.Url) } title="Copy URL for IQ">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-4 h-4 inline-block align-middle fill-current text-gray-400"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+<path d="M208 0L332.1 0c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9L448 336c0 26.5-21.5 48-48 48l-192 0c-26.5 0-48-21.5-48-48l0-288c0-26.5 21.5-48 48-48zM48 128l80 0 0 64-64 0 0 256 192 0 0-32 64 0 0 48c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 176c0-26.5 21.5-48 48-48z"></path></svg>
+			</button>
+			@components.Anchor(components.AnchorProps{
+				Label: instance.Name,
+				Class: "link p-4 text-lg",
+				Href:  instance.Url,
+				Attrs: templ.Attributes{
+					"target": "_blank",
+				},
+			},
+			)
+			<script>
                 function copyUrl(url) {
                   navigator.clipboard.writeText(url);
                 }
             </script>
-            <br>
-            @InstanceDescription(instance.Description)
-        </th>
-
-        // Container
-        <td>
-            if len(instance.ContainerDetails) > 0 {
-                <div class="grid grid-cols-[repeat(3,_auto)] gap-x-4">
-                    for _, container := range instance.ContainerDetails {
-                        <div>{ container.Service }</div>
-                        <div>{ container.ContainerState }</div>
-                        <div>{ container.ContainerStatus }</div>
-                    }
-                </div>
-            }
-
-        </td>
-
-        // Server
-        <td>
-            @components.PlainText(instance.ApiStatus)
-            <br>
-            @components.PlainText(instance.BackendVersion)
-            <br>
-            @components.PlainText(instance.BackendBuildNumber)
-            <br>
-            if instance.BackendCommitHash != "" {
-                @components.Anchor(components.AnchorProps{
-                    Label: instance.BackendCommitHash,
-                    Attrs: templ.Attributes{
-                        "target": "_blank",
-                        "title": "View the deployed hash: " + instance.BackendCommitHash,
-                    },
-                    Class: "link",
-                    Href: instance.BackendCommitUrl,
-                })
-            }
-        </td>
-
-        // Db
-        <td>
-            @components.PlainText(instance.DbConnectionStatus)
-        </td>
-
-        // IdP
-        <td>
-            @components.PlainText(instance.CdmIdProvider)
-        </td>
-
-        // Mode
-        <td>
-            @components.PlainText(instance.StagingMode)
-        </td>
-
-        // Login
-        <td>
-            @LoginPassInfo(instance)
-            {{
-                rootLoginAvailable := "✘"
-                rootLoginAvailableColor := "text-red-600"
-                tempAvailable := false
-                if instance.CdmIdProvider != "azure" {
-                    tempAvailable = true
-                }
-                if tempAvailable {
-                    rootLoginAvailable = "✔"
-                    rootLoginAvailableColor = "text-green-600"
-                }
-            }}
-            <div class="flex items-center space-x-3">
-                <span class={ "flex items-center justify-center w-2 h-2 rounded-full", rootLoginAvailableColor }>
-                  <span class="">{ rootLoginAvailable }</span>
-                </span>
-                <p class=""><code>root</code> Login</p>
-            </div>
-        </td>
-
-        // More Info
-        <td>
-            @MoreInfoView(instance)
-        </td>
-
-    </tr>
+			<br/>
+			@InstanceDescription(instance.Description)
+		</th>
+		// Container
+		<td>
+			if len(instance.ContainerDetails) > 0 {
+				<div class="grid grid-cols-[repeat(3,_auto)] gap-x-4">
+					for _, container := range instance.ContainerDetails {
+						<div>{ container.Service }</div>
+						<div>{ container.ContainerState }</div>
+						<div>{ container.ContainerStatus }</div>
+					}
+				</div>
+			}
+		</td>
+		// Server
+		<td>
+			@components.PlainText(instance.ApiStatus)
+			<br/>
+			@components.PlainText(instance.BackendVersion)
+			<br/>
+			@components.PlainText(instance.BackendBuildNumber)
+			<br/>
+			if instance.BackendCommitHash != "" {
+				@components.Anchor(components.AnchorProps{
+					Label: instance.BackendCommitHash,
+					Attrs: templ.Attributes{
+						"target": "_blank",
+						"title":  "View the deployed hash: " + instance.BackendCommitHash,
+					},
+					Class: "link",
+					Href:  instance.BackendCommitUrl,
+				})
+			}
+		</td>
+		// Frontend
+		<td>
+			@components.PlainText("")
+			<br/>
+			@components.PlainText(instance.FrontendVersion)
+			<br/>
+			@components.PlainText(instance.FrontendBuildNumber)
+			<br/>
+			if instance.FrontendCommitHash != "" {
+				@components.Anchor(components.AnchorProps{
+					Label: instance.FrontendCommitHash,
+					Attrs: templ.Attributes{
+						"target": "_blank",
+						"title":  "View the deployed hash: " + instance.FrontendCommitHash,
+					},
+					Class: "link",
+					Href:  instance.FrontendCommitUrl,
+				})
+			}
+		</td>
+		// Db
+		<td>
+			@components.PlainText(instance.DbConnectionStatus)
+		</td>
+		<td>
+    		// IdP
+			@components.PlainText(instance.CdmIdProvider)
+		    <br/>
+    		// Mode
+			@components.PlainText(instance.StagingMode)
+		</td>
+		// Login
+		<td>
+			@LoginPassInfo(instance)
+			{{
+	rootLoginAvailable := "✘"
+	rootLoginAvailableColor := "text-red-600"
+	tempAvailable := false
+	if instance.CdmIdProvider != "azure" {
+		tempAvailable = true
+	}
+	if tempAvailable {
+		rootLoginAvailable = "✔"
+		rootLoginAvailableColor = "text-green-600"
+	}
+			}}
+			<div class="flex items-center space-x-3">
+				<span class={ "flex items-center justify-center w-2 h-2 rounded-full", rootLoginAvailableColor }>
+					<span class="">{ rootLoginAvailable }</span>
+				</span>
+				<p class=""><code>root</code> Login</p>
+			</div>
+		</td>
+		// More Info
+		<td>
+			@MoreInfoView(instance)
+		</td>
+	</tr>
 }
 
 templ LoginPassInfo(instance apollo.Instance) {
-    {{
-        login := "[as created]"
-        sampleLogin := "abwxyz00"
-        pass := "[as created]"
-        samplePass := "abwxyz00"
-        switch instance.CdmIdProvider {
-            case "azure":
-                login = "[email]"
-                sampleLogin = "john.doe@example.com"
-                pass = "[windows login]"
-                samplePass = "hunter2"
-            case "ldaps":
-                if strings.HasSuffix(instance.Name, "-ms") {
-                    login = "[full name]"
-                    sampleLogin = "John Doe"
-                    pass = "[username]"
-                    samplePass = "abwxyz00"
-                } else {
-                    login = "[username]"
-                    sampleLogin = "abwxyz00"
-                    pass = "[username]"
-                    samplePass = "abwxyz00"
-                }
-        }
-    }}
-
-    <div class="flex justify-between">
-        <div class="flex items-center space-x-3">
-            <span class="flex items-center justify-center w-2 h-2 rounded-full">
-              <span class="">👤</span>
-            </span>
-            <p class="">{ login }</p>
-        </div>
-        @LoginTooltipInfo(sampleLogin, samplePass)
-    </div>
-    <div class="flex items-center space-x-3">
-        <span class="flex items-center justify-center w-2 h-2 rounded-full">
-          <span class="">🔑</span>
-        </span>
-        <p class="">{ pass }</p>
-    </div>
+	{{
+	login := "[as created]"
+	sampleLogin := "abwxyz00"
+	pass := "[as created]"
+	samplePass := "abwxyz00"
+	switch instance.CdmIdProvider {
+	case "azure":
+		login = "[email]"
+		sampleLogin = "john.doe@example.com"
+		pass = "[windows login]"
+		samplePass = "hunter2"
+	case "ldaps":
+		if strings.HasSuffix(instance.Name, "-ms") {
+			login = "[full name]"
+			sampleLogin = "John Doe"
+			pass = "[username]"
+			samplePass = "abwxyz00"
+		} else {
+			login = "[username]"
+			sampleLogin = "abwxyz00"
+			pass = "[username]"
+			samplePass = "abwxyz00"
+		}
+	}
+	}}
+	<div class="flex justify-between">
+		<div class="flex items-center space-x-3">
+			<span class="flex items-center justify-center w-2 h-2 rounded-full">
+				<span class="">👤</span>
+			</span>
+			<p class="">{ login }</p>
+		</div>
+		@LoginTooltipInfo(sampleLogin, samplePass)
+	</div>
+	<div class="flex items-center space-x-3">
+		<span class="flex items-center justify-center w-2 h-2 rounded-full">
+			<span class="">🔑</span>
+		</span>
+		<p class="">{ pass }</p>
+	</div>
 }
 
 templ LoginTooltipInfo(sampleLogin string, samplePass string) {
-    @components.Tooltip(
-        components.TooltipProps{
-            Tip:   fmt.Sprintf("EXAMPLE/NOT REAL -> Login: %s, Pass: %s", sampleLogin, samplePass),
-            Class: "tooltip-bottom tooltip-info",
-        },
-    ) {
-        <button class="btn btn-outline btn-circle btn-xs btn-info">❔</button>
-    }
+	@components.Tooltip(
+		components.TooltipProps{
+			Tip:   fmt.Sprintf("EXAMPLE/NOT REAL -> Login: %s, Pass: %s", sampleLogin, samplePass),
+			Class: "tooltip-bottom tooltip-info",
+		},
+	) {
+		<button class="btn btn-outline btn-circle btn-xs btn-info">❔</button>
+	}
 }
-
 
 script MoreInfoViewClose(id string) {
     document.getElementById(id).close()
 }
 
 templ MoreInfoView(instance apollo.Instance) {
-    {{ nameId := fmt.Sprintf("more_info_%s", instance.Id) }}
-    <div class="flex justify-center items-center">
-        @components.Modal(components.ModalProps{ID: nameId, Label: "📃"}) {
-            <h3 class="text-3xl">More Info - { instance.Name }</h3>
-            <div>
-                <p><strong>WorkingDir:</strong> { instance.WorkingDir }</p>
-                <p><strong>Url:</strong> { instance.Url }</p>
-                <p><strong>Port:</strong> { fmt.Sprintf("%d", instance.Port) }</p>
-                <p><strong>Image:</strong> { instance.Image }</p>
-                <p><strong>DeploymentTime:</strong> { instance.DeploymentTime }</p>
-            </div>
-            <div class="modal-action">
-                <button class="btn" onclick={ MoreInfoViewClose(nameId)  } >Close</button>
-            </div>
-        }
-    </div>
+	{{ nameId := fmt.Sprintf("more_info_%s", instance.Id) }}
+	<div class="flex justify-center items-center">
+		@components.Modal(components.ModalProps{ID: nameId, Label: "📃"}) {
+			<h3 class="text-3xl">More Info - { instance.Name }</h3>
+			<div>
+				<p><strong>WorkingDir:</strong> { instance.WorkingDir }</p>
+				<p><strong>Url:</strong> { instance.Url }</p>
+				<p><strong>Port:</strong> { fmt.Sprintf("%d", instance.Port) }</p>
+				<p><strong>Image:</strong> { instance.Image }</p>
+				<p><strong>DeploymentTime:</strong> { instance.DeploymentTime }</p>
+			</div>
+			<div class="modal-action">
+				<button class="btn" onclick={ MoreInfoViewClose(nameId) }>Close</button>
+			</div>
+		}
+	</div>
 }
 
 templ InstanceDescription(description string) {
-    <div class="pt-4 max-w-xs text-xs text-balance text-gray-400">
-        { description }
-    </div>
+	<div class="pt-4 max-w-xs text-xs text-balance text-gray-400">
+		{ description }
+	</div>
 }
