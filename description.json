@@ -7,19 +7,23 @@
       },
       {
         "instance": "test",
-        "description": "Placeholder description."
+        "description": "Day to day usage for everyone. Redeployment rate is once a week."
       },
       {
-        "instance": "testiq",
-        "description": "IQ (automated) testing. Redeployment rate is moderate."
+        "instance": "iq-staging",
+        "description": "IQ automated testing. Redeployment rate is daily."
       },
       {
         "instance": "staging",
-        "description": "Day to day usage for everyone."
+        "description": "Automated testing. Redeployment rate is daily."
       },
       {
-        "instance": "v",
-        "description": "Released version archive. Use as needed."
+        "instance": "v10",
+        "description": "Released version archives. Use as needed. Compatible with IQ-Software V8.0."
+      },
+      {
+        "instance": "v11",
+        "description": "Released version archive. Use as needed. Compatible with IQ-Software V8.0 - 0040."
       }
     ]
 }
