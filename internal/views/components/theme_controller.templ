@@ -1,0 +1,91 @@
+// theme_controller
+// https://daisyui.com/components/theme-controller/
+package components
+
+/// [...document.querySelectorAll(".dropdown-content > .menu > li > button")]
+// /      .filter(e => e.dataset.setTheme !== undefined)
+// /      .map(e => console.log(e.dataset.setTheme));
+var themeList = []string{
+	"light",
+	"dark",
+	"cupcake",
+	"bumblebee",
+	"emerald",
+	"corporate",
+	"synthwave",
+	"retro",
+	"cyberpunk",
+	"valentine",
+	"halloween",
+	"garden",
+	"forest",
+	"aqua",
+	"lofi",
+	"pastel",
+	"fantasy",
+	"wireframe",
+	"black",
+	"luxury",
+	"dracula",
+	"cmyk",
+	"autumn",
+	"business",
+	"acid",
+	"lemonade",
+	"night",
+	"coffee",
+	"winter",
+	"dim",
+	"nord",
+	"sunset",
+	"caramellatte",
+	"abyss",
+	"silk",
+}
+
+templ ThemeController() {
+	<div class="dropdown dropdown-end ml-auto">
+		<div tabindex="0" role="button" class="btn btn-sm gap-1 btn-ghost" aria-label="Change Theme">
+			<!-- square icon -->
+			<div class="bg-base-100 border-base-content/10 grid shrink-0 grid-cols-2 gap-0.5 rounded-md border p-1">
+				<div class="bg-base-content size-1 rounded-full"></div>
+				<div class="bg-primary size-1 rounded-full"></div>
+				<div class="bg-secondary size-1 rounded-full"></div>
+				<div class="bg-accent size-1 rounded-full"></div>
+			</div>
+			<!-- down arrow icon -->
+			<svg
+				width="12px"
+				height="12px"
+				class="mt-px hidden h-2 w-2 fill-current opacity-60 sm:inline-block"
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 2048 2048"
+			>
+				<path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
+			</svg>
+		</div>
+		<ul tabindex="0" class="dropdown-content bg-base-300 rounded-box z-1 p-2 shadow-2xl">
+			for _, themeName := range themeList {
+				<li>
+					<label for={ themeName } class="flex gap-1 items-center justify-start btn btn-sm btn-ghost">
+						<!-- square icon in specific theme -->
+						<div data-theme={ themeName } class="bg-base-100 grid shrink-0 grid-cols-2 gap-0.5 rounded-md p-1 shadow-sm">
+							<div class="bg-base-content size-1 rounded-full"></div>
+							<div class="bg-primary size-1 rounded-full"></div>
+							<div class="bg-secondary size-1 rounded-full"></div>
+							<div class="bg-accent size-1 rounded-full"></div>
+						</div>
+						<input
+							id={ themeName }
+							type="radio"
+							name="theme-dropdown"
+							class="theme-controller justify-start appearance-none after:content-[attr(aria-label)]"
+							aria-label={ themeName }
+							value={ themeName }
+						/>
+					</label>
+				</li>
+			}
+		</ul>
+	</div>
+}

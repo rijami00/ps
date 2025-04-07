@@ -80,6 +80,7 @@ templ SideNavLayout(head templ.Component) {
 							<img class="brightness-200 max-w-8 hidden dark:block" src="/static/images/dark.png" alt="Logo"/>
 							<img class="max-w-8 dark:hidden" src="/static/images/light.png" alt="Logo"/>
 						</a>
+						@components.ThemeController()
 					</div>
 					<main class="w-full min-h-svh pl-8 pr-8 xl:pr-0">
 						{ children... }
@@ -88,11 +89,11 @@ templ SideNavLayout(head templ.Component) {
 						components.FooterProps{
 							Name:      "APIS Informationtechnologien GmbH",
 							Copyright: fmt.Sprintf("%s", time.Now().UTC().Format("2006")),
-						    Anchors : []components.AnchorProps{
-							    {LeftIcon: examples.GithubIcon(), Href: "https://github.com/rijami00/ps"},
-						    },
-                        },
-                    )
+							Anchors: []components.AnchorProps{
+								{LeftIcon: examples.GithubIcon(), Href: "https://github.com/rijami00/ps"},
+							},
+						},
+					)
 				</div>
 				@drawerSide(
 					[]components.AnchorProps{

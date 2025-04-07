@@ -4,8 +4,7 @@
 @source "./internal/views/**/*.templ";
 @plugin "daisyui" {
   themes:
-    light --default,
-    dark --prefersdark;
+    all;
 }
 @plugin "daisyui/theme" {
   name: "light";

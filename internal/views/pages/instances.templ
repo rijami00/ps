@@ -233,7 +233,7 @@ templ LoginTooltipInfo(sampleLogin string, samplePass string) {
 			Class: "tooltip-bottom tooltip-info",
 		},
 	) {
-		<button class="btn btn-outline btn-circle btn-xs btn-info">❔</button>
+		<button class="btn btn-circle btn-info btn-xs">❔</button>
 	}
 }
 
@@ -243,7 +243,7 @@ script MoreInfoViewClose(id string) {
 
 templ MoreInfoView(instance apollo.Instance) {
 	{{ nameId := fmt.Sprintf("more_info_%s", instance.Id) }}
-	<div class="flex justify-center items-center">
+	<div class="flex justify-center items-center break-all">
 		@components.Modal(components.ModalProps{ID: nameId, Label: "📃"}) {
 			<h3 class="text-3xl">More Info - { instance.Name }</h3>
 			<div>
@@ -261,7 +261,7 @@ templ MoreInfoView(instance apollo.Instance) {
 }
 
 templ InstanceDescription(description string) {
-	<div class="pt-4 max-w-xs text-xs text-balance text-gray-400">
+	<div class="pt-4 max-w-xs text-xs text-balance opacity-60">
 		{ description }
 	</div>
 }
