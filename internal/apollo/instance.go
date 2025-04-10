@@ -29,6 +29,7 @@ type Instance struct {
 	BackendBuildNumber  string
 	BackendCommitHash   string
 	BackendCommitUrl    string
+	FrontendStatus      string
 	FrontendVersion     string
 	FrontendBuildNumber string
 	FrontendCommitHash  string

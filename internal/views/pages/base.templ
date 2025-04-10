@@ -50,7 +50,7 @@ templ Head(title string, stylesheets []string, scripts []Script) {
 
 templ SideNavLayout(head templ.Component) {
 	<!DOCTYPE html>
-	<html data-theme="getColorScheme()" lang="en">
+	<html lang="en">
 		@DefaultHead()
 		<body>
 			<div class="drawer">

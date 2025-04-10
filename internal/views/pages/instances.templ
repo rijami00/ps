@@ -127,7 +127,7 @@ templ InstanceRow(instance apollo.Instance) {
 		</td>
 		// Frontend
 		<td>
-			@components.PlainText("")
+			@components.PlainText(instance.FrontendStatus)
 			<br/>
 			@components.PlainText(instance.FrontendVersion)
 			<br/>
@@ -231,11 +231,16 @@ templ LoginPassInfo(instance apollo.Instance) {
 templ LoginTooltipInfo(sampleLogin string, samplePass string) {
 	@components.Tooltip(
 		components.TooltipProps{
-			Tip:   fmt.Sprintf("EXAMPLE/NOT REAL -> Login: %s, Pass: %s", sampleLogin, samplePass),
-			Class: "tooltip-bottom tooltip-info",
+			//Tip:   fmt.Sprintf("EXAMPLE/NOT REAL <br/> Login: %s, Pass: %s", sampleLogin, samplePass),
+			Class: "tooltip-bottom",
 		},
 	) {
-		<button class="btn btn-circle btn-info btn-xs">❔</button>
+		<div class="tooltip-content">
+			<p class="text-xs">EXAMPLE/NOT REAL</p>
+			<p class="text-xs">Login: { sampleLogin }</p>
+			<p class="text-xs">Pass: { samplePass }</p>
+		</div>
+		<button class="btn btn-circle btn-xs">❔</button>
 	}
 }
 

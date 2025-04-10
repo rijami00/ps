@@ -183,10 +183,13 @@ func GetInstances() ([]Instance, error) {
 			responseUpFe, err := getUpFe(url)
 
 			if err == nil && responseUpFe != nil {
+				instance.FrontendStatus = runningState
 				instance.FrontendVersion = responseUpFe.Version
 				instance.FrontendBuildNumber = responseUpFe.BuildNumber
 				instance.FrontendCommitHash = responseUpFe.CommitHash
 				instance.FrontendCommitUrl = fmt.Sprintf(internal.Settings.GitHubInstanceFrontend + "/commit/" + responseUpFe.CommitHash)
+			} else {
+				instance.FrontendStatus = unreachableState
 			}
 
 			instances = append(instances, instance)
