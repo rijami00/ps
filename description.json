@@ -10,6 +10,10 @@
         "description": "Day to day usage for everyone. Redeployment rate is once a week."
       },
       {
+        "instance": "iq",
+        "description": "IQ automated testing. Redeployment rate is weekly."
+      },
+      {
         "instance": "iq-staging",
         "description": "IQ automated testing. Redeployment rate is daily."
       },
