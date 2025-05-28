@@ -124,6 +124,10 @@ templ InstanceRow(instance apollo.Instance) {
 					Href:  instance.BackendCommitUrl,
 				})
 			}
+			<br/>
+			if instance.BackendCommitDateTime != "" {
+                @components.PlainText(instance.BackendCommitDateTime)
+            }
 		</td>
 		// Frontend
 		<td>
@@ -144,6 +148,10 @@ templ InstanceRow(instance apollo.Instance) {
 					Href:  instance.FrontendCommitUrl,
 				})
 			}
+			<br/>
+			if instance.FrontendCommitDateTime != "" {
+                @components.PlainText(instance.FrontendCommitDateTime)
+            }
 		</td>
 		// Db
 		<td>

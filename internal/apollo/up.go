@@ -15,18 +15,20 @@ type ResponseUp struct {
 		Database struct {
 			Status string `json:"status"`
 		} `json:"database"`
-		Version     string `json:"version"`
-		BuildNumber string `json:"buildNumber"`
-		CommitHash  string `json:"commitHash"`
-		IDProvider  string `json:"idProvider"`
-		Stage       string `json:"stage"`
+		Version        string `json:"version"`
+		BuildNumber    string `json:"buildNumber"`
+		CommitHash     string `json:"commitHash"`
+		CommitDateTime string `json:"commitDateTime"`
+		IDProvider     string `json:"idProvider"`
+		Stage          string `json:"stage"`
 	} `json:"details"`
 }
 
 type ResponseUpFe struct {
-	Version     string `json:"version"`
-	BuildNumber string `json:"buildNumber"`
-	CommitHash  string `json:"commitHash"`
+	Version        string `json:"version"`
+	BuildNumber    string `json:"buildNumber"`
+	CommitHash     string `json:"commitHash"`
+	CommitDateTime string `json:"commitDateTime"`
 }
 
 func getUp(url string) (*ResponseUp, error) {
@@ -71,11 +73,12 @@ func getUp(url string) (*ResponseUp, error) {
 			Database struct {
 				Status string `json:"status"`
 			} `json:"database"`
-			Version     string `json:"version"`
-			BuildNumber string `json:"buildNumber"`
-			CommitHash  string `json:"commitHash"`
-			IDProvider  string `json:"idProvider"`
-			Stage       string `json:"stage"`
+			Version        string `json:"version"`
+			BuildNumber    string `json:"buildNumber"`
+			CommitHash     string `json:"commitHash"`
+			CommitDateTime string `json:"commitDateTime"`
+			IDProvider     string `json:"idProvider"`
+			Stage          string `json:"stage"`
 		}{}
 	}
 
@@ -124,16 +127,23 @@ func getUpFe(url string) (*ResponseUpFe, error) {
 	version := parts[0]
 
 	buildHashParts := strings.Split(parts[1], ".")
-	if len(buildHashParts) != 2 {
-		return nil, fmt.Errorf("invalid build.hash format: %s", parts[1])
-	}
+
 	build := buildHashParts[0]
-	hash := buildHashParts[1]
+	hash := "UNKNOWN"
+	commitDateTime := "UNKNOWN"
+
+	if len(buildHashParts) >= 2 {
+		hash = buildHashParts[1]
+	}
+	if len(buildHashParts) >= 3 {
+		commitDateTime = buildHashParts[2]
+	}
 
 	response := ResponseUpFe{
-		Version:     version,
-		BuildNumber: build,
-		CommitHash:  hash,
+		Version:        version,
+		BuildNumber:    build,
+		CommitHash:     hash,
+		CommitDateTime: commitDateTime,
 	}
 
 	fmt.Println(response)

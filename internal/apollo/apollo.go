@@ -171,6 +171,7 @@ func GetInstances() ([]Instance, error) {
 				} else {
 					instance.BackendVersion = responseUp.Details.Version
 					instance.BackendCommitHash = responseUp.Details.CommitHash
+					instance.BackendCommitDateTime = responseUp.Details.CommitDateTime
 					instance.BackendCommitUrl = fmt.Sprintf(internal.Settings.GitHubInstanceBackend + "/commit/" + responseUp.Details.CommitHash)
 					instance.CdmIdProvider = responseUp.Details.IDProvider
 					instance.StagingMode = responseUp.Details.Stage
@@ -187,6 +188,7 @@ func GetInstances() ([]Instance, error) {
 				instance.FrontendVersion = responseUpFe.Version
 				instance.FrontendBuildNumber = responseUpFe.BuildNumber
 				instance.FrontendCommitHash = responseUpFe.CommitHash
+				instance.FrontendCommitDateTime = responseUpFe.CommitDateTime
 				instance.FrontendCommitUrl = fmt.Sprintf(internal.Settings.GitHubInstanceFrontend + "/commit/" + responseUpFe.CommitHash)
 			} else {
 				instance.FrontendStatus = unreachableState

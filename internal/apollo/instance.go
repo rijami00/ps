@@ -14,31 +14,33 @@ import (
 // host, port, name, description, backend version, backend build number, cdm id provider, staging mode (development, staging, production), uptime, deployment time, default user/pass for login etc
 
 type Instance struct {
-	Id                  string
-	WorkingDir          string
-	Url                 string
-	Port                uint16
-	Name                string
-	Description         string
-	Image               string
-	ContainerState      string
-	ContainerStatus     string
-	ContainerDetails    []ContainerDetails
-	ApiStatus           string
-	BackendVersion      string
-	BackendBuildNumber  string
-	BackendCommitHash   string
-	BackendCommitUrl    string
-	FrontendStatus      string
-	FrontendVersion     string
-	FrontendBuildNumber string
-	FrontendCommitHash  string
-	FrontendCommitUrl   string
-	CdmIdProvider       string
-	StagingMode         string
-	Uptime              string
-	DeploymentTime      string
-	DbConnectionStatus  string
+	Id                     string
+	WorkingDir             string
+	Url                    string
+	Port                   uint16
+	Name                   string
+	Description            string
+	Image                  string
+	ContainerState         string
+	ContainerStatus        string
+	ContainerDetails       []ContainerDetails
+	ApiStatus              string
+	BackendVersion         string
+	BackendBuildNumber     string
+	BackendCommitHash      string
+	BackendCommitDateTime  string
+	BackendCommitUrl       string
+	FrontendStatus         string
+	FrontendVersion        string
+	FrontendBuildNumber    string
+	FrontendCommitHash     string
+	FrontendCommitDateTime string
+	FrontendCommitUrl      string
+	CdmIdProvider          string
+	StagingMode            string
+	Uptime                 string
+	DeploymentTime         string
+	DbConnectionStatus     string
 }
 
 type ContainerDetails struct {
