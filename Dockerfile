@@ -49,6 +49,9 @@ WORKDIR /app
 COPY --from=generate /app/go.mod /app/go.sum ./
 RUN go mod download
 
+# Copy the timeago langs directory from the module cache
+RUN cp -r /go/pkg/mod/github.com/!serhii!cho/timeago/v3@v3.2.1/langs ./langs
+
 # Copy full source again for the final Go build
 COPY --from=generate /app /app
 
@@ -76,6 +79,7 @@ COPY --from=build /app/public /app/public
 COPY --from=build /app/generated /app/generated
 COPY --from=build /app/content /app/content
 COPY --from=build /app/description.json /app/description.json
+COPY --from=build /app/langs /app/langs
 
 # Expose the application port
 EXPOSE 8080
