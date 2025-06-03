@@ -4,6 +4,10 @@ github.com/Microsoft/go-winio v0.4.14 h1:+hMXMk01us9KgxGb7ftKQt2Xpf5hH/yky+TDA+q
 github.com/Microsoft/go-winio v0.4.14/go.mod h1:qXqCSQ3Xa7+6tgxaGTIe4Kpcdsi+P8jBhyzoq1bpyYA=
 github.com/PuerkitoBio/goquery v1.10.1 h1:Y8JGYUkXWTGRB6Ars3+j3kN0xg1YqqlwvdTV8WTFQcU=
 github.com/PuerkitoBio/goquery v1.10.1/go.mod h1:IYiHrOMps66ag56LEH7QYDDupKXyo5A8qrjIx3ZtujY=
+github.com/SerhiiCho/timeago/v2 v2.2.1 h1:aGTH3icQRgml6xB4zkPb+7TjRk2hroiIddAvbBeGz5w=
+github.com/SerhiiCho/timeago/v2 v2.2.1/go.mod h1:flmHaMv6fsRcRdi0jx7x1o0+Vko7+L+OMmTvIg/7IsE=
+github.com/SerhiiCho/timeago/v3 v3.2.1 h1:cdfzUD0n6i/aZDPqRRuOrrv6aTJaNczXaxPnL/QKaRI=
+github.com/SerhiiCho/timeago/v3 v3.2.1/go.mod h1:XIS/HBnwbdb7NugaUr/+SPa33Z4YP6/4J+LsNiGzyqE=
 github.com/a-h/templ v0.3.857 h1:6EqcJuGZW4OL+2iZ3MD+NnIcG7nGkaQeF2Zq5kf9ZGg=
 github.com/a-h/templ v0.3.857/go.mod h1:qhrhAkRFubE7khxLZHsBFHfX+gWwVNKbzKeF9GlPV4M=
 github.com/alecthomas/chroma v0.10.0 h1:7XDcGkCQopCNKjZHfYrNLraA+M7e0fMiJ/Mfikbfjek=

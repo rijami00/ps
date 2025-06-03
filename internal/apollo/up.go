@@ -4,9 +4,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	ago "github.com/SerhiiCho/timeago/v3"
 	"io"
 	"net/http"
+	"strconv"
 	"strings"
+	"time"
 )
 
 type ResponseUp struct {
@@ -82,6 +85,9 @@ func getUp(url string) (*ResponseUp, error) {
 		}{}
 	}
 
+	// Format commit timestamp (must come after details overwrite check)
+	response.Details.CommitDateTime = unixToTime(response.Details.CommitDateTime)
+
 	return &response, nil
 }
 
@@ -137,6 +143,7 @@ func getUpFe(url string) (*ResponseUpFe, error) {
 	}
 	if len(buildHashParts) >= 3 {
 		commitDateTime = buildHashParts[2]
+		commitDateTime = unixToTime(commitDateTime)
 	}
 
 	response := ResponseUpFe{
@@ -149,4 +156,23 @@ func getUpFe(url string) (*ResponseUpFe, error) {
 	fmt.Println(response)
 
 	return &response, nil
+}
+
+// Take a unix timestamp in string, convert it to int64, and return a human-readable date string
+func unixToTime(unixTimestamp string) string {
+	sec, err := strconv.ParseInt(unixTimestamp, 10, 64)
+	if err != nil {
+		return "UNKNOWN"
+	}
+	t := time.Unix(sec, 0).Local()
+	return t.Format("2006-01-02 15:04:05")
+}
+
+func prettyTime(unixTimestamp string) string {
+	sec, err := strconv.Atoi(unixTimestamp)
+	if err != nil {
+		return "UNKNOWN"
+	}
+	prettyTime, _ := ago.Parse(sec)
+	return prettyTime
 }

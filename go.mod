@@ -4,6 +4,7 @@ go 1.24
 
 require (
 	github.com/PuerkitoBio/goquery v1.10.1
+	github.com/SerhiiCho/timeago/v3 v3.2.1
 	github.com/a-h/templ v0.3.857
 	github.com/alecthomas/chroma v0.10.0
 	github.com/docker/docker v28.0.4+incompatible
