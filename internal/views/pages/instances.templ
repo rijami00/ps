@@ -25,18 +25,20 @@ for _, instance := range instances {
 			components.PlainText("Containers"),
 			StackItems(
 				[]templ.Component{
-					components.PlainText("Server"),
+					components.PlainText("BACKEND"),
 					components.PlainText("Version"),
 					components.PlainText("Build"),
 					components.PlainText("Hash"),
+					components.PlainText("Commit Date"),
 				},
 			),
 			StackItems(
 				[]templ.Component{
-					components.PlainText("Rweb"),
+					components.PlainText("FRONTEND"),
 					components.PlainText("Version"),
 					components.PlainText("Build"),
 					components.PlainText("Hash"),
+					components.PlainText("Commit Date"),
 				},
 			),
 			components.PlainText("API⇢DB"),
