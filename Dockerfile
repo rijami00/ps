@@ -42,9 +42,6 @@ RUN npx tailwindcss -i input.css -o ./public/static/css/tw.css --minify
 FROM golang:1.24-alpine AS build
 WORKDIR /app
 
-# Install necessary dependencies
-RUN apk add --no-cache tzdata
-
 # Copy Go module files and dependencies (to reuse caching)
 COPY --from=generate /app/go.mod /app/go.sum ./
 RUN go mod download
@@ -57,7 +54,7 @@ COPY --from=generate /app /app
 COPY --from=css /app/public/static/css/tw.css /app/public/static/css/tw.css
 
 # Build the Go binary
-RUN GOOS=linux GOARCH=amd64 go build -tags zoneinfodata -ldflags "-s -w" -o bin/main cmd/server/main.go
+RUN GOOS=linux GOARCH=amd64 go build -tags timetzdata -ldflags "-s -w" -o bin/main cmd/server/main.go
 
 # Stage 4: Create minimal runtime container
 FROM alpine:latest
