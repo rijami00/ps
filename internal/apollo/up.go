@@ -158,7 +158,7 @@ func getUpFe(url string) (*ResponseUpFe, error) {
 	return &response, nil
 }
 
-// Take a unix timestamp in string, convert it to int64, and return a human-readable date string
+// UnixToEuropeTime Take a unix timestamp in string, convert it to int64, and return a human-readable date string
 func UnixToEuropeTime(unixTimestamp string) string {
 	sec, err := strconv.ParseInt(unixTimestamp, 10, 64)
 	if err != nil {
@@ -172,6 +172,7 @@ func UnixToEuropeTime(unixTimestamp string) string {
 	return t.Format("2006-01-02 15:04:05 MST")
 }
 
+// PrettyTime Take a unix timestamp in string, convert it to int, and return a human-readable time ago string
 func PrettyTime(unixTimestamp string) string {
 	sec, err := strconv.Atoi(unixTimestamp)
 	if err != nil {
