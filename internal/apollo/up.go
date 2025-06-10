@@ -86,7 +86,7 @@ func getUp(url string) (*ResponseUp, error) {
 	}
 
 	// Format commit timestamp (must come after details overwrite check)
-	response.Details.CommitDateTime = unixToTime(response.Details.CommitDateTime)
+	// response.Details.CommitDateTime = unixToEuropeTime(response.Details.CommitDateTime)
 
 	return &response, nil
 }
@@ -143,7 +143,7 @@ func getUpFe(url string) (*ResponseUpFe, error) {
 	}
 	if len(buildHashParts) >= 3 {
 		commitDateTime = buildHashParts[2]
-		commitDateTime = unixToTime(commitDateTime)
+		// commitDateTime = unixToEuropeTime(commitDateTime)
 	}
 
 	response := ResponseUpFe{
@@ -159,16 +159,20 @@ func getUpFe(url string) (*ResponseUpFe, error) {
 }
 
 // Take a unix timestamp in string, convert it to int64, and return a human-readable date string
-func unixToTime(unixTimestamp string) string {
+func UnixToEuropeTime(unixTimestamp string) string {
 	sec, err := strconv.ParseInt(unixTimestamp, 10, 64)
 	if err != nil {
 		return "UNKNOWN"
 	}
-	t := time.Unix(sec, 0).Local()
-	return t.Format("2006-01-02 15:04:05")
+	loc, err := time.LoadLocation("Europe/Berlin")
+	if err != nil {
+		return "UNKNOWN"
+	}
+	t := time.Unix(sec, 0).In(loc)
+	return t.Format("2006-01-02 15:04:05 MST")
 }
 
-func prettyTime(unixTimestamp string) string {
+func PrettyTime(unixTimestamp string) string {
 	sec, err := strconv.Atoi(unixTimestamp)
 	if err != nil {
 		return "UNKNOWN"

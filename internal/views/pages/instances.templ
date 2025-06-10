@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/haatos/goshipit/internal/apollo"
 	"github.com/haatos/goshipit/internal/views/components"
-	ago "github.com/SerhiiCho/timeago/v3"
 	"strings"
 )
 
@@ -132,21 +131,10 @@ templ InstanceRow(instance apollo.Instance) {
 
 				@components.Tooltip(
             		components.TooltipProps{
-            			Tip:   instance.BackendCommitDateTime,
-            			//Class: "tooltip-bottom",
+            			Tip:   apollo.UnixToEuropeTime(instance.BackendCommitDateTime),
             		},
             	) {
-            	   @components.PlainText(func () string {
-            	        if instance.BackendCommitDateTime == "UNKNOWN" {
-            	            return instance.BackendCommitDateTime
-            	        }
-            	        prettyTime, err := ago.Parse(instance.BackendCommitDateTime)
-            	        if (err != nil) {
-            	            return "UNKNOWN"
-            	        }
-            	        return prettyTime
-            	   }(),
-            	   )
+            	   @components.PlainText(apollo.PrettyTime(instance.BackendCommitDateTime))
             	}
             }
 		</td>
@@ -174,21 +162,10 @@ templ InstanceRow(instance apollo.Instance) {
 
 				@components.Tooltip(
             		components.TooltipProps{
-            			Tip:   instance.FrontendCommitDateTime,
-            			//Class: "tooltip-bottom",
+            			Tip:   apollo.UnixToEuropeTime(instance.FrontendCommitDateTime),
             		},
             	) {
-            	   @components.PlainText(func () string {
-            	        if instance.FrontendCommitDateTime == "UNKNOWN" {
-            	            return instance.FrontendCommitDateTime
-            	        }
-            	        prettyTime, err := ago.Parse(instance.FrontendCommitDateTime)
-            	        if (err != nil) {
-            	            return "UNKNOWN"
-            	        }
-            	        return prettyTime
-            	   }(),
-            	   )
+            	   @components.PlainText(apollo.PrettyTime(instance.FrontendCommitDateTime))
             	}
             }
 		</td>
