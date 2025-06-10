@@ -43,7 +43,7 @@ FROM golang:1.24-alpine AS build
 WORKDIR /app
 
 # Install necessary dependencies
-# RUN apk add --no-cache git
+RUN apk add --no-cache tzdata
 
 # Copy Go module files and dependencies (to reuse caching)
 COPY --from=generate /app/go.mod /app/go.sum ./
