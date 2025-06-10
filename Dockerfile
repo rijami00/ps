@@ -57,14 +57,11 @@ COPY --from=generate /app /app
 COPY --from=css /app/public/static/css/tw.css /app/public/static/css/tw.css
 
 # Build the Go binary
-RUN GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -o bin/main cmd/server/main.go
+RUN GOOS=linux GOARCH=amd64 go build -tags zoneinfodata -ldflags "-s -w" -o bin/main cmd/server/main.go
 
 # Stage 4: Create minimal runtime container
 FROM alpine:latest
 WORKDIR /app
-
-# Install CA certificates (add this if needed)
-# RUN apk add --no-cache ca-certificates
 
 # Copy built binary
 COPY --from=build /app/bin/main /app/main
