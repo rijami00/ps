@@ -12,37 +12,28 @@ To get started with goship.it in a new project using _Echo_ router:
 - Install Templ CLI:
   - `go install github.com/a-h/templ/cmd/templ@latest`
 - Install TailwindCSS and DaisyUI:
-  - `npm i -D tailwindcss@latest @tailwindcss/typography daisyui@latest`
-- Initialize TailwindCSS:
-  - `npx tailwindcss init`
-- Configure `tailwind.config.js`, which the previous command generated, to look like this:
+  - `npm i -D tailwindcss@latest @tailwindcss/cli @tailwindcss/typography daisyui@latest`
+- Create `input.css` at the root of the project with the following contents:
 
-```javascript
-module.exports = {
-  content: ["internal/views/**/*.templ"],
-  theme: {
-    extend: {},
-  },
-};
-```
-
-- Create `input.css` at the base of your project with the following contents:
-
-```css
+```input.css
 @import "tailwindcss" source(none);
-@config "./tailwind.config.js";
+@plugin "@tailwindcss/typography";
 @source "./internal/views/**/*.templ";
-@plugin "daisyui";
+@plugin "daisyui" {
+  themes:
+    light --default,
+    dark --prefersdark;
+}
 ```
 
 - Create `Makefile` at the base of your project with the following contents:
 
 ```make
 tw:
-	@npx tailwindcss -i input.css -o public/static/css/tw.css --watch
+	@npx @tailwindcss/cli -i input.css -o ./public/static/css/tw.css --watch
 
 dev:
-	@templ generate -watch -proxy="http://localhost:8080" -open-browser=false -cmd="go run main.go"
+	@templ generate -watch -proxyport=7332 -proxy="http://localhost:8080" -open-browser=false -cmd="go run cmd/server/main.go"
 ```
 
 - Place the following rows in `main.go` (remember to update the components package import path to match your project):
