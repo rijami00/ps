@@ -28,6 +28,10 @@
       {
         "instance": "v11",
         "description": "Released version archive. Use as needed. Compatible with IQ-Software V8.0 - 0040."
+      },
+      {
+        "instance": "v12",
+        "description": "Released version archive. Use as needed. Compatible with IQ-Software V8.0 - 0050."
       }
     ]
 }
