@@ -12,7 +12,7 @@ To get started with goship.it in a new project using _Echo_ router:
 - Install Templ CLI:
   - `go install github.com/a-h/templ/cmd/templ@latest`
 - Install TailwindCSS and DaisyUI:
-  - `npm i -D tailwindcss@latest @tailwindcss/cli @tailwindcss/typography daisyui@latest`
+  - `npm i -D tailwindcss @tailwindcss/cli @tailwindcss/typography daisyui@latest`
 - Create `input.css` at the root of the project with the following contents:
 
 ```input.css
@@ -20,9 +20,77 @@ To get started with goship.it in a new project using _Echo_ router:
 @plugin "@tailwindcss/typography";
 @source "./internal/views/**/*.templ";
 @plugin "daisyui" {
-  themes:
-    light --default,
-    dark --prefersdark;
+    themes:
+        light --default,
+        dark --prefersdark;
+}
+@plugin "daisyui/theme" {
+    name: "light";
+    default: true;
+    prefersdark: false;
+    color-scheme: "light";
+    --color-base-100: oklch(92% 0 0);
+    --color-base-200: oklch(87% 0 0);
+    --color-base-300: oklch(70% 0 0);
+    --color-base-content: oklch(0% 0 0);
+    --color-primary: oklch(55% 0.135 66.442);
+    --color-primary-content: oklch(98% 0.018 155.826);
+    --color-secondary: oklch(53% 0.157 131.589);
+    --color-secondary-content: oklch(98% 0.031 120.757);
+    --color-accent: oklch(64% 0.222 41.116);
+    --color-accent-content: oklch(98% 0.016 73.684);
+    --color-neutral: oklch(43% 0 0);
+    --color-neutral-content: oklch(98% 0 0);
+    --color-info: oklch(52% 0.105 223.128);
+    --color-info-content: oklch(98% 0.019 200.873);
+    --color-success: oklch(50% 0.118 165.612);
+    --color-success-content: oklch(98% 0.018 155.826);
+    --color-warning: oklch(55% 0.195 38.402);
+    --color-warning-content: oklch(98% 0.016 73.684);
+    --color-error: oklch(52% 0.223 3.958);
+    --color-error-content: oklch(97% 0.014 343.198);
+    --radius-selector: 0.5rem;
+    --radius-field: 0.5rem;
+    --radius-box: 0.5rem;
+    --size-selector: 0.28125rem;
+    --size-field: 0.28125rem;
+    --border: 1px;
+    --depth: 1;
+    --noise: 0;
+}
+@plugin "daisyui/theme" {
+    name: "dark";
+    default: false;
+    prefersdark: true;
+    color-scheme: "dark";
+    --color-base-100: oklch(26% 0 0);
+    --color-base-200: oklch(20% 0 0);
+    --color-base-300: oklch(14% 0 0);
+    --color-base-content: oklch(97% 0 0);
+    --color-primary: oklch(79% 0.184 86.047);
+    --color-primary-content: oklch(28% 0.066 53.813);
+    --color-secondary: oklch(64% 0.2 131.684);
+    --color-secondary-content: oklch(98% 0.031 120.757);
+    --color-accent: oklch(64% 0.222 41.116);
+    --color-accent-content: oklch(98% 0.016 73.684);
+    --color-neutral: oklch(14% 0 0);
+    --color-neutral-content: oklch(98% 0 0);
+    --color-info: oklch(71% 0.143 215.221);
+    --color-info-content: oklch(98% 0.019 200.873);
+    --color-success: oklch(72% 0.219 149.579);
+    --color-success-content: oklch(98% 0.018 155.826);
+    --color-warning: oklch(70% 0.213 47.604);
+    --color-warning-content: oklch(98% 0.016 73.684);
+    --color-error: oklch(65% 0.241 354.308);
+    --color-error-content: oklch(97% 0.014 343.198);
+    --radius-selector: 0.5rem;
+    --radius-field: 0.5rem;
+    --radius-box: 0.5rem;
+    --size-selector: 0.28125rem;
+    --size-field: 0.28125rem;
+    --border: 1px;
+    --depth: 1;
+    --noise: 0;
 }
 ```
 
@@ -33,7 +101,7 @@ tw:
 	@npx @tailwindcss/cli -i input.css -o ./public/static/css/tw.css --watch
 
 dev:
-	@templ generate -watch -proxyport=7332 -proxy="http://localhost:8080" -open-browser=false -cmd="go run cmd/server/main.go"
+	@templ generate -watch -proxyport=7332 -proxy="http://localhost:8080" -open-browser=false -cmd="go run main.go"
 ```
 
 - Place the following rows in `main.go` (remember to update the components package import path to match your project):
@@ -42,12 +110,11 @@ dev:
 package main
 
 import (
-	"embed"
-	"log"
 	"net/http"
 
-	"<your project>/internal/views/components"
+	"github.com/my/package/internal/views/components"
 
+	"github.com/a-h/templ"
 	"github.com/labstack/echo/v4"
 )
 
@@ -58,7 +125,7 @@ func main() {
 
 	e.GET("/", func(c echo.Context) error {
 		accordion := components.AccordionExample()
-        return render(accordion)
+		return render(c, accordion)
 	})
 
 	e.Start(":8080")
@@ -69,11 +136,10 @@ func render(c echo.Context, component templ.Component) error {
 	defer templ.ReleaseBuffer(buf)
 
 	if err := component.Render(c.Request().Context(), buf); err != nil {
-		    return err
+		return err
 	}
 	return c.HTML(http.StatusOK, buf.String())
 }
-
 ```
 
 - Create the accordion component `internal/views/components/accordion.templ`:
@@ -139,6 +205,8 @@ At this point, the filetree of your project should look something like this:
 ├── input.css
 ├── internal
 │   └── views
+│       └── components
+│           └── accordion.templ
 ├── main.go
 ├── node_modules
 ├── package-lock.json
